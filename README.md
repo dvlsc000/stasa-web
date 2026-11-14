@@ -35,7 +35,7 @@ A room can hold any number of pieces. The walk gets longer by itself, and pieces
 
 ## Room walls
 Each room's wall pattern is set in `ROOMS` (`wall:`). The patterns are taken from Staša's collages:
-`curtain` (red velvet, like her studio photos), `anemone` (white flower print on black with pink stripes), `lips-red`, `lips-ink`, `eyes-red`, `eyes-ink`, `satin-stripes`, plus `stripes-red`, `dots-red`, `dots-ink`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
+`curtain` (red velvet, like her studio photos), `eyes-stripes` (red eyes in bands between black stripes), `lips-stripes` (red lips between satin and black pinstripes), `eyes-ribbons` (white eyes on black with red ribbons), `lips-red`, `lips-ink`, `eyes-red`, `eyes-ink`, `satin-stripes`, plus `stripes-red`, `dots-red`, `dots-ink`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
 
 ## 3D hat
 The rotating black hat in front of the red curtain is drawn in code in `js/hat3d.js`, using three.js from `vendor/`. It's modelled on the black straw hat with the bow. Brim waves, colours and lights are all at the top of that file. It only renders while it's on screen, and visitors can drag it or turn it with the arrow keys.

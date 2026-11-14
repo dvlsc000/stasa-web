@@ -135,57 +135,61 @@
     root.querySelectorAll("svg[data-draw]").forEach(s => draw(s, s.dataset.draw));
   }
 
-  /* ---------- Printed eye texture (tile) ---------- */
-  function eyeTile({ bg, fg, iris, w = 220, h = 170, seed = 1 }) {
+  /* ---------- Printed eye (after the eye prints in her collages) ---------- */
+  function bez(p0, p1, p2, p3, t) {
+    const u = 1 - t;
+    return [u*u*u*p0[0] + 3*u*u*t*p1[0] + 3*u*t*t*p2[0] + t*t*t*p3[0], u*u*u*p0[1] + 3*u*u*t*p1[1] + 3*u*t*t*p2[1] + t*t*t*p3[1]];
+  }
+  let clipN = 0;
+  function printedEye(cx, cy, sc, rot, fg, bg, seed) {
+    const r = rng(seed), id = "c" + (clipN++);
+    const U = [[-42, 3], [-26, -17], [22, -19], [42, -2]];   // upper lid
+    const L = [[-42, 3], [-20, 16], [22, 16], [42, -2]];     // lower lid
+    let lashes = "";
+    for (let i = 0; i < 15; i++) {
+      const t = 0.08 + i * 0.062, p = bez(...U, t), q = bez(...U, Math.min(1, t + .01));
+      let nx = (q[1] - p[1]), ny = -(q[0] - p[0]); const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l;
+      if (ny > 0) { nx = -nx; ny = -ny; }
+      const len = 9 + 9 * Math.pow(t, 1.4) + r() * 3, sweep = 4 + 10 * t;
+      const ex = p[0] + nx * len + sweep, ey = p[1] + ny * len;
+      lashes += `<path d="M${p[0].toFixed(1)} ${p[1].toFixed(1)} Q${(p[0] + nx * len * .55 + sweep * .1).toFixed(1)} ${(p[1] + ny * len * .7).toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" stroke-width="${(1.6 - t * .5).toFixed(2)}"/>`;
+    }
+    for (let i = 0; i < 7; i++) {
+      const t = 0.25 + i * 0.09, p = bez(...L, t);
+      lashes += `<path d="M${p[0].toFixed(1)} ${p[1].toFixed(1)} l${(1 + t * 3).toFixed(1)} ${(4 + r() * 2).toFixed(1)}" stroke-width=".9"/>`;
+    }
+    let radial = "";
+    for (let i = 0; i < 22; i++) { const a = i / 22 * 6.283; radial += `<path d="M${(2 + Math.cos(a) * 5).toFixed(1)} ${(-1 + Math.sin(a) * 5).toFixed(1)} L${(2 + Math.cos(a) * 11.5).toFixed(1)} ${(-1 + Math.sin(a) * 11.5).toFixed(1)}" stroke-width=".8"/>`; }
+    const shape = `M-42 3 C-26 -17 22 -19 42 -2 C22 16 -20 16 -42 3Z`;
+    return `<g transform="translate(${cx} ${cy}) rotate(${rot}) scale(${sc})">
+      <defs><clipPath id="${id}"><path d="${shape}"/></clipPath></defs>
+      <path d="${shape}" fill="${bg}"/>
+      <g clip-path="url(#${id})" stroke="${fg}" fill="none">
+        <circle cx="2" cy="-1" r="12.5" stroke-width="1.6"/>${radial}
+        <circle cx="2" cy="-1" r="4.8" fill="${fg}" stroke="none"/>
+        <circle cx="5.5" cy="-4.5" r="1.8" fill="${bg}" stroke="none"/>
+        <path d="M-42 3 C-26 -13 22 -15 42 -2" stroke-width="5" opacity=".18"/>
+      </g>
+      <g stroke="${fg}" fill="none" stroke-linecap="round">
+        <path d="M-42 3 C-26 -17 22 -19 42 -2" stroke-width="3.6"/>
+        <path d="M-35 -9 C-18 -26 16 -27 37 -12" stroke-width="1.3"/>
+        <path d="M-41 4 C-20 16 22 16 40 -1" stroke-width="1.5"/>
+        ${lashes}
+      </g></g>`;
+  }
+  function eyeTile({ bg, fg, w = 220, h = 170, seed = 1 }) {
     const r = rng(seed);
-    const eye = (cx, cy, sc, rot) => {
-      const lashes = [[-30, -6, -36, -20], [-20, -11, -24, -26], [-8, -14, -9, -30], [4, -14, 5, -31], [16, -12, 20, -28], [27, -8, 34, -22], [34, -3, 42, -14]]
-        .map(l => `<path d="M${l[0]} ${l[1]} Q${(l[0] + l[2]) / 2 + 1} ${(l[1] + l[3]) / 2} ${l[2]} ${l[3]}" stroke="${fg}" stroke-width="2.4" stroke-linecap="round" fill="none"/>`).join("");
-      return `<g transform="translate(${cx} ${cy}) rotate(${rot}) scale(${sc})">
-        <path d="M-40 0 Q-18 -18 0 -16 Q22 -16 40 -2 Q20 14 0 14 Q-22 14 -40 0Z" fill="${fg}"/>
-        <circle cx="2" cy="-1" r="10.5" fill="${iris}"/>
-        <circle cx="2" cy="-1" r="4.6" fill="${fg}" opacity=".9"/>
-        <path d="M-40 0 Q-18 -18 0 -16 Q22 -16 40 -2" stroke="${iris}" stroke-width="3.2" fill="none"/>
-        ${lashes}</g>`;
-    };
-    const a = eye(w * 0.27, h * 0.33, 0.95 + r() * 0.1, -8 + r() * 6);
-    const b = eye(w * 0.77, h * 0.83, 0.9 + r() * 0.12, 6 + r() * 6);
-    const b2 = eye(w * 0.77 - w, h * 0.83, 0.9, 8); // wrap
-    const a2 = eye(w * 0.27, h * 0.33 + h, 0.95, -6);
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${a}${b}${b2}${a2}</svg>`;
+    const e = (x, y, s, ro) => printedEye(x, y, s, ro, fg, bg, seed * 31 + Math.round(x + y));
+    const body = e(w * .28, h * .34, .95 + r() * .08, -7) + e(w * .78, h * .84, .9, 6) + e(w * .78 - w, h * .84, .9, 6) + e(w * .28, h * .34 + h, .95, -7);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${body}</svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
   }
 
-
-  /* ---------- Flower print: white starbursts and bubbles on black (Swan, Red hat) ---------- */
-  function anemoneTile({ bg = "#111010", fg = "#ECE7DC", w = 260, h = 260, seed = 4 }) {
-    const r = rng(seed); let g = "";
-    // bubbles
-    for (let i = 0; i < 70; i++) {
-      const x = r() * w, y = r() * h, rx = 1.2 + r() * 3.4, ry = rx * (0.7 + r() * 0.6);
-      const ring = r() < 0.35;
-      const one = (ox, oy) => ring
-        ? `<ellipse cx="${(x + ox).toFixed(1)}" cy="${(y + oy).toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="none" stroke="${fg}" stroke-width="1.1"/>`
-        : `<ellipse cx="${(x + ox).toFixed(1)}" cy="${(y + oy).toFixed(1)}" rx="${(rx * .8).toFixed(1)}" ry="${(ry * .8).toFixed(1)}" fill="${fg}"/>`;
-      g += one(0, 0); if (x > w - 8) g += one(-w, 0); if (y > h - 8) g += one(0, -h);
-    }
-    // starburst flowers
-    const flower = (cx, cy, R) => {
-      let f = "";
-      const n = 46;
-      for (let i = 0; i < n; i++) {
-        const a = i / n * 6.283 + r() * .08, len = R * (0.62 + r() * 0.38), bend = (r() - .5) * 0.25;
-        const x1 = cx + Math.cos(a) * R * .2, y1 = cy + Math.sin(a) * R * .2;
-        const x2 = cx + Math.cos(a + bend) * len, y2 = cy + Math.sin(a + bend) * len;
-        const mx = cx + Math.cos(a + bend * .5) * len * .6, my = cy + Math.sin(a + bend * .5) * len * .6;
-        f += `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="${fg}" stroke-width="${(1 + r() * 1.6).toFixed(1)}" stroke-linecap="round" fill="none"/>`;
-      }
-      f += `<circle cx="${cx}" cy="${cy}" r="${R * .2}" fill="${bg}" stroke="${fg}" stroke-width="1.4"/>`;
-      for (let i = 0; i < 14; i++) { const a = r() * 6.283, d = r() * R * .16; f += `<circle cx="${(cx + Math.cos(a) * d).toFixed(1)}" cy="${(cy + Math.sin(a) * d).toFixed(1)}" r="1.4" fill="${fg}"/>`; }
-      return f;
-    };
-    g += flower(w * .3, h * .28, 52) + flower(w * .78, h * .74, 46) + flower(w * .78 - w, h * .74, 46) + flower(w * .3, h * .28 + h, 52);
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${g}</svg>`;
+  /* Eye print in a cotton band beside a black band (Platinum) */
+  function eyesBandTile({ cotton, ink, fg, w = 150, band = 26, h = 200, seed = 21 }) {
+    const cw = w - band;
+    const body = printedEye(cw * .5, h * .24, .95, -5, fg, cotton, seed) + printedEye(cw * .5, h * .74, .95, 4, fg, cotton, seed + 3);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${cotton}"/>${body}<rect x="${cw}" width="${band}" height="${h}" fill="${ink}"/></svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
   }
 
@@ -204,6 +208,17 @@
     const a = lips(w * .26, h * .3, 0.95, -10 + r() * 6), b = lips(w * .76, h * .78, 0.9, 8 + r() * 8);
     const b2 = lips(w * .76 - w, h * .78, 0.9, 12), a2 = lips(w * .26, h * .3 + h, 0.95, -8);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${a}${b}${b2}${a2}</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
+
+  /* Lips in a cotton band between red satin and black pinstripes (Embrace) */
+  function lipsBandTile({ cotton, ink, red, w = 170, h = 150, seed = 17 }) {
+    const inner = lipsTile({ bg: cotton, fg: red, w: 120, h, seed });
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      <rect width="${w}" height="${h}" fill="${cotton}"/>
+      <image href="${inner.slice(5, -2)}" x="0" y="0" width="120" height="${h}"/>
+      <rect x="120" width="5" height="${h}" fill="${ink}"/><rect x="129" width="26" height="${h}" fill="${red}"/>
+      <rect x="138" width="4" height="${h}" fill="#e2414a" opacity=".7"/><rect x="159" width="5" height="${h}" fill="${ink}"/></svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
   }
 
@@ -229,7 +244,8 @@
     root.setProperty("--tex-eyes-ink", eyeTile({ bg: ink, fg: "#D6D0C3", iris: ink, seed: 3 }));
     root.setProperty("--tex-eyes-red", eyeTile({ bg: cotton, fg: red, iris: cotton, seed: 9, w: 200, h: 160 }));
     root.setProperty("--tex-lace", lace(cotton));
-    root.setProperty("--tex-anemone", anemoneTile({ bg: ink }));
+    root.setProperty("--tex-eyes-stripes", eyesBandTile({ cotton, ink, fg: red }));
+    root.setProperty("--tex-lips-stripes", lipsBandTile({ cotton, ink, red }));
     root.setProperty("--tex-lips-red", lipsTile({ bg: cotton, fg: red, seed: 6 }));
     root.setProperty("--tex-lips-ink", lipsTile({ bg: cotton, fg: ink, seed: 11, w: 170, h: 136 }));
     root.setProperty("--tex-lashes", lashesTile({ bg: cotton, fg: "#F8F5EF" }));

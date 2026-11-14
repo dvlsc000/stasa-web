@@ -10,7 +10,6 @@
   --ink: #111010;         /* floor, text */
   --red: #C8161E;         /* satin ribbon red */
   --blue: #2338C4;        /* screen-print ultramarine */
-  --pink: #E0187A;        /* swan pink, used only in the flower print stripes */
   --muted: #6D665D;
 
   --display: "SC Bodoni", "Bodoni Moda", "Didot", "Bodoni 72", "Times New Roman", serif;
@@ -208,7 +207,9 @@ h1, h2, h3, p { margin: 0; }
     linear-gradient(180deg, rgba(0,0,0,.28), transparent 22%, transparent 72%, rgba(0,0,0,.34)),
     repeating-linear-gradient(90deg, #6f060b 0px, #a8101a 22px, #d4232a 42px, #e33a3c 50px, #c0141c 66px, #8a0a10 92px, #b1121a 112px, #d52a30 124px, #9c0d14 140px, #6f060b 156px);
 }
-.tex-anemone { background: repeating-linear-gradient(90deg, transparent 0 256px, var(--pink) 256px 260px), var(--tex-anemone, var(--ink)); background-size: auto, 260px 260px; }
+.tex-eyes-stripes { background: var(--tex-eyes-stripes, var(--cotton)); background-size: 150px 200px; }
+.tex-lips-stripes { background: var(--tex-lips-stripes, var(--cotton)); background-size: 170px 150px; }
+.tex-eyes-ribbons { background: repeating-linear-gradient(90deg, transparent 0 210px, #8f0c12 210px 213px, var(--red) 213px 226px, #e1383d 226px 231px, var(--red) 231px 244px, #8f0c12 244px 247px, transparent 247px 262px, #8f0c12 262px 264px, var(--red) 264px 276px, #8f0c12 276px 278px), var(--tex-eyes-ink, var(--ink)); background-size: auto, var(--eye-size); }
 .tex-lips-red { background: var(--tex-lips-red, var(--cotton)); background-size: 190px 150px; }
 .tex-lips-ink { background: repeating-linear-gradient(90deg, transparent 0 148px, #FBFAF6 148px 158px, #DDD7CB 158px 160px), var(--tex-lips-ink, var(--cotton)); background-size: auto, 170px 136px; }
 .tex-satin-stripes { background: repeating-linear-gradient(90deg, #a80f17 0 6px, var(--red) 6px 22px, #e1383d 22px 28px, var(--red) 28px 42px, var(--cotton) 42px 56px, var(--ink) 56px 62px, var(--cotton) 62px 76px); }
