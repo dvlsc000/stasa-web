@@ -1,0 +1,12 @@
+---
+// Four ruffle tiers — red, dots, paper, lace — with scalloped hems.
+// Horizontal: hangs down over the top of the next section. Vertical: a curtain between rooms in the walk.
+interface Props { vertical?: boolean; class?: string; base?: 'ink' | 'paper' }
+const { vertical = false, class: cls = '' } = Astro.props;
+---
+<div class:list={['flounce', vertical ? 'flounce--v' : 'flounce--h', cls]} aria-hidden="true" data-flounce>
+  <div class="flounce__tier tier--red" />
+  <div class="flounce__tier tier--dots pat-dots-red" />
+  <div class="flounce__tier tier--paper" />
+  <div class="flounce__tier tier--lace" />
+</div>

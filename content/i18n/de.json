@@ -1,0 +1,359 @@
+{
+  "lang": "de",
+  "ui": {
+    "meta.title": "Staša Čimbur — Hüte, Kopfschmuck und Textilcollagen",
+    "meta.description": "Staša Čimbur (StashaHats), angewandte Künstlerin und Modistenmeisterin zwischen Zagreb und Amsterdam: Hüte, Fascinators, Taschen, Schirme, Tücher und genähte Textilcollagen.",
+    "a11y.skipContent": "Zum Inhalt",
+    "a11y.skipWalk": "Rundgang überspringen",
+    "a11y.langSwitch": "Sprache",
+    "a11y.mainNav": "Hauptnavigation",
+    "a11y.floorPlan": "Grundriss des Salons: zu einem Raum springen",
+    "a11y.openPlate": "Tafel öffnen",
+    "preloader.skip": "Überspringen",
+    "nav.wearable": "Tragbar",
+    "nav.wall": "Für die Wand",
+    "nav.exhibitions": "Ausstellungen",
+    "nav.commissions": "Aufträge",
+    "hero.cities": "Zagreb — Amsterdam",
+    "hero.role": "angewandte Künstlerin und Modistenmeisterin",
+    "hero.enter": "Treten Sie in den Salon",
+    "prolog.kicker": "Programm des Abends",
+    "prolog.title": "Prolog",
+    "prolog.p1": "Staša Čimbur näht kleine Vorstellungen für Kopf, Hände und Wand. Hüte, Fascinators, Taschen, Schirme, Tücher und bedruckte Stoffe entstehen in ihren Ateliers in Zagreb und Amsterdam, und immer führt das Material: ein Rest alter Samt, Spitze vom Flohmarkt, ein Filz, der sich nicht biegen will.",
+    "prolog.p2": "Hinter ihr liegen mehr als 150 Ausstellungen, Performances und Schauen, darunter die Einzelausstellung „All you need is a Hat“ im Museum für Kunst und Gewerbe in Zagreb. Ihre Arbeiten befinden sich in Museen und Privatsammlungen, und sie hat mit Josipa Lisac zusammengearbeitet, auf der Bühne und abseits davon.",
+    "prolog.castTitle": "Die Besetzung",
+    "prolog.cast": [
+      "Hüte",
+      "Kopfschmuck und Fascinators",
+      "Taschen",
+      "Schirme",
+      "Tücher und Textilien",
+      "Kleidung",
+      "Textilcollagen"
+    ],
+    "prolog.count": "Ausstellungen, Performances und Schauen",
+    "prolog.portraitAlt": "Porträt von Staša Čimbur mit einem ihrer Hüte",
+    "wing1.title": "Tragbar",
+    "wing1.wing": "Flügel I",
+    "wing1.intro": "Sechs Räume, ein Rundgang. Scrollen Sie weiter, und der Salon geht mit.",
+    "room": "Raum",
+    "rooms.hats": "Hüte",
+    "rooms.headpieces": "Kopfschmuck und Fascinators",
+    "rooms.bags": "Taschen",
+    "rooms.parasols": "Schirme",
+    "rooms.textiles": "Tücher und Textilien",
+    "rooms.clothes": "Kleidung",
+    "rooms.framed": "Gerahmte Collagen",
+    "rooms.collage": "Collagen und Objekte",
+    "view": "Ansehen",
+    "plate": "Taf.",
+    "interlude.quote": "Ein Hut ist kein Schmuck. Ein Hut ist {eye} ein Auftritt auf der Bühne.",
+    "interlude.cite": "Staša Čimbur im Gespräch (vorläufiges Zitat)",
+    "wing2.title": "Für die Wand",
+    "wing2.wing": "Flügel II",
+    "wing2.intro": "Genähte Textilcollagen und Objekte, gerahmt und bereit für Ihre Wand. Jedes gibt es nur ein einziges Mal.",
+    "available": "Verfügbar",
+    "sold": "In einer Sammlung",
+    "onRequest": "Preis auf Anfrage",
+    "enquireBuy": "Anfragen / kaufen",
+    "exh.title": "Ausstellungen und Presse",
+    "exh.kicker": "Aus dem Programmheft, 2004 – heute",
+    "exh.year": "Jahr",
+    "exh.name": "Titel",
+    "exh.venue": "Ort",
+    "exh.city": "Stadt",
+    "exh.highlights": "Höhepunkte",
+    "exh.note": "Diese Liste ist vorläufig.",
+    "comm.title": "Aufträge",
+    "comm.p": "Ein Hut nach Maß beginnt mit einem Gespräch: über den Anlass, über den Kopf und darüber, wie viel Mut Sie tragen möchten. Die Anfertigung dauert drei bis acht Wochen. Ich fertige auch Kostümteile für die Bühne, Einzelstücke für Hochzeiten und Arbeiten für Ausstellungen.",
+    "form.name": "Name",
+    "form.email": "E-Mail",
+    "form.type": "Art der Anfrage",
+    "form.types": [
+      "Ein Hut nach Maß",
+      "Ein Werk kaufen",
+      "Kostüm und Bühne",
+      "Ausstellung oder Presse",
+      "Etwas anderes"
+    ],
+    "form.message": "Nachricht",
+    "form.messageHint": "Anlass, Datum, Farben – alles, was Ihnen einfällt.",
+    "form.submit": "Anfrage senden",
+    "form.sending": "Wird genäht…",
+    "form.sent": "Anfrage gesendet. Ich antworte innerhalb weniger Tage.",
+    "form.error": "Die Anfrage wurde nicht gesendet. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut, oder schreiben Sie an die E-Mail-Adresse unten.",
+    "form.required": "Dieses Feld ist erforderlich.",
+    "form.invalidEmail": "Geben Sie eine E-Mail-Adresse wie name@beispiel.de ein.",
+    "form.about": "Zum Werk",
+    "plate.close": "Schließen",
+    "plate.prev": "Vorherige Tafel",
+    "plate.next": "Nächste Tafel",
+    "plate.year": "Jahr",
+    "plate.materials": "Materialien",
+    "plate.technique": "Technik",
+    "plate.dimensions": "Maße",
+    "plate.availability": "Verfügbarkeit",
+    "plate.enquire": "Nach diesem Werk fragen",
+    "plate.zoom": "Bild vergrößern",
+    "plate.details": "Details",
+    "plate.back": "Zurück in den Salon",
+    "plate.noImage": "Foto folgt",
+    "footer.instagram": "Instagram",
+    "footer.rights": "Alle Rechte vorbehalten.",
+    "footer.top": "Zurück zum Anfang"
+  },
+  "works": {
+    "pl-001": {
+      "title": "Theaterloge",
+      "materials": "Filz, Tüll und Samt",
+      "technique": "Von Hand auf Holzform gezogen, handgenäht",
+      "story": "Eine breite Krempe aus schwarzem Filz und ein Schleier mit roten Punkten: ein Hut, der vom Balkon aus zusieht. Getragen bei einer Premiere im Kroatischen Nationaltheater, wo er angeblich mehr Blicke auf sich zog als die Bühne.",
+      "alt": "Hut aus Filz, Tüll und Samt, in Rot, Weiß und Schwarz"
+    },
+    "pl-002": {
+      "title": "Sonntagsbolero",
+      "materials": "Filz und Satin",
+      "technique": "Von Hand auf Holzform gezogen, Applikation",
+      "story": "Ein Glockenhut aus mohnrotem Filz mit applizierter Satinborte, die sich wie ein Tanzschritt um den Kopf dreht. Gemacht für einen Spaziergang, der den ganzen Nachmittag dauert.",
+      "alt": "Hut aus Filz und Satin, in Rot, Weiß und Schwarz"
+    },
+    "pl-003": {
+      "title": "Konfettiregen",
+      "materials": "Stroh, Pailletten und Garn",
+      "technique": "Von Hand auf Holzform gezogen, bestickt",
+      "story": "Ein Strohhut mit handgenähten Pailletten, die über die Krempe rieseln, als wäre das Fest gerade erst vorbei. Erstmals bei einer Modenschau in Amsterdam gezeigt.",
+      "alt": "Hut aus Stroh, Pailletten und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-004": {
+      "title": "Frau Dreiauge",
+      "materials": "Samt, Seide und Garn",
+      "technique": "Handgenäht, bestickt",
+      "story": "Ein Pillbox-Hut aus schwarzem Samt mit drei gestickten Augen, die zu blinzeln scheinen, wenn die Trägerin den Kopf dreht. Ein Hut, der alles bemerkt, was Ihnen entgeht.",
+      "alt": "Hut aus Samt, Seide und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-005": {
+      "title": "Ein Tropfen Rot",
+      "materials": "Sinamay und Federn",
+      "technique": "Von Hand auf Holzform gezogen, handgenäht",
+      "story": "Ein Fascinator in Tropfenform aus rotem Sinamay mit einer einzigen Feder. Klein genug fürs Büro, kühn genug für eine Hochzeit.",
+      "alt": "Kopfschmuck aus Sinamay und Federn, in Rot, Weiß und Schwarz"
+    },
+    "pl-006": {
+      "title": "Schwalbenschwanz",
+      "materials": "Filz, Draht und Seide",
+      "technique": "Von Hand auf Holzform gezogen, Applikation",
+      "story": "Zwei Flügel aus schwarzem Filz auf feinem Draht, mit weißer Seide eingefasst. Wenn Wind aufkommt, wiegt sich der Kopfschmuck, als wolle er davonfliegen.",
+      "alt": "Kopfschmuck aus Filz, Draht und Seide, in Rot, Weiß und Schwarz"
+    },
+    "pl-007": {
+      "title": "Flüstern hinter dem Schleier",
+      "materials": "Tüll, Spitze und Satin",
+      "technique": "Handgenäht, Applikation",
+      "story": "Ein kleines Satinkäppchen mit Tüllschleier und alter Spitze vom Flohmarkt Hrelić. Der Schleier bedeckt ein Auge und lässt das andere frei zum Zwinkern.",
+      "alt": "Kopfschmuck aus Tüll, Spitze und Satin, in Rot, Weiß und Schwarz"
+    },
+    "pl-008": {
+      "title": "Kleine Krone für einen großen Tag",
+      "materials": "Messing, Filz und Pailletten",
+      "technique": "Assemblage, handgenäht",
+      "story": "Eine Krone aus rotem Filz mit Messingnieten und Pailletten, leicht schief getragen. Für Geburtstage, Kündigungen und andere große Entscheidungen.",
+      "alt": "Kopfschmuck aus Messing, Filz und Pailletten, in Rot, Weiß und Schwarz"
+    },
+    "pl-009": {
+      "title": "Der nie verschickte Brief",
+      "materials": "Leder, Baumwolle und Garn",
+      "technique": "Handgenäht, Applikation",
+      "story": "Eine Clutch in Briefumschlagform mit rotem Ledersiegel und gepunktetem Baumwollfutter. Darin ist Platz für einen Lippenstift, einen Schlüssel und einen Satz, den Sie nie gesagt haben.",
+      "alt": "Tasche aus Leder, Baumwolle und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-010": {
+      "title": "Polka zum Abschied",
+      "materials": "Baumwolle, Holz und Leder",
+      "technique": "Siebdruck, handgenäht",
+      "story": "Eine Tasche aus bedruckter Baumwolle mit Holzgriffen, groß genug für ein Wochenende auf dem Land. Die Punkte sind von Hand gedruckt, keiner gleicht ganz dem anderen.",
+      "alt": "Tasche aus Baumwolle, Holz und Leder, in Rot, Weiß und Schwarz"
+    },
+    "pl-011": {
+      "title": "Tasche für Geheimnisse",
+      "materials": "Samt, Messing und Seide",
+      "technique": "Handgenäht, bestickt",
+      "story": "Ein kleiner Samtbeutel mit Messingverschluss und einem gestickten Auge auf der Klappe. Das Auge bleibt wach, auch wenn die Tasche geschlossen ist.",
+      "alt": "Tasche aus Samt, Messing und Seide, in Rot, Weiß und Schwarz"
+    },
+    "pl-012": {
+      "title": "Kleine Tanzschachtel",
+      "materials": "Leder, Satin und Spitze",
+      "technique": "Handgenäht, plissiert",
+      "story": "Eine kastenförmige Tasche mit plissiertem Satinvolant am Boden. Beim Gehen schwingt der Volant wie ein Rock auf der Tanzfläche.",
+      "alt": "Tasche aus Leder, Satin und Spitze, in Rot, Weiß und Schwarz"
+    },
+    "pl-013": {
+      "title": "Schatten für Flamenco",
+      "materials": "Baumwolle, Spitze und Holz",
+      "technique": "Handgenäht, Applikation",
+      "story": "Ein Sonnenschirm aus gestreifter Baumwolle mit Spitzenkante und Holzgriff. Der Saum ist in Wellen geschnitten, wie die unterste Stufe eines Flamencorocks.",
+      "alt": "Sonnenschirm aus Baumwolle, Spitze und Holz, in Rot, Weiß und Schwarz"
+    },
+    "pl-014": {
+      "title": "Gepunkteter Himmel",
+      "materials": "Seide, Holz und Messing",
+      "technique": "Siebdruck, handgenäht",
+      "story": "Ein Seidenschirm, bedruckt mit weißen Punkten auf Schwarz, damit darunter immer Nacht ist. Die Messingspitze folgt einem alten Wiener Vorbild.",
+      "alt": "Sonnenschirm aus Seide, Holz und Messing, in Rot, Weiß und Schwarz"
+    },
+    "pl-015": {
+      "title": "Sonnenschirm für Amsterdamer Regen",
+      "materials": "Baumwolle, Holz und Garn",
+      "technique": "Handgenäht, bestickt",
+      "story": "Ein Sonnenschirm, der selbst im November noch auf Sonne hofft. Die innen gestickten Regentropfen sieht nur, wer ihn trägt.",
+      "alt": "Sonnenschirm aus Baumwolle, Holz und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-016": {
+      "title": "Drehkreis",
+      "materials": "Papier, Holz und Seide",
+      "technique": "Plissiert, handgenäht",
+      "story": "Ein plissierter Schirm aus Papier und Seide, der sich wie ein Fächer öffnet. Entstanden für eine Performance, in der sich zwanzig Schirme im selben Takt drehten.",
+      "alt": "Sonnenschirm aus Papier, Holz und Seide, in Rot, Weiß und Schwarz"
+    },
+    "pl-018": {
+      "title": "Hände an der Wand",
+      "materials": "Seide",
+      "technique": "Siebdruck",
+      "story": "Ein Seidentuch, bedruckt mit Händen, Augen und kleinen Gesichtern, in Tusche gezeichnet und in senkrechten Bahnen angeordnet. Dieselbe Zeichnung wurde später die Tapete ihres Ateliers.",
+      "alt": "Tuch aus Seide, in Rot, Weiß und Schwarz"
+    },
+    "pl-019": {
+      "title": "Wimpern",
+      "materials": "Baumwolle und Seide",
+      "technique": "Siebdruck",
+      "story": "Ein langer Schal mit einem Rapport roter Augen mit langen Wimpern. Um den Hals geschlungen, blicken die Augen in alle Richtungen zugleich.",
+      "alt": "Tuch aus Baumwolle und Seide, in Rot, Weiß und Schwarz"
+    },
+    "pl-020": {
+      "title": "Streifen fürs Meer",
+      "materials": "Leinen und Baumwolle",
+      "technique": "Siebdruck, handgenäht",
+      "story": "Eine Leinentischdecke oder ein Cape, je nach Wind: rote und weiße Streifen mit handgerolltem Saum. Entstanden auf der Insel Vis während eines sehr langen Sommers.",
+      "alt": "Tuch aus Leinen und Baumwolle, in Rot, Weiß und Schwarz"
+    },
+    "pl-021": {
+      "title": "Kleiner Zirkus",
+      "materials": "Seide und Garn",
+      "technique": "Siebdruck, bestickt",
+      "story": "Ein Tuch, auf dem Akrobaten, Pferde und ein verwirrter Löwe um eine rote Mitte kreisen. Die Ränder sind Stich für Stich mit rotem Garn bestickt.",
+      "alt": "Tuch aus Seide und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-022": {
+      "title": "Volant für Mitternacht",
+      "materials": "Satin, Tüll und Spitze",
+      "technique": "Plissiert, handgenäht",
+      "story": "Ein Rock aus vier Stufen Volants – rot, gepunktet, weiß und Spitze –, wie die Collage, die ihn inspirierte. Gemacht für Tänze, die nach Mitternacht beginnen.",
+      "alt": "Kleidungsstück aus Satin, Tüll und Spitze, in Rot, Weiß und Schwarz"
+    },
+    "pl-023": {
+      "title": "Mantel mit Augen",
+      "materials": "Filz, Baumwolle und Garn",
+      "technique": "Applikation, bestickt",
+      "story": "Ein schwarzer Filzmantel mit applizierten Augen auf dem Rücken, damit die Trägerin immer weiß, wer hinter ihr geht. Jedes Auge blickt anders.",
+      "alt": "Kleidungsstück aus Filz, Baumwolle und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-024": {
+      "title": "Spitzenbolero",
+      "materials": "Spitze, Seide und Knöpfe",
+      "technique": "Handgenäht",
+      "story": "Ein kurzer Bolero aus sieben verschiedenen alten Spitzen und einem einzigen roten Knopf. Jede Spitze hat ihre eigene Geschichte und ihre eigene Großmutter.",
+      "alt": "Kleidungsstück aus Spitze, Seide und Knöpfe, in Rot, Weiß und Schwarz"
+    },
+    "pl-025": {
+      "title": "Kleid für den großen Auftritt",
+      "materials": "Baumwolle, Satin und Tüll",
+      "technique": "Applikation, plissiert",
+      "story": "Ein Kleid mit gestreiftem Mieder und einem Tüllrock, der raschelt, wenn die Trägerin einen Raum betritt. Das Gehen ist, laut der Macherin, weniger wichtig.",
+      "alt": "Kleidungsstück aus Baumwolle, Satin und Tüll, in Rot, Weiß und Schwarz"
+    },
+    "pl-017": {
+      "title": "Des Matadors Liebling",
+      "materials": "Baumwolle, Spitze, Seide und Garn",
+      "technique": "Genähte Textilcollage, Applikation",
+      "story": "Eine Tänzerin in Stufen von Flamencovolants eilt diagonal über die Bühne, vor einer Tapete aus Händen und Augen. Auf ihren Strümpfen blinzeln rote Augen: das Werk, aus dem dieser ganze Salon entstanden ist.",
+      "alt": "Gerahmte Textilcollage aus Baumwolle, Spitze, Seide und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-026": {
+      "title": "Tänzerin auf dem Draht",
+      "materials": "Baumwolle, Draht und Garn",
+      "technique": "Genähte Textilcollage",
+      "story": "Eine kleine Tänzerin balanciert auf einem echten Draht, der über einen gepunkteten Grund genäht ist. Unter ihr gibt es kein Netz, nur den schwarzen Boden.",
+      "alt": "Gerahmte Textilcollage aus Baumwolle, Draht und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-027": {
+      "title": "Salon der Hände",
+      "materials": "Baumwolle, Papier und Garn",
+      "technique": "Genähte Textilcollage, Siebdruck",
+      "story": "Zwölf aus bedrucktem Stoff geschnittene Hände grüßen, zeigen und winken. Eine von ihnen hält einen Hut, den niemand trägt.",
+      "alt": "Gerahmte Textilcollage aus Baumwolle, Papier und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-028": {
+      "title": "Roter Vorhang",
+      "materials": "Samt, Satin und Garn",
+      "technique": "Genähte Textilcollage, Applikation",
+      "story": "Ein Samtvorhang öffnet sich gerade, und dahinter sieht man nur ein Bein in einem gepunkteten Strumpf. Den Rest der Vorstellung müssen Sie sich denken.",
+      "alt": "Gerahmte Textilcollage aus Samt, Satin und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-029": {
+      "title": "Bildnis einer Dame mit Hut",
+      "materials": "Seide, Spitze und Knöpfe",
+      "technique": "Genähte Textilcollage, bestickt",
+      "story": "Ihr Gesicht ist aus weißer Seide, ihr Hut aus drei Lagen Spitze, die über den Rahmen quellen. Die Dame sieht Sie direkt an und blinzelt nicht.",
+      "alt": "Gerahmte Textilcollage aus Seide, Spitze und Knöpfe, in Rot, Weiß und Schwarz"
+    },
+    "pl-030": {
+      "title": "Die Katze, die alles sah",
+      "materials": "Filz, Baumwolle und Garn",
+      "technique": "Genähte Textilcollage, Applikation",
+      "story": "Eine schwarze Filzkatze sitzt am Fenster, und ihre roten Augen folgen jedem, der den Raum durchquert. Das kleinste Werk an der Wand und der verlässlichste Wächter.",
+      "alt": "Gerahmte Textilcollage aus Filz, Baumwolle und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-031": {
+      "title": "Nachtzug Zagreb – Amsterdam",
+      "materials": "Baumwolle, Leinen und Garn",
+      "technique": "Genähte Textilcollage, bestickt",
+      "story": "Eine lange waagerechte Collage aus Abteilfenstern, in jedem ein anderer Hut. Die Naht, die sie verbindet, ist das Gleis, auf ganzer Länge mit rotem Garn gestickt.",
+      "alt": "Gerahmte Textilcollage aus Baumwolle, Leinen und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-032": {
+      "title": "Kabarett auf dem Balkon",
+      "materials": "Satin, Pailletten und Spitze",
+      "technique": "Genähte Textilcollage, Applikation",
+      "story": "Drei Sängerinnen auf einem Balkon aus Spitze, jede in ihrem eigenen Takt. Die Pailletten sind einzeln aufgenäht, wie Noten.",
+      "alt": "Gerahmte Textilcollage aus Satin, Pailletten und Spitze, in Rot, Weiß und Schwarz"
+    },
+    "pl-033": {
+      "title": "Liebesbrief an eine Modistin",
+      "materials": "Filz, Draht, Papier und Garn",
+      "technique": "Assemblage, handgenäht",
+      "story": "Ein Hut, den man nicht tragen kann: eine Skulptur aus Filz, Draht und alten Hutformen aus ihrem Atelier. Eine Widmung an alle Modistinnen, die sie gelehrt haben.",
+      "alt": "Tragbares Objekt aus Filz, Draht, Papier und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-034": {
+      "title": "Auge im Schuh",
+      "materials": "Leder, Seide und Garn",
+      "technique": "Assemblage, bestickt",
+      "story": "Ein alter Tanzschuh, in dem statt eines Fußes ein gesticktes Auge wohnt. Ein Objekt für die Vitrine, nicht zum Tanzen, auch wenn das niemand glaubt.",
+      "alt": "Tragbares Objekt aus Leder, Seide und Garn, in Rot, Weiß und Schwarz"
+    },
+    "pl-035": {
+      "title": "Drei Schwestern, ein Hut",
+      "materials": "Filz, Baumwolle und Spitze",
+      "technique": "Genähte Textilcollage, Applikation",
+      "story": "Drei Schwestern teilen sich einen großen roten Hut, und keine will ihn loslassen. Eine Collage über Familienerbe und darüber, wer als Nächste an der Reihe ist.",
+      "alt": "Tragbares Objekt aus Filz, Baumwolle und Spitze, in Rot, Weiß und Schwarz"
+    },
+    "pl-036": {
+      "title": "Rose und Polka",
+      "materials": "Seide, Filz und Draht",
+      "technique": "Assemblage, handgenäht",
+      "story": "Eine große rote Seidenrose steigt aus einem gepunkteten Hut wie aus einer Theaterloge. Eine Skulptur, die man an die Wand hängen oder, mit etwas Mut, tragen kann.",
+      "alt": "Tragbares Objekt aus Seide, Filz und Draht, in Rot, Weiß und Schwarz"
+    }
+  }
+}

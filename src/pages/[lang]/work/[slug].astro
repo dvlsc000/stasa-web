@@ -1,0 +1,32 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Header from '../../../components/Header.astro';
+import Plate from '../../../components/Plate.astro';
+import Footer from '../../../components/Footer.astro';
+import { LANGS, t, works, site, img, price, type Lang, type Work } from '../../../lib/content';
+
+export function getStaticPaths() {
+  return LANGS.flatMap((lang) => works.map((work) => ({ params: { lang, slug: work.slug }, props: { work } })));
+}
+const lang = Astro.params.lang as Lang;
+const { work: w } = Astro.props as { work: Work };
+const { ui, work } = t(lang);
+const wt = work(w.id);
+const photo = img(w.image) ?? img(w.cutout);
+const og = photo ? photo.fallback : '/og/default.jpg';
+const url = new URL(`/${lang}/work/${w.slug}/`, site.siteUrl).href;
+const artwork = {
+  '@context': 'https://schema.org', '@type': 'VisualArtwork', name: wt.title, description: wt.story, url,
+  image: new URL(og, site.siteUrl).href, dateCreated: String(w.year), artMedium: wt.materials, artworkSurface: wt.technique,
+  ...(w.wing === 'wall' ? { artform: 'Textile collage' } : { artform: 'Millinery and wearable art' }),
+  size: w.dimensions, inLanguage: lang,
+  creator: { '@type': 'Person', name: 'Staša Čimbur', url: new URL(`/${lang}/`, site.siteUrl).href },
+  ...(w.available ? { offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', priceCurrency: 'EUR', ...(w.price ? { price: w.price } : {}) } } : {}),
+};
+---
+<Base lang={lang} title={`${wt.title} — Staša Čimbur`} description={wt.story} path={`work/${w.slug}/`} ogImage={og} jsonld={[artwork]} bodyClass="workpage">
+  <a class="skip" href="#main">{ui('a11y.skipContent')}</a>
+  <Header lang={lang} path={`work/${w.slug}/`} home={false} />
+  <main id="main"><Plate work={w} lang={lang} /></main>
+  <Footer lang={lang} path={`work/${w.slug}/`} />
+</Base>

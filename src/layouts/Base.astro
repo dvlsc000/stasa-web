@@ -1,0 +1,57 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/cuts.css';
+import '../styles/components.css';
+import '../styles/sections.css';
+import '../styles/plate.css';
+import Sprite from '../components/Sprite.astro';
+import Eye from '../components/Eye.astro';
+import { LANGS, site, DEFAULT_LANG, t, type Lang } from '../lib/content';
+
+interface Props {
+  lang: Lang; title: string; description: string; path?: string; ogImage?: string; jsonld?: object[]; bodyClass?: string;
+}
+const { lang, title, description, path = '', ogImage = '/og/default.jpg', jsonld = [], bodyClass = '' } = Astro.props;
+const canonical = new URL(`/${lang}/${path}`, site.siteUrl).href;
+const OG_LOCALE: Record<Lang, string> = { hr: 'hr_HR', en: 'en_GB', nl: 'nl_NL', es: 'es_ES', de: 'de_DE', fr: 'fr_FR' };
+---
+<!doctype html>
+<html lang={lang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={l} href={new URL(`/${l}/${path}`, site.siteUrl).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(`/${DEFAULT_LANG}/${path}`, site.siteUrl).href} />
+    <meta name="theme-color" content="#F3EEE4" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/basteleur-bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ortica-linear-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={`${site.name} · ${site.label}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, site.siteUrl).href} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonld.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
+    <script is:inline>document.documentElement.classList.replace('no-js','js');</script>
+    <slot name="head" />
+  </head>
+  <body class={bodyClass} data-lang={lang} data-view={t(lang).ui('view')}>
+    <Sprite />
+    <slot />
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"><Eye class="cursor__eye" /><span class="cursor__label label"></span></div>
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

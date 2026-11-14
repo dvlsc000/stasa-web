@@ -1,0 +1,88 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 var(--t-m)/1.6 var(--f-body);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal; font-variant-ligatures: common-ligatures;
+  overflow-x: clip;
+}
+img, svg, picture { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+h1, h2, h3, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: .9; text-wrap: balance; letter-spacing: -0.01em; }
+p { text-wrap: pretty; hyphens: auto; }
+:lang(hr) p, :lang(nl) p, :lang(es) p { hyphenate-limit-chars: 7 3 3; }
+.num, time, td { font-variant-numeric: tabular-nums lining-nums; }
+
+/* focus: a red running stitch around whatever has focus */
+:focus { outline: none; }
+:focus-visible { outline: 2px dashed var(--red); outline-offset: 4px; }
+.on-ink :focus-visible, .on-red :focus-visible { outline-color: var(--paper); }
+
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* paper/fabric grain over everything — one static tile, no blend modes */
+.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .5;
+  background: url('/patterns/grain.webp') 0 0 / 180px; }
+
+/* skip links */
+.skip { position: fixed; left: var(--margin); top: .75rem; z-index: 200; transform: translateY(-160%);
+  background: var(--ink); color: var(--paper); padding: .6rem 1rem; font: var(--t-s)/1.2 var(--f-label); text-decoration: none; }
+.skip:focus-visible { transform: none; outline-color: var(--red); }
+
+/* ── patterns ── */
+.pat-dots-red { background: var(--paper) url('/patterns/dots-red.svg') 0 0 / 32px; }
+.pat-dots-red-l { background: var(--paper) url('/patterns/dots-red.svg') 0 0 / 76px; }
+.pat-dots-ink { background: var(--ink) url('/patterns/dots-ink.svg') 0 0 / 32px; }
+.pat-dots-ink-l { background: var(--ink) url('/patterns/dots-ink.svg') 0 0 / 76px; }
+.pat-stripes-red { background: var(--paper) url('/patterns/stripes-red.svg') 0 0 / 28px; }
+.pat-stripes-red-w { background: var(--paper) url('/patterns/stripes-red.svg') 0 0 / 88px; }
+.pat-wallpaper-ink { background: var(--paper) url('/patterns/wallpaper-ink.svg') 0 0 / 180px; }
+.pat-eyes { background: var(--paper) url('/patterns/eyes.svg') 0 0 / 150px; }
+.pat-gingham { background: var(--paper) url('/patterns/gingham.svg') 0 0 / 40px; }
+.pat-ink { background: var(--ink); }
+.pat-red { background: var(--red); }
+.pat-paper { background: var(--paper); }
+
+/* ── stitch overlay (an <svg class="stitch"> placed inside a positioned cut element) ── */
+.stitch { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.stitch polygon, .stitch path { fill: none; stroke: var(--thread-on-light); stroke-width: 1.3; stroke-dasharray: var(--stitch); vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.on-ink .stitch polygon, .on-red .stitch polygon, .stitch--light polygon { stroke: var(--thread-on-dark); }
+
+/* collage tilt helpers */
+.tilt-a { rotate: -2.2deg; } .tilt-b { rotate: 1.6deg; } .tilt-c { rotate: -0.8deg; } .tilt-d { rotate: 2.6deg; } .tilt-e { rotate: -1.4deg; }
+
+/* ── label type ── */
+.label { font: 400 var(--t-s)/1.35 var(--f-label); letter-spacing: 0; }
+.kicker { font: 400 var(--t-s)/1.3 var(--f-label); }
+
+/* ── red appliqué patch button ── */
+.patch {
+  position: relative; display: inline-grid; place-items: center; min-height: 3.5rem; padding: .7rem 1.6rem .8rem;
+  font: 700 var(--t-l)/1 var(--f-display); color: var(--paper); text-decoration: none;
+  isolation: isolate; transition: transform var(--d-ui) ease;
+}
+.patch::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--red);
+  clip-path: polygon(1.2% 6%, 34% 0.5%, 71% 3.5%, 99% 0.8%, 98.2% 52%, 99.4% 96%, 64% 99.5%, 27% 96.6%, 0.4% 99.2%, 1.8% 47%); }
+.patch .stitch polygon { stroke: var(--thread-on-dark); }
+.patch:active { transform: scale(0.97); }
+.patch--ink::before { background: var(--ink); }
+
+/* ── language switcher ── */
+.langs { display: flex; gap: .15rem; font: var(--t-s)/1 var(--f-label); }
+.langs a { position: relative; padding: .7rem .42rem; text-decoration: none; min-width: 2.25rem; text-align: center; }
+.langs a[aria-current='true']::after { content: ''; position: absolute; left: .3rem; right: .3rem; bottom: .35rem; border-bottom: 2px dashed var(--red); }
+.langs .sep { align-self: center; opacity: .6; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+  .patch { transition: none; }
+}

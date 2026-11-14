@@ -1,0 +1,46 @@
+---
+import Stitch from './Stitch.astro';
+import Thread from './Thread.astro';
+import { t, exhibitions, type Lang } from '../lib/content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { ui } = t(lang);
+const highlights = exhibitions.filter((e) => e.highlight);
+const patches = ['pat-red on-red', 'pat-dots-red', 'pat-ink on-ink'];
+const swatches = ['dots-red', 'stripes-red', 'wallpaper-ink', 'eyes', 'gingham', 'dots-ink'];
+---
+<section class="playbill" id="exhibitions" aria-labelledby="exh-title">
+  <header class="playbill__head">
+    <p class="kicker">{ui('exh.kicker')}</p>
+    <h2 id="exh-title">{ui('exh.title')}</h2>
+  </header>
+
+  <ul class="playbill__highlights" role="list" aria-label={ui('exh.highlights')}>
+    {highlights.map((e, i) => (
+      <li class:list={['hl', `hl--${i}`]}>
+        <div class:list={['hl__patch', `cut-${i + 2}`, patches[i]]}>
+          <p class="label">{e.year}</p>
+          <p class="hl__title">{e.title}</p>
+          <p class="label">{e.venue}, {e.city}</p>
+          <Stitch cut={i + 2} light={i !== 1} />
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <div class="playbill__tablewrap">
+    <table class="playbill__table">
+      <caption class="sr-only">{ui('exh.title')}</caption>
+      <thead><tr><th scope="col">{ui('exh.year')}</th><th scope="col">{ui('exh.name')}</th><th scope="col">{ui('exh.venue')}</th><th scope="col">{ui('exh.city')}</th></tr></thead>
+      <tbody>
+        {exhibitions.map((e, i) => (
+          <tr data-swatch={swatches[i % swatches.length]}>
+            <td class="num">{e.year}</td><td class="playbill__name">{e.title}</td><td>{e.venue}</td><td>{e.city}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="playbill__float cut-6" aria-hidden="true"><Stitch cut={6} /></div>
+  <Thread class="thread--playbill" points={[[0.5, 0.0], ['.playbill__head', 0.3, -0.25], ['.playbill__head', -0.05, 0.25], ['.playbill__head', -0.04, 0.95], ['.playbill__highlights', 0.0, 1.08], ['.playbill__tablewrap', -0.035, 0.02], ['.playbill__tablewrap', -0.03, 1.0], [0.03, 1.0]]} />
+</section>

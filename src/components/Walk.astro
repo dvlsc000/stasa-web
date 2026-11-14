@@ -1,0 +1,80 @@
+---
+import Art from './Art.astro';
+import Stitch from './Stitch.astro';
+import Flounce from './Flounce.astro';
+import { t, byRoom, plateNo, WEARABLE_ROOMS, ROMAN, type Lang } from '../lib/content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { ui, work } = t(lang);
+const WALL: Record<string, string> = {
+  hats: 'wallpaper-ink', headpieces: 'eyes', bags: 'dots-red', parasols: 'stripes-red-w', textiles: 'gingham', clothes: 'dots-ink-l',
+};
+// pieces that hang from the picture rail vs stand on the floor
+const STANDS = new Set(['bags', 'clothes']);
+const tilts = ['tilt-a', 'tilt-b', 'tilt-c', 'tilt-d', 'tilt-e'];
+---
+<section class="walk" id="wearable" aria-labelledby="walk-title">
+  <a class="skip-walk label" href="#interlude">{ui('a11y.skipWalk')}</a>
+  <div class="walk__pin">
+    <div class="walk__track" data-walk-track>
+      <header class="walk__intro">
+        <p class="kicker">{ui('wing1.wing')}</p>
+        <h2 id="walk-title">{ui('wing1.title')}</h2>
+        <p class="walk__lede">{ui('wing1.intro')}</p>
+        <svg class="walk__hint" aria-hidden="true"><use href="#i-manicule" /></svg>
+      </header>
+
+      {WEARABLE_ROOMS.map((room, ri) => (
+        <>
+          <Flounce vertical class={`walk__flounce walk__flounce--${ri}`} />
+          <section class:list={['room', `room--${room}`, `pat-${WALL[room]}`, { 'on-ink': room === 'clothes' }]} id={`room-${room}`}
+            data-room={room} aria-labelledby={`room-${room}-title`} style={`--n:${byRoom(room).length}`}>
+            <div class="room__floor" aria-hidden="true"></div>
+            <header class="room__title cut-3">
+              <p class="label">{ui('room')} {ROMAN[ri]}</p>
+              <h3 id={`room-${room}-title`}>{ui(`rooms.${room}`)}</h3>
+              <Stitch cut={3} />
+            </header>
+            <ul class="room__pieces" role="list">
+              {byRoom(room).map((w, i) => {
+                const wt = work(w.id);
+                return (
+                  <li class:list={['piece', STANDS.has(room) ? 'piece--stand' : 'piece--hang', `piece--${i}`]}
+                      style={`--depth:${w.depth};--i:${i}`} data-depth={w.depth} id={`piece-${w.slug}`}>
+                    <div class="piece__sway">
+                      {!STANDS.has(room) && <span class="piece__cord" aria-hidden="true"></span>}
+                      <a class:list={['piece__art', tilts[(i + ri) % 5]]} href={`/${lang}/work/${w.slug}/`} data-plate={w.slug} data-cursor="view"
+                         aria-label={`${ui('a11y.openPlate')} ${ui('plate')} ${plateNo(w.id)}: ${wt.title}`}>
+                        <Art work={w} alt={wt.alt} mode="cutout" sizes="(max-width: 767px) 72vw, 26vw" />
+                      </a>
+                      <div class:list={['piece__label', 'museum-label', `cut-${(i % 6) + 1}`]}>
+                        <p class="label">{ui('plate')} {plateNo(w.id)}</p>
+                        <p class="museum-label__title">{wt.title}</p>
+                        <p class="label">{w.year}<br />{wt.materials}</p>
+                        <svg class="museum-label__x"><use href="#i-cross" /></svg>
+                        <Stitch cut={(i % 6) + 1} />
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        </>
+      ))}
+      <div class="walk__exit" aria-hidden="true"></div>
+    </div>
+
+    <nav class="floorplan" aria-label={ui('a11y.floorPlan')}>
+      <div class="floorplan__rail"><div class="floorplan__progress" data-floor-progress></div></div>
+      <ol>
+        {WEARABLE_ROOMS.map((room, ri) => (
+          <li><a href={`#room-${room}`} data-room-link={room}>
+            <svg aria-hidden="true"><use href="#i-manicule" /></svg>
+            <span class="label"><span class="floorplan__no">{ROMAN[ri]}</span><span class="floorplan__name">{ui(`rooms.${room}`)}</span></span>
+          </a></li>
+        ))}
+      </ol>
+    </nav>
+  </div>
+</section>

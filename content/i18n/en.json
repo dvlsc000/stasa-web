@@ -1,0 +1,359 @@
+{
+  "lang": "en",
+  "ui": {
+    "meta.title": "Staša Čimbur — hats, headpieces and textile collages",
+    "meta.description": "Staša Čimbur (StashaHats), applied artist and master milliner between Zagreb and Amsterdam: hats, fascinators, bags, parasols, scarves and sewn textile collages.",
+    "a11y.skipContent": "Skip to content",
+    "a11y.skipWalk": "Skip the walk",
+    "a11y.langSwitch": "Language",
+    "a11y.mainNav": "Main navigation",
+    "a11y.floorPlan": "Floor plan of the salon: jump to a room",
+    "a11y.openPlate": "Open plate",
+    "preloader.skip": "Skip",
+    "nav.wearable": "Wearable",
+    "nav.wall": "For the wall",
+    "nav.exhibitions": "Exhibitions",
+    "nav.commissions": "Commissions",
+    "hero.cities": "Zagreb — Amsterdam",
+    "hero.role": "applied artist and master milliner",
+    "hero.enter": "Step into the salon",
+    "prolog.kicker": "Tonight's programme",
+    "prolog.title": "Prologue",
+    "prolog.p1": "Staša Čimbur sews small performances for the head, the hands and the wall. Hats, fascinators, bags, parasols, scarves and printed fabrics come out of her studios in Zagreb and Amsterdam, and the material always leads: a scrap of old velvet, lace from a flea market, a felt that refuses to bend.",
+    "prolog.p2": "She has more than 150 exhibitions, performances and shows behind her, among them the solo exhibition “All you need is a Hat” at the Museum of Arts and Crafts in Zagreb. Her work is held in museums and private collections, and she has collaborated with Josipa Lisac on stage and off.",
+    "prolog.castTitle": "The cast",
+    "prolog.cast": [
+      "Hats",
+      "Headpieces and fascinators",
+      "Bags",
+      "Parasols",
+      "Scarves and textiles",
+      "Clothes",
+      "Textile collages"
+    ],
+    "prolog.count": "exhibitions, performances and shows",
+    "prolog.portraitAlt": "Portrait of Staša Čimbur wearing one of her hats",
+    "wing1.title": "Wearable",
+    "wing1.wing": "Wing I",
+    "wing1.intro": "Six rooms, one walk. Keep scrolling and the salon moves with you.",
+    "room": "Room",
+    "rooms.hats": "Hats",
+    "rooms.headpieces": "Headpieces and fascinators",
+    "rooms.bags": "Bags",
+    "rooms.parasols": "Parasols",
+    "rooms.textiles": "Scarves and textiles",
+    "rooms.clothes": "Clothes",
+    "rooms.framed": "Framed collages",
+    "rooms.collage": "Collages and objects",
+    "view": "View",
+    "plate": "Pl.",
+    "interlude.quote": "A hat is not decoration. A hat is {eye} an entrance onto the stage.",
+    "interlude.cite": "Staša Čimbur, in conversation (placeholder quote)",
+    "wing2.title": "For the wall",
+    "wing2.wing": "Wing II",
+    "wing2.intro": "Sewn textile collages and objects, framed and ready for your wall. Each one exists only once.",
+    "available": "Available",
+    "sold": "In a collection",
+    "onRequest": "Price on request",
+    "enquireBuy": "Enquire / buy",
+    "exh.title": "Exhibitions and press",
+    "exh.kicker": "From the playbill, 2004 – today",
+    "exh.year": "Year",
+    "exh.name": "Title",
+    "exh.venue": "Venue",
+    "exh.city": "City",
+    "exh.highlights": "Highlights",
+    "exh.note": "This list is a placeholder.",
+    "comm.title": "Commissions",
+    "comm.p": "A bespoke hat starts with a conversation: about the occasion, about the head, and about how much courage you would like to wear. Making one takes three to eight weeks. I also make costume pieces for the stage, one-off pieces for weddings, and work for exhibitions.",
+    "form.name": "Name",
+    "form.email": "Email",
+    "form.type": "Type of enquiry",
+    "form.types": [
+      "A bespoke hat",
+      "Buying a piece",
+      "Costume and stage",
+      "Exhibition or press",
+      "Something else"
+    ],
+    "form.message": "Message",
+    "form.messageHint": "The occasion, the date, colours — anything that comes to mind.",
+    "form.submit": "Send enquiry",
+    "form.sending": "Sewing…",
+    "form.sent": "Enquiry sent. I'll reply within a few days.",
+    "form.error": "The enquiry wasn't sent. Check your connection and try again, or write to the email address below.",
+    "form.required": "This field is required.",
+    "form.invalidEmail": "Enter an email address like name@example.com.",
+    "form.about": "About the piece",
+    "plate.close": "Close",
+    "plate.prev": "Previous plate",
+    "plate.next": "Next plate",
+    "plate.year": "Year",
+    "plate.materials": "Materials",
+    "plate.technique": "Technique",
+    "plate.dimensions": "Dimensions",
+    "plate.availability": "Availability",
+    "plate.enquire": "Enquire about this piece",
+    "plate.zoom": "Zoom image",
+    "plate.details": "Details",
+    "plate.back": "Back to the salon",
+    "plate.noImage": "Photograph to follow",
+    "footer.instagram": "Instagram",
+    "footer.rights": "All rights reserved.",
+    "footer.top": "Back to the beginning"
+  },
+  "works": {
+    "pl-001": {
+      "title": "Theatre Box",
+      "materials": "Felt, tulle and velvet",
+      "technique": "Blocked by hand, hand-sewn",
+      "story": "A wide brim of black felt and a veil scattered with red dots: a hat that watches from the balcony. Worn to a premiere at the Croatian National Theatre, where it reportedly drew more glances than the stage.",
+      "alt": "Hat of felt, tulle and velvet, in red, white and black"
+    },
+    "pl-002": {
+      "title": "Sunday Bolero",
+      "materials": "Felt and satin",
+      "technique": "Blocked by hand, appliqué",
+      "story": "A cloche in poppy-red felt with an appliquéd satin band that turns around the head like a dance step. Made for a walk that lasts all afternoon.",
+      "alt": "Hat of felt and satin, in red, white and black"
+    },
+    "pl-003": {
+      "title": "Confetti Rain",
+      "materials": "Straw, sequins and thread",
+      "technique": "Blocked by hand, embroidered",
+      "story": "A straw hat with hand-sewn sequins falling down the brim as if the party has only just ended. First shown at a runway show in Amsterdam.",
+      "alt": "Hat of straw, sequins and thread, in red, white and black"
+    },
+    "pl-004": {
+      "title": "Madam Three-Eyes",
+      "materials": "Velvet, silk and thread",
+      "technique": "Hand-sewn, embroidered",
+      "story": "A black velvet pillbox with three embroidered eyes that seem to blink when the wearer turns her head. A hat that notices everything you miss.",
+      "alt": "Hat of velvet, silk and thread, in red, white and black"
+    },
+    "pl-005": {
+      "title": "A Drop of Red",
+      "materials": "Sinamay and feathers",
+      "technique": "Blocked by hand, hand-sewn",
+      "story": "A teardrop fascinator blocked from red sinamay and a single feather. Small enough for the office, bold enough for a wedding.",
+      "alt": "Headpiece of sinamay and feathers, in red, white and black"
+    },
+    "pl-006": {
+      "title": "Swallowtail",
+      "materials": "Felt, wire and silk",
+      "technique": "Blocked by hand, appliqué",
+      "story": "Two wings of black felt on a fine wire, edged in white silk. When the wind picks up, the headpiece sways as if it might fly away.",
+      "alt": "Headpiece of felt, wire and silk, in red, white and black"
+    },
+    "pl-007": {
+      "title": "Whisper Behind the Veil",
+      "materials": "Tulle, lace and satin",
+      "technique": "Hand-sewn, appliqué",
+      "story": "A small satin cap with a tulle veil and old lace found at the Hrelić flea market. The veil covers one eye and leaves the other free to wink.",
+      "alt": "Headpiece of tulle, lace and satin, in red, white and black"
+    },
+    "pl-008": {
+      "title": "Small Crown for a Big Day",
+      "materials": "Brass, felt and sequins",
+      "technique": "Assemblage, hand-sewn",
+      "story": "A crown of red felt with brass studs and sequins, worn slightly askew. For birthdays, resignations and other big decisions.",
+      "alt": "Headpiece of brass, felt and sequins, in red, white and black"
+    },
+    "pl-009": {
+      "title": "The Unsent Letter",
+      "materials": "Leather, cotton and thread",
+      "technique": "Hand-sewn, appliqué",
+      "story": "An envelope clutch with a red leather seal and a polka-dot cotton lining. Inside there is room for a lipstick, a key and one sentence you never said.",
+      "alt": "Bag of leather, cotton and thread, in red, white and black"
+    },
+    "pl-010": {
+      "title": "Polka for Leaving",
+      "materials": "Cotton, wood and leather",
+      "technique": "Screen-printed, hand-sewn",
+      "story": "A printed cotton bag with wooden handles, big enough for a weekend out of town. The dots are printed by hand, so no two are quite alike.",
+      "alt": "Bag of cotton, wood and leather, in red, white and black"
+    },
+    "pl-011": {
+      "title": "Pocket for Secrets",
+      "materials": "Velvet, brass and silk",
+      "technique": "Hand-sewn, embroidered",
+      "story": "A small velvet pouch with a brass clasp and an eye embroidered on the flap. The eye stays awake even when the bag is shut.",
+      "alt": "Bag of velvet, brass and silk, in red, white and black"
+    },
+    "pl-012": {
+      "title": "Little Dance Box",
+      "materials": "Leather, satin and lace",
+      "technique": "Hand-sewn, pleated",
+      "story": "A box-shaped bag with a pleated satin flounce around its base. When you walk, the flounce swings like a skirt on the dance floor.",
+      "alt": "Bag of leather, satin and lace, in red, white and black"
+    },
+    "pl-013": {
+      "title": "Shade for Flamenco",
+      "materials": "Cotton, lace and wood",
+      "technique": "Hand-sewn, appliqué",
+      "story": "A parasol of striped cotton with a lace edge and a wooden handle. The hem is cut into waves, like the lowest tier of a flamenco skirt.",
+      "alt": "Parasol of cotton, lace and wood, in red, white and black"
+    },
+    "pl-014": {
+      "title": "Polka-dot Sky",
+      "materials": "Silk, wood and brass",
+      "technique": "Screen-printed, hand-sewn",
+      "story": "A silk parasol printed with white dots on black, so that it is always night underneath. The brass tip follows an old Viennese pattern.",
+      "alt": "Parasol of silk, wood and brass, in red, white and black"
+    },
+    "pl-015": {
+      "title": "Sunshade for Amsterdam Rain",
+      "materials": "Cotton, wood and thread",
+      "technique": "Hand-sewn, embroidered",
+      "story": "A sunshade that keeps hoping for sun, even in November. The raindrops embroidered on the inside can only be seen by whoever is carrying it.",
+      "alt": "Parasol of cotton, wood and thread, in red, white and black"
+    },
+    "pl-016": {
+      "title": "Turning Circle",
+      "materials": "Paper, wood and silk",
+      "technique": "Pleated, hand-sewn",
+      "story": "A pleated parasol of paper and silk that opens like a fan. Made for a performance in which twenty parasols turned to the same rhythm.",
+      "alt": "Parasol of paper, wood and silk, in red, white and black"
+    },
+    "pl-018": {
+      "title": "Hands on the Wall",
+      "materials": "Silk",
+      "technique": "Screen-printed",
+      "story": "A silk scarf printed with hands, eyes and little faces drawn in ink in vertical bands. The same drawing later became the wallpaper of her studio.",
+      "alt": "Scarf of silk, in red, white and black"
+    },
+    "pl-019": {
+      "title": "Lashes",
+      "materials": "Cotton and silk",
+      "technique": "Screen-printed",
+      "story": "A long scarf with a repeat of red eyes with long lashes. Wrapped around the neck, the eyes look in every direction at once.",
+      "alt": "Scarf of cotton and silk, in red, white and black"
+    },
+    "pl-020": {
+      "title": "Stripes for the Sea",
+      "materials": "Linen and cotton",
+      "technique": "Screen-printed, hand-sewn",
+      "story": "A linen tablecloth, or a cape, depending on the wind: red and white stripes with a hand-rolled hem. Made on the island of Vis during one very long summer.",
+      "alt": "Scarf of linen and cotton, in red, white and black"
+    },
+    "pl-021": {
+      "title": "Little Circus",
+      "materials": "Silk and thread",
+      "technique": "Screen-printed, embroidered",
+      "story": "A scarf on which acrobats, horses and one puzzled lion circle a red centre. The edges are embroidered in red thread, stitch by stitch.",
+      "alt": "Scarf of silk and thread, in red, white and black"
+    },
+    "pl-022": {
+      "title": "Flounce for Midnight",
+      "materials": "Satin, tulle and lace",
+      "technique": "Pleated, hand-sewn",
+      "story": "A skirt in four tiers of flounces — red, polka-dot, white and lace — like the collage that inspired it. Made for dancing that starts after midnight.",
+      "alt": "Garment of satin, tulle and lace, in red, white and black"
+    },
+    "pl-023": {
+      "title": "Coat with Eyes",
+      "materials": "Felt, cotton and thread",
+      "technique": "Appliqué, embroidered",
+      "story": "A black felt coat with appliquéd eyes on the back, so the wearer always knows who is walking behind her. Each eye has a different expression.",
+      "alt": "Garment of felt, cotton and thread, in red, white and black"
+    },
+    "pl-024": {
+      "title": "Lace Bolero",
+      "materials": "Lace, silk and buttons",
+      "technique": "Hand-sewn",
+      "story": "A short bolero pieced together from seven different antique laces and a single red button. Every lace has its own story and its own grandmother.",
+      "alt": "Garment of lace, silk and buttons, in red, white and black"
+    },
+    "pl-025": {
+      "title": "Dress for Making an Entrance",
+      "materials": "Cotton, satin and tulle",
+      "technique": "Appliqué, pleated",
+      "story": "A dress with a striped bodice and a tulle skirt that rustles when the wearer enters a room. Leaving, according to the maker, matters less.",
+      "alt": "Garment of cotton, satin and tulle, in red, white and black"
+    },
+    "pl-017": {
+      "title": "Matador's Darling",
+      "materials": "Cotton, lace, silk and thread",
+      "technique": "Sewn textile collage, appliqué",
+      "story": "A dancer in tiers of flamenco flounces rushes diagonally across the stage, in front of a wallpaper of hands and eyes. Red eyes blink on her stockings: the work this whole salon grew from.",
+      "alt": "Framed textile collage of cotton, lace, silk and thread, in red, white and black"
+    },
+    "pl-026": {
+      "title": "Dancer on a Wire",
+      "materials": "Cotton, wire and thread",
+      "technique": "Sewn textile collage",
+      "story": "A small dancer balances on a real wire sewn across a polka-dot ground. There is no net below her, only the black floor.",
+      "alt": "Framed textile collage of cotton, wire and thread, in red, white and black"
+    },
+    "pl-027": {
+      "title": "Salon of Hands",
+      "materials": "Cotton, paper and thread",
+      "technique": "Sewn textile collage, screen-printed",
+      "story": "Twelve hands cut from printed fabric greet, point and wave. One of them holds a hat that nobody is wearing.",
+      "alt": "Framed textile collage of cotton, paper and thread, in red, white and black"
+    },
+    "pl-028": {
+      "title": "Red Curtain",
+      "materials": "Velvet, satin and thread",
+      "technique": "Sewn textile collage, appliqué",
+      "story": "A velvet curtain is just parting, and behind it all you can see is one leg in a polka-dot stocking. The rest of the show you have to imagine.",
+      "alt": "Framed textile collage of velvet, satin and thread, in red, white and black"
+    },
+    "pl-029": {
+      "title": "Portrait of a Lady in a Hat",
+      "materials": "Silk, lace and buttons",
+      "technique": "Sewn textile collage, embroidered",
+      "story": "Her face is white silk and her hat three layers of lace that spill over the frame. The lady looks straight at you and does not blink.",
+      "alt": "Framed textile collage of silk, lace and buttons, in red, white and black"
+    },
+    "pl-030": {
+      "title": "The Cat Who Saw Everything",
+      "materials": "Felt, cotton and thread",
+      "technique": "Sewn textile collage, appliqué",
+      "story": "A black felt cat sits at a window, and her red eyes follow anyone who crosses the room. The smallest work on the wall, and the most reliable guard.",
+      "alt": "Framed textile collage of felt, cotton and thread, in red, white and black"
+    },
+    "pl-031": {
+      "title": "Night Train Zagreb – Amsterdam",
+      "materials": "Cotton, linen and thread",
+      "technique": "Sewn textile collage, embroidered",
+      "story": "A long horizontal collage of carriage windows, a different hat in each one. The seam that joins them is the railway, embroidered in red thread along its whole length.",
+      "alt": "Framed textile collage of cotton, linen and thread, in red, white and black"
+    },
+    "pl-032": {
+      "title": "Cabaret on the Balcony",
+      "materials": "Satin, sequins and lace",
+      "technique": "Sewn textile collage, appliqué",
+      "story": "Three singers on a balcony of lace, each keeping her own time. The sequins are sewn on one by one, like notes.",
+      "alt": "Framed textile collage of satin, sequins and lace, in red, white and black"
+    },
+    "pl-033": {
+      "title": "Love Letter to a Milliner",
+      "materials": "Felt, wire, paper and thread",
+      "technique": "Assemblage, hand-sewn",
+      "story": "A hat that cannot be worn: a sculpture of felt, wire and old hat blocks from her studio. A dedication to every milliner who taught her.",
+      "alt": "Wearable object of felt, wire, paper and thread, in red, white and black"
+    },
+    "pl-034": {
+      "title": "Eye in a Shoe",
+      "materials": "Leather, silk and thread",
+      "technique": "Assemblage, embroidered",
+      "story": "An old dancing shoe in which an embroidered eye lives instead of a foot. An object for a vitrine, not for dancing, although nobody believes that.",
+      "alt": "Wearable object of leather, silk and thread, in red, white and black"
+    },
+    "pl-035": {
+      "title": "Three Sisters, One Hat",
+      "materials": "Felt, cotton and lace",
+      "technique": "Sewn textile collage, appliqué",
+      "story": "Three sisters share one large red hat, and none of them wants to let go. A collage about family inheritance and about who is next in line.",
+      "alt": "Wearable object of felt, cotton and lace, in red, white and black"
+    },
+    "pl-036": {
+      "title": "Rose and Polka",
+      "materials": "Silk, felt and wire",
+      "technique": "Assemblage, hand-sewn",
+      "story": "A large red silk rose climbs out of a polka-dot hat as if from a theatre box. A sculpture that can hang on a wall or, with a little courage, be worn.",
+      "alt": "Wearable object of silk, felt and wire, in red, white and black"
+    }
+  }
+}

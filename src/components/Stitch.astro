@@ -1,0 +1,9 @@
+---
+// A running-stitch outline that follows one of the six hand-cut edges.
+import cuts from '../data/cuts.json';
+interface Props { cut?: number; light?: boolean; class?: string }
+const { cut = 1, light = false, class: cls = '' } = Astro.props;
+---
+<svg class:list={['stitch', { 'stitch--light': light }, cls]} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <polygon points={cuts.stitch[(cut - 1) % 6]} />
+</svg>

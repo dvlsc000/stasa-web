@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import Preloader from '../../components/Preloader.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import Prolog from '../../components/Prolog.astro';
+import Walk from '../../components/Walk.astro';
+import Interlude from '../../components/Interlude.astro';
+import SalonWall from '../../components/SalonWall.astro';
+import Exhibitions from '../../components/Exhibitions.astro';
+import Commissions from '../../components/Commissions.astro';
+import Footer from '../../components/Footer.astro';
+import { LANGS, t, site, works, type Lang } from '../../lib/content';
+
+export function getStaticPaths() { return LANGS.map((lang) => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang;
+const { ui, work } = t(lang);
+
+const person = {
+  '@context': 'https://schema.org', '@type': 'Person', name: 'Staša Čimbur', alternateName: ['Stasha Chimbur', 'StashaHats'],
+  jobTitle: ui('hero.role'), url: new URL(`/${lang}/`, site.siteUrl).href, sameAs: [site.instagram],
+  workLocation: [{ '@type': 'Place', name: 'Zagreb' }, { '@type': 'Place', name: 'Amsterdam' }],
+  knowsAbout: ['Millinery', 'Applied art', 'Textile collage'],
+};
+// small data block the Plate dialog needs (titles for the document title only)
+const titles = Object.fromEntries(works.map((w) => [w.id, work(w.id).title]));
+---
+<Base lang={lang} title={ui('meta.title')} description={ui('meta.description')} jsonld={[person]} bodyClass="home">
+  <a class="skip" href="#prolog">{ui('a11y.skipContent')}</a>
+  <Preloader skip={ui('preloader.skip')} />
+  <Header lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <Prolog lang={lang} />
+    <Walk lang={lang} />
+    <Interlude lang={lang} />
+    <SalonWall lang={lang} />
+    <Exhibitions lang={lang} />
+    <Commissions lang={lang} />
+  </main>
+  <Footer lang={lang} />
+  <dialog class="plate-dialog" aria-label={ui('plate.details')} data-plate-dialog>
+    <div class="plate-dialog__body" data-plate-body></div>
+  </dialog>
+  <script type="application/json" id="page-data" set:html={JSON.stringify({ lang, titles, siteTitle: ui('meta.title') })} />
+</Base>

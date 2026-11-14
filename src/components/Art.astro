@@ -1,0 +1,66 @@
+---
+/**
+ * The artwork for one piece.
+ *  mode="cutout"  → transparent cut-out (walk, hero). Falls back to the photo, then to a stitched silhouette.
+ *  mode="photo"   → the full photo (salon frames, Plate). Falls back to a little stitched collage.
+ * Photos are looked up in the image manifest built by scripts/images.mjs.
+ */
+import { img, plateNo, type Work } from '../lib/content';
+import { shapeFor, type Fill } from '../data/shapes';
+import Eye from './Eye.astro';
+
+interface Props { work: Work; alt: string; mode?: 'cutout' | 'photo'; sizes?: string; eager?: boolean; plateLabel?: string; class?: string }
+const { work, alt, mode = 'cutout', sizes = '(max-width: 767px) 70vw, 30vw', eager = false, plateLabel = 'Pl.', class: cls = '' } = Astro.props;
+
+const cut = img(work.cutout);
+const photo = img(work.image);
+const chosen = mode === 'cutout' ? (cut ?? photo) : (photo ?? cut);
+const isCut = chosen && chosen === cut;
+
+const ROOM_FILL: Record<string, string> = {
+  hats: 'dots-red', headpieces: 'stripes-red', bags: 'wallpaper-ink', parasols: 'dots-red', textiles: 'eyes', clothes: 'stripes-red',
+};
+const pieceFill = ROOM_FILL[work.room] ?? (work.wallpaper === 'dots-red' ? 'stripes-red' : 'dots-red');
+const FILL: Record<Fill, string> = {
+  p: `url(#pat-${pieceFill})`, r: 'var(--red)', k: 'var(--ink)', w: 'var(--paper)', d: 'url(#pat-dots-red)',
+  i: 'url(#pat-dots-ink)', s: 'url(#pat-stripes-red)', e: 'url(#pat-eyes)',
+};
+const framedP: Fill = work.wallpaper === 'dots-red' || work.wallpaper === 'gingham' ? 's' : 'd';
+const parts = shapeFor(work.placeholder ?? 'brim');
+const isClosed = (d: string) => /Z\s*$/i.test(d.trim()) || /a[\d.]+,[\d.]+ 0 1,0/.test(d);
+const threadFor = (f: Fill) => (f === 'k' || f === 'r' || f === 'i' ? 'var(--thread-on-dark)' : 'var(--thread-on-light)');
+---
+{chosen ? (
+  <picture class:list={['art', isCut ? 'art--cut' : 'art--photo', cls]} data-art={work.slug}
+    style={`aspect-ratio:${chosen.width}/${chosen.height};--lqip:url(${chosen.lqip})`}>
+    <source type="image/avif" srcset={chosen.avif} sizes={sizes} />
+    <source type="image/webp" srcset={chosen.webp} sizes={sizes} />
+    <img src={chosen.fallback} alt={alt} width={chosen.width} height={chosen.height}
+      loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} />
+  </picture>
+) : mode === 'cutout' ? (
+  <svg class:list={['art', 'art--placeholder', cls]} data-art={work.slug} viewBox="0 0 200 200" role={alt ? 'img' : undefined} aria-label={alt || undefined} aria-hidden={alt ? undefined : 'true'}>
+    <g class="art__shadow" aria-hidden="true">
+      {parts.map(([d]) => isClosed(d) ? <path d={d} /> : <path d={d} fill="none" stroke="var(--ink)" stroke-width="5" />)}
+    </g>
+    {parts.map(([d, f]) => isClosed(d) ? (
+      <g>
+        <path d={d} fill={FILL[f]} />
+        <path class="art__stitch" d={d} fill="none" stroke={threadFor(f)} stroke-width="1.15" stroke-dasharray="3.2 2.4" stroke-linecap="round" />
+      </g>
+    ) : (
+      <path d={d} fill="none" stroke={FILL[f]} stroke-width="5" stroke-linecap="round" />
+    ))}
+  </svg>
+) : (
+  <div class:list={['art', 'art--plate', `pat-${work.wallpaper}`, cls]} data-art={work.slug} role="img" aria-label={alt}>
+    <div class="art__floor" />
+    <svg class="art__figure" viewBox="0 0 200 200" aria-hidden="true">
+      {parts.map(([d, f]) => isClosed(d) ? (
+        <g><path d={d} fill={FILL[f === 'p' ? framedP : f]} />
+          <path d={d} fill="none" stroke={threadFor(f)} stroke-width="1.1" stroke-dasharray="3.2 2.4" /></g>
+      ) : <path d={d} fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" />)}
+    </svg>
+    <span class="art__no label"><Eye class="art__eye" />{plateLabel} {plateNo(work.id)}</span>
+  </div>
+)}

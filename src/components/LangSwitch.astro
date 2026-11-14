@@ -1,0 +1,13 @@
+---
+import { LANGS, type Lang } from '../lib/content';
+interface Props { lang: Lang; path?: string; label: string; class?: string }
+const { lang, path = '', label, class: cls = '' } = Astro.props;
+---
+<nav class:list={['langs', cls]} aria-label={label}>
+  {LANGS.map((l, i) => (
+    <>
+      {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+      <a href={`/${l}/${path}`} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined} data-lang-link={l}>{l.toUpperCase()}</a>
+    </>
+  ))}
+</nav>

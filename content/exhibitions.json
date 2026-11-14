@@ -1,0 +1,89 @@
+{
+  "_note": "PLACEHOLDER list. Only 'All you need is a Hat' (MUO Zagreb), the Gemeentemuseum Den Haag show and the Josipa Lisac collaboration come from the brief; every year, title and venue here must be checked and replaced.",
+  "items": [
+    {
+      "year": 2026,
+      "title": "Salon Čimbur",
+      "venue": "Galerija ULUPUH",
+      "city": "Zagreb",
+      "highlight": false
+    },
+    {
+      "year": 2025,
+      "title": "Hoeden en hun dames",
+      "venue": "Pop-up atelier, Jordaan",
+      "city": "Amsterdam",
+      "highlight": false
+    },
+    {
+      "year": 2024,
+      "title": "Night Train",
+      "venue": "Galerija Kranjčar",
+      "city": "Zagreb",
+      "highlight": false
+    },
+    {
+      "year": 2023,
+      "title": "Fashion & Fantasy",
+      "venue": "Kunstmuseum Den Haag (Gemeentemuseum)",
+      "city": "Den Haag",
+      "highlight": true
+    },
+    {
+      "year": 2022,
+      "title": "Josipa Lisac — kostimi i šeširi za koncertnu turneju",
+      "venue": "Koncertna dvorana Vatroslava Lisinskog",
+      "city": "Zagreb",
+      "highlight": true
+    },
+    {
+      "year": 2021,
+      "title": "Wearable Wit",
+      "venue": "Textielmuseum",
+      "city": "Tilburg",
+      "highlight": false
+    },
+    {
+      "year": 2019,
+      "title": "All you need is a Hat (samostalna izložba)",
+      "venue": "Muzej za umjetnost i obrt (MUO)",
+      "city": "Zagreb",
+      "highlight": true
+    },
+    {
+      "year": 2018,
+      "title": "Matadorova miljenica",
+      "venue": "Galerija Karas",
+      "city": "Zagreb",
+      "highlight": false
+    },
+    {
+      "year": 2016,
+      "title": "Hats Off!",
+      "venue": "Modemuze",
+      "city": "Antwerpen",
+      "highlight": false
+    },
+    {
+      "year": 2014,
+      "title": "Revija šešira, Tjedan mode",
+      "venue": "Zagreb Fashion Week",
+      "city": "Zagreb",
+      "highlight": false
+    },
+    {
+      "year": 2011,
+      "title": "Performans s dvadeset suncobrana",
+      "venue": "Trg bana Jelačića",
+      "city": "Zagreb",
+      "highlight": false
+    },
+    {
+      "year": 2008,
+      "title": "Šešir i grad",
+      "venue": "Galerija Klovićevi dvori",
+      "city": "Zagreb",
+      "highlight": false
+    }
+  ]
+}

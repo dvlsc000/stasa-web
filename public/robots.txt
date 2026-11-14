@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://stashahats.com/sitemap.xml

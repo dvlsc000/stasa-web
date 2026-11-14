@@ -1,0 +1,359 @@
+{
+  "lang": "fr",
+  "ui": {
+    "meta.title": "Staša Čimbur — chapeaux, coiffes et collages textiles",
+    "meta.description": "Staša Čimbur (StashaHats), artiste appliquée et maîtresse modiste entre Zagreb et Amsterdam : chapeaux, bibis, sacs, ombrelles, foulards et collages textiles cousus.",
+    "a11y.skipContent": "Aller au contenu",
+    "a11y.skipWalk": "Passer la promenade",
+    "a11y.langSwitch": "Langue",
+    "a11y.mainNav": "Navigation principale",
+    "a11y.floorPlan": "Plan du salon : aller à une salle",
+    "a11y.openPlate": "Ouvrir la planche",
+    "preloader.skip": "Passer",
+    "nav.wearable": "À porter",
+    "nav.wall": "Pour le mur",
+    "nav.exhibitions": "Expositions",
+    "nav.commissions": "Commandes",
+    "hero.cities": "Zagreb — Amsterdam",
+    "hero.role": "artiste appliquée et maîtresse modiste",
+    "hero.enter": "Entrez dans le salon",
+    "prolog.kicker": "Programme de la soirée",
+    "prolog.title": "Prologue",
+    "prolog.p1": "Staša Čimbur coud de petits spectacles pour la tête, les mains et le mur. Chapeaux, bibis, sacs, ombrelles, foulards et tissus imprimés naissent dans ses ateliers de Zagreb et d’Amsterdam, et c’est toujours la matière qui mène : un reste de vieux velours, une dentelle chinée, un feutre qui refuse de plier.",
+    "prolog.p2": "Elle compte plus de 150 expositions, performances et défilés, dont l’exposition personnelle « All you need is a Hat » au Musée des arts et métiers de Zagreb. Ses œuvres figurent dans des musées et des collections privées, et elle a collaboré avec Josipa Lisac, sur scène et en dehors.",
+    "prolog.castTitle": "La distribution",
+    "prolog.cast": [
+      "Chapeaux",
+      "Coiffes et bibis",
+      "Sacs",
+      "Ombrelles",
+      "Foulards et textiles",
+      "Vêtements",
+      "Collages textiles"
+    ],
+    "prolog.count": "expositions, performances et défilés",
+    "prolog.portraitAlt": "Portrait de Staša Čimbur portant l’un de ses chapeaux",
+    "wing1.title": "À porter",
+    "wing1.wing": "Aile I",
+    "wing1.intro": "Six salles, une promenade. Continuez à faire défiler et le salon avance avec vous.",
+    "room": "Salle",
+    "rooms.hats": "Chapeaux",
+    "rooms.headpieces": "Coiffes et bibis",
+    "rooms.bags": "Sacs",
+    "rooms.parasols": "Ombrelles",
+    "rooms.textiles": "Foulards et textiles",
+    "rooms.clothes": "Vêtements",
+    "rooms.framed": "Collages encadrés",
+    "rooms.collage": "Collages et objets",
+    "view": "Voir",
+    "plate": "Pl.",
+    "interlude.quote": "Un chapeau n’est pas un ornement. Un chapeau, c’est {eye} une entrée en scène.",
+    "interlude.cite": "Staša Čimbur, en conversation (citation provisoire)",
+    "wing2.title": "Pour le mur",
+    "wing2.wing": "Aile II",
+    "wing2.intro": "Collages textiles cousus et objets, encadrés et prêts pour votre mur. Chacun n’existe qu’une fois.",
+    "available": "Disponible",
+    "sold": "Dans une collection",
+    "onRequest": "Prix sur demande",
+    "enquireBuy": "Demander / acheter",
+    "exh.title": "Expositions et presse",
+    "exh.kicker": "Extrait du programme, 2004 – aujourd’hui",
+    "exh.year": "Année",
+    "exh.name": "Titre",
+    "exh.venue": "Lieu",
+    "exh.city": "Ville",
+    "exh.highlights": "Temps forts",
+    "exh.note": "Cette liste est provisoire.",
+    "comm.title": "Commandes",
+    "comm.p": "Un chapeau sur mesure commence par une conversation : sur l’occasion, sur la tête et sur la dose d’audace que vous voulez porter. Sa fabrication prend de trois à huit semaines. Je réalise aussi des pièces de costume pour la scène, des pièces uniques pour les mariages et des œuvres pour les expositions.",
+    "form.name": "Nom",
+    "form.email": "E-mail",
+    "form.type": "Type de demande",
+    "form.types": [
+      "Un chapeau sur mesure",
+      "Acheter une œuvre",
+      "Costume et scène",
+      "Exposition ou presse",
+      "Autre chose"
+    ],
+    "form.message": "Message",
+    "form.messageHint": "L’occasion, la date, les couleurs – tout ce qui vous vient à l’esprit.",
+    "form.submit": "Envoyer la demande",
+    "form.sending": "Couture en cours…",
+    "form.sent": "Demande envoyée. Je réponds sous quelques jours.",
+    "form.error": "La demande n’a pas été envoyée. Vérifiez votre connexion et réessayez, ou écrivez à l’adresse ci-dessous.",
+    "form.required": "Ce champ est obligatoire.",
+    "form.invalidEmail": "Saisissez une adresse comme nom@exemple.fr.",
+    "form.about": "À propos de l’œuvre",
+    "plate.close": "Fermer",
+    "plate.prev": "Planche précédente",
+    "plate.next": "Planche suivante",
+    "plate.year": "Année",
+    "plate.materials": "Matériaux",
+    "plate.technique": "Technique",
+    "plate.dimensions": "Dimensions",
+    "plate.availability": "Disponibilité",
+    "plate.enquire": "Se renseigner sur cette œuvre",
+    "plate.zoom": "Agrandir l’image",
+    "plate.details": "Détails",
+    "plate.back": "Retour au salon",
+    "plate.noImage": "Photographie à venir",
+    "footer.instagram": "Instagram",
+    "footer.rights": "Tous droits réservés.",
+    "footer.top": "Retour au début"
+  },
+  "works": {
+    "pl-001": {
+      "title": "Loge de théâtre",
+      "materials": "Feutre, tulle et velours",
+      "technique": "Bloqué à la main, cousu main",
+      "story": "Un large bord de feutre noir et une voilette semée de pois rouges : un chapeau qui regarde depuis le balcon. Porté lors d’une première au Théâtre national croate, où il aurait attiré plus de regards que la scène.",
+      "alt": "Chapeau en feutre, tulle et velours, en rouge, blanc et noir"
+    },
+    "pl-002": {
+      "title": "Boléro du dimanche",
+      "materials": "Feutre et satin",
+      "technique": "Bloqué à la main, appliqué",
+      "story": "Une cloche en feutre rouge coquelicot dont le ruban de satin appliqué tourne autour de la tête comme un pas de danse. Faite pour une promenade qui dure tout l’après-midi.",
+      "alt": "Chapeau en feutre et satin, en rouge, blanc et noir"
+    },
+    "pl-003": {
+      "title": "Pluie de confettis",
+      "materials": "Paille, paillettes et fil",
+      "technique": "Bloqué à la main, brodé",
+      "story": "Un chapeau de paille aux paillettes cousues main qui glissent le long du bord, comme si la fête venait de finir. Présenté pour la première fois lors d’un défilé à Amsterdam.",
+      "alt": "Chapeau en paille, paillettes et fil, en rouge, blanc et noir"
+    },
+    "pl-004": {
+      "title": "Madame Trois-Yeux",
+      "materials": "Velours, soie et fil",
+      "technique": "Cousu main, brodé",
+      "story": "Un tambourin de velours noir orné de trois yeux brodés qui semblent cligner quand celle qui le porte tourne la tête. Un chapeau qui remarque tout ce qui vous échappe.",
+      "alt": "Chapeau en velours, soie et fil, en rouge, blanc et noir"
+    },
+    "pl-005": {
+      "title": "Une goutte de rouge",
+      "materials": "Sinamay et plumes",
+      "technique": "Bloqué à la main, cousu main",
+      "story": "Un bibi en forme de goutte, bloqué dans du sinamay rouge et orné d’une seule plume. Assez petit pour le bureau, assez audacieux pour un mariage.",
+      "alt": "Bibi en sinamay et plumes, en rouge, blanc et noir"
+    },
+    "pl-006": {
+      "title": "Queue d’hirondelle",
+      "materials": "Feutre, fil de fer et soie",
+      "technique": "Bloqué à la main, appliqué",
+      "story": "Deux ailes de feutre noir sur un fil fin, bordées de soie blanche. Quand le vent se lève, la coiffe se balance comme si elle allait s’envoler.",
+      "alt": "Bibi en feutre, fil de fer et soie, en rouge, blanc et noir"
+    },
+    "pl-007": {
+      "title": "Murmure derrière la voilette",
+      "materials": "Tulle, dentelle et satin",
+      "technique": "Cousu main, appliqué",
+      "story": "Un petit calot de satin avec une voilette de tulle et une vieille dentelle chinée au marché aux puces de Hrelić. La voilette couvre un œil et laisse l’autre libre de faire un clin d’œil.",
+      "alt": "Bibi en tulle, dentelle et satin, en rouge, blanc et noir"
+    },
+    "pl-008": {
+      "title": "Petite couronne pour un grand jour",
+      "materials": "Laiton, feutre et paillettes",
+      "technique": "Assemblage, cousu main",
+      "story": "Une couronne de feutre rouge cloutée de laiton et de paillettes, portée un peu de travers. Pour les anniversaires, les démissions et autres grandes décisions.",
+      "alt": "Bibi en laiton, feutre et paillettes, en rouge, blanc et noir"
+    },
+    "pl-009": {
+      "title": "La lettre jamais envoyée",
+      "materials": "Cuir, coton et fil",
+      "technique": "Cousu main, appliqué",
+      "story": "Une pochette-enveloppe au sceau de cuir rouge, doublée de coton à pois. À l’intérieur, de la place pour un rouge à lèvres, une clé et une phrase jamais prononcée.",
+      "alt": "Sac en cuir, coton et fil, en rouge, blanc et noir"
+    },
+    "pl-010": {
+      "title": "Polka pour partir",
+      "materials": "Coton, bois et cuir",
+      "technique": "Sérigraphie, cousu main",
+      "story": "Un sac en coton imprimé aux anses de bois, assez grand pour un week-end hors de la ville. Les pois sont imprimés à la main : aucun n’est tout à fait pareil.",
+      "alt": "Sac en coton, bois et cuir, en rouge, blanc et noir"
+    },
+    "pl-011": {
+      "title": "Poche à secrets",
+      "materials": "Velours, laiton et soie",
+      "technique": "Cousu main, brodé",
+      "story": "Une petite bourse de velours au fermoir de laiton, un œil brodé sur le rabat. L’œil reste éveillé même quand le sac est fermé.",
+      "alt": "Sac en velours, laiton et soie, en rouge, blanc et noir"
+    },
+    "pl-012": {
+      "title": "Petite boîte à danser",
+      "materials": "Cuir, satin et dentelle",
+      "technique": "Cousu main, plissé",
+      "story": "Un sac en forme de boîte, ceint d’un volant de satin plissé. Quand vous marchez, le volant ondule comme une jupe sur la piste de danse.",
+      "alt": "Sac en cuir, satin et dentelle, en rouge, blanc et noir"
+    },
+    "pl-013": {
+      "title": "Ombre pour flamenco",
+      "materials": "Coton, dentelle et bois",
+      "technique": "Cousu main, appliqué",
+      "story": "Une ombrelle en coton rayé, bordée de dentelle, au manche de bois. L’ourlet est découpé en vagues, comme le dernier volant d’une jupe de flamenco.",
+      "alt": "Ombrelle en coton, dentelle et bois, en rouge, blanc et noir"
+    },
+    "pl-014": {
+      "title": "Ciel à pois",
+      "materials": "Soie, bois et laiton",
+      "technique": "Sérigraphie, cousu main",
+      "story": "Une ombrelle de soie imprimée de pois blancs sur fond noir, pour qu’il fasse toujours nuit dessous. L’embout de laiton reprend un ancien modèle viennois.",
+      "alt": "Ombrelle en soie, bois et laiton, en rouge, blanc et noir"
+    },
+    "pl-015": {
+      "title": "Ombrelle pour la pluie d’Amsterdam",
+      "materials": "Coton, bois et fil",
+      "technique": "Cousu main, brodé",
+      "story": "Une ombrelle qui espère le soleil, même en novembre. Les gouttes de pluie brodées à l’intérieur ne sont visibles que pour qui la porte.",
+      "alt": "Ombrelle en coton, bois et fil, en rouge, blanc et noir"
+    },
+    "pl-016": {
+      "title": "Cercle tournant",
+      "materials": "Papier, bois et soie",
+      "technique": "Plissé, cousu main",
+      "story": "Une ombrelle plissée de papier et de soie qui s’ouvre comme un éventail. Créée pour une performance où vingt ombrelles tournaient au même rythme.",
+      "alt": "Ombrelle en papier, bois et soie, en rouge, blanc et noir"
+    },
+    "pl-018": {
+      "title": "Des mains sur le mur",
+      "materials": "Soie",
+      "technique": "Sérigraphie",
+      "story": "Un foulard de soie imprimé de mains, d’yeux et de petits visages dessinés à l’encre en bandes verticales. Le même dessin est devenu plus tard le papier peint de son atelier.",
+      "alt": "Foulard en soie, en rouge, blanc et noir"
+    },
+    "pl-019": {
+      "title": "Cils",
+      "materials": "Coton et soie",
+      "technique": "Sérigraphie",
+      "story": "Une longue écharpe à motif répété d’yeux rouges aux longs cils. Enroulés autour du cou, les yeux regardent dans toutes les directions à la fois.",
+      "alt": "Foulard en coton et soie, en rouge, blanc et noir"
+    },
+    "pl-020": {
+      "title": "Rayures pour la mer",
+      "materials": "Lin et coton",
+      "technique": "Sérigraphie, cousu main",
+      "story": "Une nappe de lin, ou une cape, selon le vent : rayures rouges et blanches, ourlet roulé à la main. Faite sur l’île de Vis pendant un très long été.",
+      "alt": "Foulard en lin et coton, en rouge, blanc et noir"
+    },
+    "pl-021": {
+      "title": "Petit cirque",
+      "materials": "Soie et fil",
+      "technique": "Sérigraphie, brodé",
+      "story": "Un foulard où des acrobates, des chevaux et un lion perplexe tournent autour d’un centre rouge. Les bords sont brodés de fil rouge, point par point.",
+      "alt": "Foulard en soie et fil, en rouge, blanc et noir"
+    },
+    "pl-022": {
+      "title": "Volant pour minuit",
+      "materials": "Satin, tulle et dentelle",
+      "technique": "Plissé, cousu main",
+      "story": "Une jupe à quatre volants – rouge, à pois, blanc et dentelle – comme le collage qui l’a inspirée. Faite pour danser après minuit.",
+      "alt": "Vêtement en satin, tulle et dentelle, en rouge, blanc et noir"
+    },
+    "pl-023": {
+      "title": "Manteau aux yeux",
+      "materials": "Feutre, coton et fil",
+      "technique": "Appliqué, brodé",
+      "story": "Un manteau de feutre noir aux yeux appliqués dans le dos, pour que celle qui le porte sache toujours qui marche derrière elle. Chaque œil a son propre regard.",
+      "alt": "Vêtement en feutre, coton et fil, en rouge, blanc et noir"
+    },
+    "pl-024": {
+      "title": "Boléro de dentelle",
+      "materials": "Dentelle, soie et boutons",
+      "technique": "Cousu main",
+      "story": "Un boléro court assemblé à partir de sept dentelles anciennes et d’un seul bouton rouge. Chaque dentelle a son histoire et sa grand-mère.",
+      "alt": "Vêtement en dentelle, soie et boutons, en rouge, blanc et noir"
+    },
+    "pl-025": {
+      "title": "Robe pour faire son entrée",
+      "materials": "Coton, satin et tulle",
+      "technique": "Appliqué, plissé",
+      "story": "Une robe au corsage rayé et à la jupe de tulle qui bruisse quand celle qui la porte entre dans une pièce. Sortir, selon l’autrice, importe moins.",
+      "alt": "Vêtement en coton, satin et tulle, en rouge, blanc et noir"
+    },
+    "pl-017": {
+      "title": "La chérie du matador",
+      "materials": "Coton, dentelle, soie et fil",
+      "technique": "Collage textile cousu, appliqué",
+      "story": "Une danseuse en volants de flamenco traverse la scène en diagonale, devant un papier peint de mains et d’yeux. Sur ses bas clignent des yeux rouges : l’œuvre dont est né tout ce salon.",
+      "alt": "Collage textile encadré en coton, dentelle, soie et fil, en rouge, blanc et noir"
+    },
+    "pl-026": {
+      "title": "Danseuse sur le fil",
+      "materials": "Coton, fil de fer et fil",
+      "technique": "Collage textile cousu",
+      "story": "Une petite danseuse s’équilibre sur un vrai fil cousu en travers d’un fond à pois. Sous elle, pas de filet, seulement le sol noir.",
+      "alt": "Collage textile encadré en coton, fil de fer et fil, en rouge, blanc et noir"
+    },
+    "pl-027": {
+      "title": "Salon des mains",
+      "materials": "Coton, papier et fil",
+      "technique": "Collage textile cousu, sérigraphie",
+      "story": "Douze mains découpées dans un tissu imprimé saluent, montrent et font signe. L’une d’elles tient un chapeau que personne ne porte.",
+      "alt": "Collage textile encadré en coton, papier et fil, en rouge, blanc et noir"
+    },
+    "pl-028": {
+      "title": "Rideau rouge",
+      "materials": "Velours, satin et fil",
+      "technique": "Collage textile cousu, appliqué",
+      "story": "Un rideau de velours s’entrouvre et l’on ne voit derrière qu’une jambe en bas à pois. Le reste du spectacle, il faut l’imaginer.",
+      "alt": "Collage textile encadré en velours, satin et fil, en rouge, blanc et noir"
+    },
+    "pl-029": {
+      "title": "Portrait d’une dame au chapeau",
+      "materials": "Soie, dentelle et boutons",
+      "technique": "Collage textile cousu, brodé",
+      "story": "Son visage est de soie blanche et son chapeau, trois couches de dentelle qui débordent du cadre. La dame vous regarde droit dans les yeux, sans ciller.",
+      "alt": "Collage textile encadré en soie, dentelle et boutons, en rouge, blanc et noir"
+    },
+    "pl-030": {
+      "title": "Le chat qui a tout vu",
+      "materials": "Feutre, coton et fil",
+      "technique": "Collage textile cousu, appliqué",
+      "story": "Un chat de feutre noir assis à la fenêtre suit de ses yeux rouges quiconque traverse la pièce. La plus petite œuvre du mur, et la gardienne la plus fiable.",
+      "alt": "Collage textile encadré en feutre, coton et fil, en rouge, blanc et noir"
+    },
+    "pl-031": {
+      "title": "Train de nuit Zagreb – Amsterdam",
+      "materials": "Coton, lin et fil",
+      "technique": "Collage textile cousu, brodé",
+      "story": "Un long collage horizontal de fenêtres de wagon, un chapeau différent dans chacune. La couture qui les relie est la voie ferrée, brodée de fil rouge sur toute sa longueur.",
+      "alt": "Collage textile encadré en coton, lin et fil, en rouge, blanc et noir"
+    },
+    "pl-032": {
+      "title": "Cabaret au balcon",
+      "materials": "Satin, paillettes et dentelle",
+      "technique": "Collage textile cousu, appliqué",
+      "story": "Trois chanteuses sur un balcon de dentelle, chacune à son propre tempo. Les paillettes sont cousues une à une, comme des notes.",
+      "alt": "Collage textile encadré en satin, paillettes et dentelle, en rouge, blanc et noir"
+    },
+    "pl-033": {
+      "title": "Lettre d’amour à une modiste",
+      "materials": "Feutre, fil de fer, papier et fil",
+      "technique": "Assemblage, cousu main",
+      "story": "Un chapeau qu’on ne peut pas porter : une sculpture de feutre, de fil de fer et de vieilles formes de son atelier. Un hommage à toutes les modistes qui l’ont formée.",
+      "alt": "Objet à porter en feutre, fil de fer, papier et fil, en rouge, blanc et noir"
+    },
+    "pl-034": {
+      "title": "Œil dans une chaussure",
+      "materials": "Cuir, soie et fil",
+      "technique": "Assemblage, brodé",
+      "story": "Un vieux soulier de danse où vit un œil brodé à la place du pied. Un objet de vitrine, pas de danse, même si personne ne le croit.",
+      "alt": "Objet à porter en cuir, soie et fil, en rouge, blanc et noir"
+    },
+    "pl-035": {
+      "title": "Trois sœurs, un chapeau",
+      "materials": "Feutre, coton et dentelle",
+      "technique": "Collage textile cousu, appliqué",
+      "story": "Trois sœurs se partagent un grand chapeau rouge, et aucune ne veut le lâcher. Un collage sur l’héritage familial et sur celle qui sera la suivante.",
+      "alt": "Objet à porter en feutre, coton et dentelle, en rouge, blanc et noir"
+    },
+    "pl-036": {
+      "title": "Rose et polka",
+      "materials": "Soie, feutre et fil de fer",
+      "technique": "Assemblage, cousu main",
+      "story": "Une grande rose de soie rouge sort d’un chapeau à pois comme d’une loge de théâtre. Une sculpture qui s’accroche au mur ou, avec un peu d’audace, se porte.",
+      "alt": "Objet à porter en soie, feutre et fil de fer, en rouge, blanc et noir"
+    }
+  }
+}

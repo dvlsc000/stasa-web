@@ -1,0 +1,72 @@
+---
+/** The Plate: the full record of one piece. Rendered as its own page at /<lang>/work/<slug>/;
+ *  on the home page the same markup is fetched and shown in a dialog. */
+import Art from './Art.astro';
+import Stitch from './Stitch.astro';
+import { t, plateNo, price, img, plateOrder, workUrl, type Work, type Lang } from '../lib/content';
+interface Props { work: Work; lang: Lang }
+const { work: w, lang } = Astro.props;
+const { ui, work } = t(lang);
+const wt = work(w.id);
+const order = plateOrder();
+const i = order.findIndex((x) => x.id === w.id);
+const prev = order[(i - 1 + order.length) % order.length];
+const next = order[(i + 1) % order.length];
+const p = price(lang, w.price);
+const gallery = (w.gallery ?? []).map((g) => ({ src: g, info: img(g) })).filter((g) => g.info);
+const wallClass = { 'dots-ink-l': 'dots-ink' }[w.wallpaper] ?? w.wallpaper;
+const availability = w.available ? `${ui('available')} — ${p ?? ui('onRequest')}` : ui('sold');
+---
+<article class:list={['plate', `pat-${wallClass}`]} data-plate-root={w.slug} data-id={w.id} aria-labelledby={`plate-title-${w.slug}`}>
+  <div class="plate__inner">
+    <figure class="plate__figure">
+      <div class="plate__zoom cut-2" data-zoom>
+        <Art work={w} alt={wt.alt} mode="photo" eager sizes="(max-width: 767px) 92vw, 54vw" plateLabel={ui('plate')} />
+        <Stitch cut={2} />
+      </div>
+      <button class="plate__zoombtn" type="button" data-zoom-btn aria-pressed="false">
+        <svg aria-hidden="true"><use href="#i-zoom" /></svg><span class="sr-only">{ui('plate.zoom')}</span>
+      </button>
+      {gallery.length > 0 && (
+        <ul class="plate__gallery" role="list" aria-label={ui('plate.details')}>
+          {gallery.map((g) => (
+            <li class="cut-4"><picture>
+              <source type="image/avif" srcset={g.info!.avif} sizes="160px" />
+              <source type="image/webp" srcset={g.info!.webp} sizes="160px" />
+              <img src={g.info!.fallback} alt="" width={g.info!.width} height={g.info!.height} loading="lazy" decoding="async" />
+            </picture></li>
+          ))}
+        </ul>
+      )}
+    </figure>
+
+    <div class="plate__card cut-3">
+      <p class="label plate__no">{ui('plate')} {plateNo(w.id)}</p>
+      <h1 class="plate__title" id={`plate-title-${w.slug}`}>{wt.title}</h1>
+      <p class="plate__story">{wt.story}</p>
+      <dl class="plate__facts">
+        <div><dt class="label">{ui('plate.year')}</dt><dd class="num">{w.year}</dd></div>
+        <div><dt class="label">{ui('plate.materials')}</dt><dd>{wt.materials}</dd></div>
+        <div><dt class="label">{ui('plate.technique')}</dt><dd>{wt.technique}</dd></div>
+        <div><dt class="label">{ui('plate.dimensions')}</dt><dd class="num">{w.dimensions}</dd></div>
+        <div><dt class="label">{ui('plate.availability')}</dt><dd><span class:list={['dot', { 'dot--sold': !w.available }]} aria-hidden="true"></span>{availability}</dd></div>
+      </dl>
+      <a class="patch plate__enquire" href={`/${lang}/?enquire=${w.id}#commissions`} data-enquire={w.id}>
+        {ui('plate.enquire')}<Stitch cut={1} light />
+      </a>
+      <Stitch cut={3} />
+    </div>
+  </div>
+
+  <nav class="plate__nav" aria-label={`${ui('plate.prev')} / ${ui('plate.next')}`}>
+    <a class="plate__prev" href={workUrl(lang, prev)} data-plate-nav={prev.slug} rel="prev">
+      <svg aria-hidden="true"><use href="#i-manicule" /></svg><span class="sr-only">{ui('plate.prev')}: {work(prev.id).title}</span>
+    </a>
+    <a class="plate__next" href={workUrl(lang, next)} data-plate-nav={next.slug} rel="next">
+      <span class="sr-only">{ui('plate.next')}: {work(next.id).title}</span><svg aria-hidden="true"><use href="#i-manicule" /></svg>
+    </a>
+  </nav>
+  <a class="plate__close" href={`/${lang}/#piece-${w.slug}`} data-plate-close>
+    <svg aria-hidden="true"><use href="#i-close" /></svg><span class="plate__close-label label">{ui('plate.close')}</span>
+  </a>
+</article>

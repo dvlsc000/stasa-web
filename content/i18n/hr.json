@@ -1,0 +1,359 @@
+{
+  "lang": "hr",
+  "ui": {
+    "meta.title": "Staša Čimbur — šeširi, oglavlja i tekstilni kolaži",
+    "meta.description": "Staša Čimbur (StashaHats), primijenjena umjetnica i modistica između Zagreba i Amsterdama: šeširi, fascinatori, torbe, suncobrani, marame i šivani tekstilni kolaži.",
+    "a11y.skipContent": "Preskoči na sadržaj",
+    "a11y.skipWalk": "Preskoči šetnju",
+    "a11y.langSwitch": "Jezik",
+    "a11y.mainNav": "Glavna navigacija",
+    "a11y.floorPlan": "Tlocrt salona: skoči u sobu",
+    "a11y.openPlate": "Otvori list",
+    "preloader.skip": "Preskoči",
+    "nav.wearable": "Nosivo",
+    "nav.wall": "Za zid",
+    "nav.exhibitions": "Izložbe",
+    "nav.commissions": "Narudžbe",
+    "hero.cities": "Zagreb — Amsterdam",
+    "hero.role": "primijenjena umjetnica i modistica",
+    "hero.enter": "Uđite u salon",
+    "prolog.kicker": "Program večeri",
+    "prolog.title": "Prolog",
+    "prolog.p1": "Staša Čimbur šije male predstave za glavu, ruke i zid. Šeširi, fascinatori, torbe, suncobrani, marame i tiskane tkanine nastaju u ateljeima u Zagrebu i Amsterdamu, a materijal je uvijek onaj koji vodi: komad starog baršuna, čipka s buvljaka, filc koji se ne želi saviti.",
+    "prolog.p2": "Iza nje je više od 150 izložbi, performansa i revija, među njima samostalna izložba „All you need is a Hat“ u Muzeju za umjetnost i obrt u Zagrebu. Njezini radovi nalaze se u muzejima i privatnim zbirkama, a s Josipom Lisac surađuje na pozornici i izvan nje.",
+    "prolog.castTitle": "Uloge",
+    "prolog.cast": [
+      "Šeširi",
+      "Oglavlja i fascinatori",
+      "Torbe",
+      "Suncobrani",
+      "Marame i tekstil",
+      "Odjeća",
+      "Tekstilni kolaži"
+    ],
+    "prolog.count": "izložbi, performansa i revija",
+    "prolog.portraitAlt": "Portret Staše Čimbur u jednom od njezinih šešira",
+    "wing1.title": "Nosivo",
+    "wing1.wing": "Krilo I",
+    "wing1.intro": "Šest soba, jedna šetnja. Pomičite se dalje i salon će se pomicati s vama.",
+    "room": "Soba",
+    "rooms.hats": "Šeširi",
+    "rooms.headpieces": "Oglavlja i fascinatori",
+    "rooms.bags": "Torbe",
+    "rooms.parasols": "Suncobrani",
+    "rooms.textiles": "Marame i tekstil",
+    "rooms.clothes": "Odjeća",
+    "rooms.framed": "Uokvireni kolaži",
+    "rooms.collage": "Kolaži i objekti",
+    "view": "Pogledaj",
+    "plate": "Pl.",
+    "interlude.quote": "Šešir nije ukras. Šešir je {eye} ulaz na pozornicu.",
+    "interlude.cite": "Staša Čimbur, iz razgovora (privremeni citat)",
+    "wing2.title": "Za zid",
+    "wing2.wing": "Krilo II",
+    "wing2.intro": "Šivani tekstilni kolaži i objekti, uokvireni i spremni za vaš zid. Svaki postoji samo jednom.",
+    "available": "Dostupno",
+    "sold": "U zbirci",
+    "onRequest": "Cijena na upit",
+    "enquireBuy": "Upit / kupnja",
+    "exh.title": "Izložbe i tisak",
+    "exh.kicker": "Iz kazališnog programa, 2004. – danas",
+    "exh.year": "Godina",
+    "exh.name": "Naslov",
+    "exh.venue": "Mjesto",
+    "exh.city": "Grad",
+    "exh.highlights": "Istaknuto",
+    "exh.note": "Popis je privremen i služi kao primjer.",
+    "comm.title": "Narudžbe",
+    "comm.p": "Šešir po mjeri počinje razgovorom: o prigodi, o glavi i o tome koliko hrabrosti želite nositi. Izrada traje od tri do osam tjedana. Radim i kostime za pozornicu, unikatne komade za vjenčanja i radove za izložbe.",
+    "form.name": "Ime",
+    "form.email": "E-pošta",
+    "form.type": "Vrsta upita",
+    "form.types": [
+      "Šešir po mjeri",
+      "Kupnja djela",
+      "Kostim i pozornica",
+      "Izložba ili tisak",
+      "Nešto drugo"
+    ],
+    "form.message": "Poruka",
+    "form.messageHint": "Prigoda, datum, boje, sve što vam pada na pamet.",
+    "form.submit": "Pošalji upit",
+    "form.sending": "Šivam…",
+    "form.sent": "Upit je poslan. Javit ću se u roku od nekoliko dana.",
+    "form.error": "Upit nije poslan. Provjerite vezu i pokušajte ponovno ili pišite na e-poštu ispod.",
+    "form.required": "Ovo polje je obavezno.",
+    "form.invalidEmail": "Upišite adresu e-pošte u obliku ime@domena.hr.",
+    "form.about": "O djelu",
+    "plate.close": "Zatvori",
+    "plate.prev": "Prethodni list",
+    "plate.next": "Sljedeći list",
+    "plate.year": "Godina",
+    "plate.materials": "Materijali",
+    "plate.technique": "Tehnika",
+    "plate.dimensions": "Dimenzije",
+    "plate.availability": "Dostupnost",
+    "plate.enquire": "Upit o ovom djelu",
+    "plate.zoom": "Povećaj sliku",
+    "plate.details": "Detalji",
+    "plate.back": "Natrag u salon",
+    "plate.noImage": "Fotografija uskoro",
+    "footer.instagram": "Instagram",
+    "footer.rights": "Sva prava pridržana.",
+    "footer.top": "Natrag na početak"
+  },
+  "works": {
+    "pl-001": {
+      "title": "Kazališna loža",
+      "materials": "Filc, til i baršun",
+      "technique": "Oblikovano na kalupu, ručno šivano",
+      "story": "Širok obod od crnog filca i veo s crvenim točkama: šešir koji gleda s balkona. Nošen na premijeri u HNK, gdje je navodno dobio više pogleda od pozornice.",
+      "alt": "Šešir od filc, til i baršun, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-002": {
+      "title": "Nedjeljni bolero",
+      "materials": "Filc i saten",
+      "technique": "Oblikovano na kalupu, aplikacija",
+      "story": "Cloche od poppy-crvenog filca s apliciranom satenskom trakom koja se vrti oko glave poput plesnog koraka. Napravljen za šetnju koja traje cijelo poslijepodne.",
+      "alt": "Šešir od filc i saten, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-003": {
+      "title": "Kiša od konfeta",
+      "materials": "Slama, šljokice i konac",
+      "technique": "Oblikovano na kalupu, vezeno",
+      "story": "Slamnati šešir s ručno ušivenim šljokicama koje padaju niz obod kao da je fešta upravo završila. Prvi put prikazan na reviji u Amsterdamu.",
+      "alt": "Šešir od slama, šljokice i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-004": {
+      "title": "Gospođa s tri oka",
+      "materials": "Baršun, svila i konac",
+      "technique": "Ručno šivano, vezeno",
+      "story": "Pillbox od crnog baršuna s tri izvezena oka koja trepću kad nositeljica okrene glavu. Šešir koji primijeti sve što vi propustite.",
+      "alt": "Šešir od baršun, svila i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-005": {
+      "title": "Kapljica crvenog",
+      "materials": "Sinamay i perje",
+      "technique": "Oblikovano na kalupu, ručno šivano",
+      "story": "Fascinator u obliku kapi, oblikovan od crvenog sinamaya i jednog jedinog pera. Dovoljno malen za ured, dovoljno odvažan za vjenčanje.",
+      "alt": "Oglavlje od sinamay i perje, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-006": {
+      "title": "Lastavičin rep",
+      "materials": "Filc, žica i svila",
+      "technique": "Oblikovano na kalupu, aplikacija",
+      "story": "Dva krila od crnog filca na tankoj žici, s bijelim svilenim rubom. Kad zapuše vjetar, oglavlje se lagano zanjiše kao da će odletjeti.",
+      "alt": "Oglavlje od filc, žica i svila, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-007": {
+      "title": "Šapat iza vela",
+      "materials": "Til, čipka i saten",
+      "technique": "Ručno šivano, aplikacija",
+      "story": "Mala satenska kapica s velom od tila i starom čipkom pronađenom na buvljaku u Hrelić. Veo pokriva jedno oko, a drugo ostavlja slobodno za namigivanje.",
+      "alt": "Oglavlje od til, čipka i saten, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-008": {
+      "title": "Mala kruna za veliki dan",
+      "materials": "Mjed, filc i šljokice",
+      "technique": "Asamblaž, ručno šivano",
+      "story": "Kruna od crvenog filca s mjedenim zakovicama i šljokicama, nošena malo nakrivo. Za rođendane, ostavke i druge velike odluke.",
+      "alt": "Oglavlje od mjed, filc i šljokice, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-009": {
+      "title": "Neposlano pismo",
+      "materials": "Koža, pamuk i konac",
+      "technique": "Ručno šivano, aplikacija",
+      "story": "Clutch u obliku omotnice s crvenim pečatom od kože i podstavom od pamuka na točkice. Unutra ima mjesta za ruž, ključ i jednu rečenicu koju nikad niste izgovorili.",
+      "alt": "Torbica od koža, pamuk i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-010": {
+      "title": "Polka za odlazak",
+      "materials": "Pamuk, drvo i koža",
+      "technique": "Sitotisak, ručno šivano",
+      "story": "Torba od tiskanog pamuka s drvenim ručkama, dovoljno velika za vikend izvan grada. Točkice su otisnute ručno, pa nijedna nije posve ista.",
+      "alt": "Torbica od pamuk, drvo i koža, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-011": {
+      "title": "Džep za tajne",
+      "materials": "Baršun, mjed i svila",
+      "technique": "Ručno šivano, vezeno",
+      "story": "Mala vrećica od baršuna s mjedenim kopčanjem i izvezenim okom na preklopu. Oko ostaje budno i kad je torba zatvorena.",
+      "alt": "Torbica od baršun, mjed i svila, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-012": {
+      "title": "Mala kutija za ples",
+      "materials": "Koža, saten i čipka",
+      "technique": "Ručno šivano, plisirano",
+      "story": "Torbica u obliku kutije s plisiranim volanom od satena oko dna. Kad hodate, volan se njiše kao suknja na podiju.",
+      "alt": "Torbica od koža, saten i čipka, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-013": {
+      "title": "Sjena za flamenco",
+      "materials": "Pamuk, čipka i drvo",
+      "technique": "Ručno šivano, aplikacija",
+      "story": "Suncobran od prugastog pamuka s čipkastim rubom i drvenom drškom. Rub je izrezan u valove, kao donji red flamenco suknje.",
+      "alt": "Suncobran od pamuk, čipka i drvo, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-014": {
+      "title": "Nebo na točkice",
+      "materials": "Svila, drvo i mjed",
+      "technique": "Sitotisak, ručno šivano",
+      "story": "Svileni suncobran otisnut bijelim točkama na crnom, tako da ispod njega uvijek bude noć. Mjedeni vrh izrađen je po starom bečkom uzorku.",
+      "alt": "Suncobran od svila, drvo i mjed, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-015": {
+      "title": "Suncobran za amsterdamsku kišu",
+      "materials": "Pamuk, drvo i konac",
+      "technique": "Ručno šivano, vezeno",
+      "story": "Suncobran koji se nada suncu i u studenom. Izvezene kapi kiše na unutarnjoj strani vidi samo onaj tko ga nosi.",
+      "alt": "Suncobran od pamuk, drvo i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-016": {
+      "title": "Okretni krug",
+      "materials": "Papir, drvo i svila",
+      "technique": "Plisirano, ručno šivano",
+      "story": "Plisirani suncobran od papira i svile koji se otvara kao lepeza. Izrađen za performans u kojem se dvadeset suncobrana okretalo u istom ritmu.",
+      "alt": "Suncobran od papir, drvo i svila, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-018": {
+      "title": "Ruke na zidu",
+      "materials": "Svila",
+      "technique": "Sitotisak",
+      "story": "Svilena marama s tiskom ruku, očiju i malih lica, crtanih tušem u okomitim trakama. Isti crtež kasnije je postao tapeta njezina ateljea.",
+      "alt": "Marama od svila, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-019": {
+      "title": "Trepavice",
+      "materials": "Pamuk i svila",
+      "technique": "Sitotisak",
+      "story": "Dugi šal s ponavljajućim crvenim očima s dugim trepavicama. Kad se omota oko vrata, oči gledaju u svim smjerovima odjednom.",
+      "alt": "Marama od pamuk i svila, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-020": {
+      "title": "Pruge za more",
+      "materials": "Lan i pamuk",
+      "technique": "Sitotisak, ručno šivano",
+      "story": "Laneni stolnjak, ili rt, ovisno o vjetru: crvene i bijele pruge s ručno porubljenim rubom. Nastao na otoku Visu tijekom jednog vrlo dugog ljeta.",
+      "alt": "Marama od lan i pamuk, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-021": {
+      "title": "Mali cirkus",
+      "materials": "Svila i konac",
+      "technique": "Sitotisak, vezeno",
+      "story": "Marama na kojoj akrobati, konji i jedan zbunjeni lav kruže oko crvenog središta. Rubovi su izvezeni crvenim koncem, šav po šav.",
+      "alt": "Marama od svila i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-022": {
+      "title": "Volan za ponoć",
+      "materials": "Saten, til i čipka",
+      "technique": "Plisirano, ručno šivano",
+      "story": "Suknja u četiri reda volana: crveni, točkasti, bijeli i čipkasti, kao na kolažu koji ju je inspirirao. Napravljena za ples koji počinje nakon ponoći.",
+      "alt": "Odjevni predmet od saten, til i čipka, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-023": {
+      "title": "Kaput s očima",
+      "materials": "Filc, pamuk i konac",
+      "technique": "Aplikacija, vezeno",
+      "story": "Crni kaput od filca s aplikacijama očiju na leđima, tako da nositeljica uvijek zna tko hoda iza nje. Svako oko ima drugačiji pogled.",
+      "alt": "Odjevni predmet od filc, pamuk i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-024": {
+      "title": "Bolero od čipke",
+      "materials": "Čipka, svila i gumbi",
+      "technique": "Ručno šivano",
+      "story": "Kratki bolero sastavljen od sedam različitih starih čipki i jednog crvenog gumba. Svaka čipka ima svoju priču i svoju baku.",
+      "alt": "Odjevni predmet od čipka, svila i gumbi, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-025": {
+      "title": "Haljina za ulazak",
+      "materials": "Pamuk, saten i til",
+      "technique": "Aplikacija, plisirano",
+      "story": "Haljina s prugastim steznikom i suknjom koja se šiša u tilu kad nositeljica uđe u sobu. Izlazak je, prema autorici, manje važan.",
+      "alt": "Odjevni predmet od pamuk, saten i til, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-017": {
+      "title": "Matadorova miljenica",
+      "materials": "Pamuk, čipka, svila i konac",
+      "technique": "Šivani tekstilni kolaž, aplikacija",
+      "story": "Plesačica u volanima flamenco suknje juri dijagonalno preko pozornice, ispred tapete s rukama i očima. Na čarapama joj trepću crvene oči: djelo iz kojega je nastao cijeli ovaj salon.",
+      "alt": "Uokvireni tekstilni kolaž od pamuk, čipka, svila i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-026": {
+      "title": "Plesačica na žici",
+      "materials": "Pamuk, žica i konac",
+      "technique": "Šivani tekstilni kolaž",
+      "story": "Mala plesačica balansira na pravoj žici ušivenoj preko točkaste pozadine. Ispod nje nema mreže, samo crni pod.",
+      "alt": "Uokvireni tekstilni kolaž od pamuk, žica i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-027": {
+      "title": "Salon s rukama",
+      "materials": "Pamuk, papir i konac",
+      "technique": "Šivani tekstilni kolaž, sitotisak",
+      "story": "Dvanaest ruku izrezanih iz tiskane tkanine pozdravlja, pokazuje i maše. Jedna od njih drži šešir koji nitko ne nosi.",
+      "alt": "Uokvireni tekstilni kolaž od pamuk, papir i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-028": {
+      "title": "Crveni zastor",
+      "materials": "Baršun, saten i konac",
+      "technique": "Šivani tekstilni kolaž, aplikacija",
+      "story": "Baršunasti zastor se upravo razmiče, a iza njega se vidi samo jedna noga u čarapi na točkice. Ostatak predstave morate zamisliti sami.",
+      "alt": "Uokvireni tekstilni kolaž od baršun, saten i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-029": {
+      "title": "Portret dame sa šeširom",
+      "materials": "Svila, čipka i gumbi",
+      "technique": "Šivani tekstilni kolaž, vezeno",
+      "story": "Lice joj je od bijele svile, a šešir od tri sloja čipke koja izlazi izvan okvira. Dama gleda ravno u vas i ne trepće.",
+      "alt": "Uokvireni tekstilni kolaž od svila, čipka i gumbi, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-030": {
+      "title": "Mačka koja je vidjela sve",
+      "materials": "Filc, pamuk i konac",
+      "technique": "Šivani tekstilni kolaž, aplikacija",
+      "story": "Crna mačka od filca sjedi na prozoru, a njezine crvene oči prate svakoga tko prođe kroz sobu. Najmanji rad na zidu i najsigurniji čuvar.",
+      "alt": "Uokvireni tekstilni kolaž od filc, pamuk i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-031": {
+      "title": "Noćni vlak Zagreb – Amsterdam",
+      "materials": "Pamuk, lan i konac",
+      "technique": "Šivani tekstilni kolaž, vezeno",
+      "story": "Dugi vodoravni kolaž s prozorima vagona, a u svakom prozoru drugi šešir. Šav koji ih spaja je pruga, izvezena crvenim koncem cijelom dužinom.",
+      "alt": "Uokvireni tekstilni kolaž od pamuk, lan i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-032": {
+      "title": "Kabaret na balkonu",
+      "materials": "Saten, šljokice i čipka",
+      "technique": "Šivani tekstilni kolaž, aplikacija",
+      "story": "Tri pjevačice na balkonu od čipke, svaka u svom ritmu. Šljokice su ušivene jedna po jedna, kao note.",
+      "alt": "Uokvireni tekstilni kolaž od saten, šljokice i čipka, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-033": {
+      "title": "Ljubavno pismo modistici",
+      "materials": "Filc, žica, papir i konac",
+      "technique": "Asamblaž, ručno šivano",
+      "story": "Šešir koji se ne može nositi: skulptura od filca, žice i starih kalupa iz njezina ateljea. Posveta svim modisticama koje su je učile.",
+      "alt": "Nosivi objekt od filc, žica, papir i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-034": {
+      "title": "Oko u cipeli",
+      "materials": "Koža, svila i konac",
+      "technique": "Asamblaž, vezeno",
+      "story": "Stara plesna cipela u kojoj umjesto stopala živi izvezeno oko. Objekt za vitrinu, ne za ples, iako tome nitko ne vjeruje.",
+      "alt": "Nosivi objekt od koža, svila i konac, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-035": {
+      "title": "Tri sestre, jedan šešir",
+      "materials": "Filc, pamuk i čipka",
+      "technique": "Šivani tekstilni kolaž, aplikacija",
+      "story": "Tri sestre dijele jedan veliki crveni šešir, a nijedna ga ne želi pustiti. Kolaž o obiteljskom nasljeđu i o tome tko je zadnji na redu.",
+      "alt": "Nosivi objekt od filc, pamuk i čipka, u crvenoj, bijeloj i crnoj"
+    },
+    "pl-036": {
+      "title": "Ruža i polka",
+      "materials": "Svila, filc i žica",
+      "technique": "Asamblaž, ručno šivano",
+      "story": "Velika ruža od crvene svile izlazi iz šešira na točkice kao iz kazališne kutije. Skulptura koju se može objesiti na zid ili, uz malo hrabrosti, nositi.",
+      "alt": "Nosivi objekt od svila, filc i žica, u crvenoj, bijeloj i crnoj"
+    }
+  }
+}

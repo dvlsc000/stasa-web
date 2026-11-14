@@ -1,0 +1,60 @@
+/* ───────────── Salon Čimbur · design tokens ─────────────
+   Three colours, no fourth hue, no gradients. See DESIGN.md. */
+
+@font-face { font-family: 'Basteleur'; src: url('/fonts/basteleur-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Basteleur'; src: url('/fonts/basteleur-moonlight.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Ortica'; src: url('/fonts/ortica-linear-light.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Ortica'; src: url('/fonts/ortica-linear-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Xanh Mono'; src: url('/fonts/xanh-mono-latin.woff2') format('woff2'); font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Xanh Mono'; src: url('/fonts/xanh-mono-ext.woff2') format('woff2'); font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Xanh Mono'; font-style: italic; src: url('/fonts/xanh-mono-latin-italic.woff2') format('woff2'); font-display: swap; }
+
+:root {
+  /* palette — sampled values are documented in DESIGN.md */
+  --paper: #F3EEE4;
+  --red: #D9251D;
+  --ink: #121010;
+  --thread-on-dark: #E9E4DA;
+  --thread-on-light: #8F8A82;
+
+  /* type */
+  --f-display: 'Basteleur', 'Georgia', serif;
+  --f-body: 'Ortica', 'Iowan Old Style', 'Palatino Linotype', serif;
+  --f-label: 'Xanh Mono', 'Courier New', monospace;
+
+  /* scale: perfect fourth (1.333) from a 19px body */
+  --t-xs: 0.8125rem;   /* 13 — fine print only */
+  --t-s: 0.9375rem;    /* 15 — labels */
+  --t-m: 1.1875rem;    /* 19 — body */
+  --t-l: 1.5625rem;    /* 25 */
+  --t-xl: 2.1rem;      /* 33 */
+  --t-2xl: clamp(2.6rem, 5.2vw, 4.6rem);
+  --t-3xl: clamp(3.4rem, 9vw, 9rem);
+  --t-hero: clamp(4.4rem, 17.5vw, 18rem);
+
+  /* grid */
+  --gutter: clamp(1rem, 2.6vw, 2.5rem);
+  --margin: clamp(1.1rem, 4.2vw, 4.5rem);
+  --measure: 34em;
+
+  /* collage */
+  --shadow: drop-shadow(0 1px 0 rgb(18 16 16 / .30)) drop-shadow(0 4px 4px rgb(18 16 16 / .18));
+  --shadow-lift: drop-shadow(0 1px 0 rgb(18 16 16 / .30)) drop-shadow(0 12px 10px rgb(18 16 16 / .22));
+  --stitch: 7px 5px;  /* running stitch: dash, gap */
+
+  /* motion */
+  --ease-walk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-flick: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-move: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --d-ui: 180ms;
+  --d-label: 450ms;
+  --d-stitch: 900ms;
+
+  --header-h: 4.25rem;
+}
+
+@media (max-width: 767px) {
+  :root { --t-m: 1.0625rem; --t-l: 1.3125rem; --t-xl: 1.75rem; }
+}
