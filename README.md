@@ -48,7 +48,7 @@ Drag this folder onto https://app.netlify.com/drop, or push it to GitHub and imp
 - `css/fonts.css` and `fonts/`: self-hosted Bodoni Moda, Newsreader and Cutive Mono (all open licence)
 - `js/content.js`: all content
 - `js/thread.js`: the hand-drawn thread lines and printed eye pattern
-- `js/main.js`: languages, the walk, detail view, halftone effect, eye cursor, form
+- `js/main.js`: languages, the walk, detail view, halftone effect, form
 - `vendor/`: GSAP + ScrollTrigger and Lenis (smooth scroll)
 
 Motion respects the visitor's "reduce motion" setting. With that setting on, the walk becomes a normal vertical page and every effect switches off.

@@ -397,18 +397,6 @@ html.pin-on .floorplan {
 .icon-btn .thread { width: 100%; height: 100%; }
 .plate-close { position: absolute; top: 22px; right: 22px; width: 34px; height: 34px; z-index: 3; }
 
-/* ---------- eye cursor ---------- */
-.eye-cursor { position: fixed; left: 0; top: 0; z-index: 500; width: 44px; height: 22px; pointer-events: none; color: #fff; mix-blend-mode: difference; opacity: 0; transition: opacity .3s ease; }
-.has-eye .eye-cursor { opacity: 1; }
-.eye-cursor .thread { width: 100%; height: 100%; transition: transform .45s var(--ease-walk); }
-.eye-pupil { position: absolute; left: 50%; top: 58%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: #fff; transition: transform .45s var(--ease-walk); }
-.eye-label { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: 0; transition: opacity .3s ease; }
-.eye-cursor.is-view .thread { transform: scale(1.7); }
-.eye-cursor.is-view .eye-pupil { transform: scale(1.9); }
-.eye-cursor.is-view .eye-label { opacity: 1; }
-.has-eye, .has-eye a, .has-eye button { cursor: none; }
-.has-eye input, .has-eye textarea, .has-eye select { cursor: auto; }
-
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .salon { grid-template-columns: repeat(6, 1fr); }

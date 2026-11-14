@@ -1,5 +1,5 @@
 /* Staša Čimbur — salon. Behaviour: languages, rendering from content.js,
-   the walk, plates, halftone reveals, eye cursor, form. */
+   the walk, plates, halftone reveals, form. */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -395,29 +395,6 @@
     setTimeout(() => $("#f-name").focus({ preventScroll: true }), reduce ? 50 : 1400);
   }
 
-  /* ---------------- eye cursor ---------------- */
-  function setupCursor() {
-    if (!fine) return;
-    const eye = $(".eye-cursor"), pupil = $(".eye-pupil");
-    html.classList.add("has-eye");
-    let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y, vx = 0, vy = 0;
-    window.addEventListener("pointermove", e => { x = e.clientX; y = e.clientY; eye.style.opacity = ""; }, { passive: true });
-    document.addEventListener("pointerleave", () => { eye.style.opacity = "0"; });
-    document.addEventListener("pointerover", e => {
-      const v = e.target.closest("[data-cursor='view'], [data-open]");
-      eye.classList.toggle("is-view", !!v && !plateState.id);
-    });
-    const k = reduce ? 1 : 0.22;
-    (function loop() {
-      const nx = cx + (x - cx) * k, ny = cy + (y - cy) * k;
-      vx = nx - cx; vy = ny - cy; cx = nx; cy = ny;
-      eye.style.transform = `translate(${cx - 22}px, ${cy - 11}px)`;
-      const px = Math.max(-5, Math.min(5, vx * 0.6)), py = Math.max(-2.5, Math.min(2.5, vy * 0.6));
-      pupil.style.translate = `${px}px ${py}px`;
-      requestAnimationFrame(loop);
-    })();
-  }
-
   /* ---------------- exhibitions: floating image ---------------- */
   function setupExFloat() {
     if (!fine) return;
@@ -464,7 +441,6 @@
   applyLang();
   setupPlate();
   setupForm();
-  setupCursor();
   setupExFloat();
   setupTilt();
   if (window.gsap && window.ScrollTrigger) setupScroll();
