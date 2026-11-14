@@ -28,6 +28,7 @@
   <a class="brand" href="#main" data-scroll="#main">StashaHats</a>
   <nav class="top-nav" aria-label="Glavna navigacija">
     <a href="#salon" data-scroll="#salon" data-i18n="nav.salon">Salon</a>
+    <a href="#film" data-scroll="#film" data-i18n="film.kicker">Film</a>
     <a href="#zid" data-scroll="#zid" data-i18n="nav.wall">Za zid</a>
     <a href="#izlozbe" data-scroll="#izlozbe" data-i18n="nav.ex">Izložbe</a>
     <a href="#kontakt" data-scroll="#kontakt" data-i18n="nav.contact">Kontakt</a>
@@ -99,6 +100,17 @@
           <p class="walk-hint mono"><span data-i18n="wing1.scroll">Listajte za šetnju</span>
             <svg class="thread" data-draw="arrow" data-seed="walk-hint"></svg></p>
         </div>
+        <!-- 3D study of one of her hats, on the red curtain -->
+        <div class="walk-feature" id="room-hat3d">
+          <div class="feature-curtain" aria-hidden="true"></div>
+          <div class="hat3d" id="hat3d" tabindex="0" role="img" data-i18n-aria="hat3d.label"></div>
+          <div class="feature-card">
+            <p class="kicker mono"><span class="tab"></span><span data-i18n="hat3d.kicker">Studija u 3D</span></p>
+            <h3 class="feature-title" data-i18n="hat3d.title">Crni šešir s mašnom</h3>
+            <p class="feature-note" data-i18n="hat3d.note"></p>
+            <p class="feature-hint mono"><svg class="thread" data-draw="arrowLeft" data-seed="h3l"></svg><span data-i18n="hat3d.hint">Povucite za okretanje</span><svg class="thread" data-draw="arrow" data-seed="h3r"></svg></p>
+          </div>
+        </div>
         <!-- rooms injected here -->
         <div class="walk-end">
           <a class="mono" href="#zid" data-scroll="#zid"><span data-i18n="wing1.end">Dalje: Krilo II</span>
@@ -110,6 +122,20 @@
         <ol class="floorplan-rooms"></ol>
       </nav>
     </div>
+  </section>
+
+  <!-- FILM: six looks from the collection's fashion shoot -->
+  <section class="film" id="film" aria-labelledby="film-title">
+    <div class="film-text">
+      <p class="kicker mono"><span class="tab"></span><span data-i18n="film.kicker">Film</span></p>
+      <h2 id="film-title" class="display" data-i18n="film.title">Šest lica</h2>
+      <p class="section-text" data-i18n="film.text"></p>
+      <button type="button" class="link-btn film-toggle" id="film-toggle" aria-pressed="false">Zaustavi film</button>
+    </div>
+    <div class="film-frame">
+      <span class="mat"><video id="film-video" src="media/film.mp4" poster="media/film-poster.jpg" muted loop playsinline preload="none" width="540" height="960"></video></span>
+    </div>
+    <svg class="thread film-line" data-draw="lineLong" data-seed="film-line" data-reveal></svg>
   </section>
 
   <!-- 04 INTERLUDE: the print room voice -->
@@ -224,5 +250,6 @@
 <script src="js/content.js"></script>
 <script src="js/thread.js"></script>
 <script src="js/main.js"></script>
+<script type="module" src="js/hat3d.js"></script>
 </body>
 </html>

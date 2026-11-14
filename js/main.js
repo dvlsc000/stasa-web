@@ -55,6 +55,7 @@
     const mail = $("#mail-link"); mail.textContent = SITE.contactEmail; mail.href = "mailto:" + SITE.contactEmail;
     $("#insta-link").href = SITE.instagram;
     if (plateState.id) fillPlate(plateState.id);
+    updateFilmBtn();
   }
   function setLang(l) {
     lang = l; try { localStorage.setItem("sc-lang", l); } catch (e) {}
@@ -85,7 +86,7 @@
       if (i > 0) end.insertAdjacentHTML("beforebegin", `<div class="walk-ribbon" aria-hidden="true"></div>`);
       const works = WORKS.filter(w => w.wing === "wearable" && w.room === room.id);
       const pieces = works.map((w, j) => `
-        <figure class="piece ${j % 2 ? "piece--b" : "piece--a"}" data-depth="${j % 2 ? 0.55 : 0.25}">
+        <figure class="piece ${j % 2 ? "piece--b" : "piece--a"}" style="--j:${j}" data-depth="${j % 2 ? 0.55 : 0.25}">
           <button class="piece-hit" type="button" data-open="${w.id}" data-cursor="view" data-wt="${w.id}|aria">
             <div class="piece-frame">${media(w, { halftone: "black" })}</div>
           </button>
@@ -96,7 +97,7 @@
           </figcaption>
         </figure>`).join("");
       end.insertAdjacentHTML("beforebegin", `
-        <div class="room" id="room-${room.id}" data-room="${room.id}">
+        <div class="room" id="room-${room.id}" data-room="${room.id}" style="--n:${works.length}">
           <div class="room-wall tex-${room.wall}" aria-hidden="true"></div>
           <div class="room-lace" aria-hidden="true"></div>
           <header class="room-title"><span class="mono"><span data-i18n="room"></span> ${ROMAN[i]}</span><h3 data-i18n="rooms.${room.id}"></h3></header>
@@ -108,7 +109,7 @@
   }
 
   function renderSalon() {
-    const frameType = w => !w.image ? "frame--float" : w.id === "w-03" ? "frame--wood" : "";
+    const frameType = w => !w.image || w.frame === "float" ? "frame--float" : w.frame === "wood" ? "frame--wood" : "";
     $("#salon-hang").innerHTML = WORKS.filter(w => w.wing === "wall").map(w => `
       <figure class="salon-item span-${w.span || "small"}">
         <button class="frame-btn" type="button" data-open="${w.id}" data-cursor="view" data-wt="${w.id}|aria" data-tilt>
@@ -279,7 +280,7 @@
     });
 
     // header colour (created after the pin so positions include its spacing) follows the section under it
-    const tones = [[".hero", "dark"], [".prolog", "light"], [".walk", "dark"], [".interlude", "light"], [".wall", "light"], [".ex", "dark"], [".contact", "light"], [".foot", "dark"]];
+    const tones = [[".hero", "dark"], [".prolog", "light"], [".walk", "dark"], [".film", "light"], [".interlude", "light"], [".wall", "light"], [".ex", "dark"], [".contact", "light"], [".foot", "dark"]];
     const top = $(".top");
     tones.forEach(([sel, tone]) => ScrollTrigger.create({
       trigger: sel, start: "top 36px", end: "bottom 36px",
@@ -318,6 +319,11 @@
     m.innerHTML = band + (w.image
       ? `<span class="mat" role="button" tabindex="0" aria-label="${t("p.zoom")}"><img src="${w.image}" alt="${field(w, "alt")}"></span>`
       : `<div class="ph"><svg class="thread" data-draw="${w.draw}" data-seed="${w.id}"></svg><span class="mono">${field(w, "phNo")}</span></div>`);
+    const imgs = w.image ? [w.image, ...(w.gallery || [])] : [];
+    if (imgs.length > 1) {
+      m.insertAdjacentHTML("beforeend", `<div class="plate-thumbs">${imgs.map((src, i) =>
+        `<button type="button" class="plate-thumb" data-src="${src}" aria-label="${i + 1} / ${imgs.length}" aria-pressed="${i === 0}"><img src="${src}" alt=""></button>`).join("")}</div>`);
+    }
     Thread.drawAll(m);
     $("#plate-no").textContent = field(w, "meta") + (w.wing === "wearable" ? " · " + t("rooms." + w.room) : "");
     $("#plate-title").textContent = field(w, "title");
@@ -364,7 +370,16 @@
     $("#plate-enquire").addEventListener("click", () => { const id = plateState.id; closePlate(); enquire(id); });
     const media = $("#plate-media");
     const toggleZoom = () => media.classList.toggle("is-zoomed");
-    media.addEventListener("click", e => { if (e.target.closest(".mat")) toggleZoom(); });
+    media.addEventListener("click", e => {
+      const th = e.target.closest(".plate-thumb");
+      if (th) {
+        media.classList.remove("is-zoomed");
+        media.querySelector(".mat img").src = th.dataset.src;
+        $$(".plate-thumb", media).forEach(b => b.setAttribute("aria-pressed", String(b === th)));
+        return;
+      }
+      if (e.target.closest(".mat")) toggleZoom();
+    });
     media.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.closest(".mat")) { e.preventDefault(); toggleZoom(); } });
     media.addEventListener("pointermove", e => {
       const mat = media.querySelector(".mat"); if (!mat || !media.classList.contains("is-zoomed")) return;
@@ -393,6 +408,31 @@
     msg.value = `${field(w, "title")} (${field(w, "no")})\n\n`;
     scrollTo("#kontakt");
     setTimeout(() => $("#f-name").focus({ preventScroll: true }), reduce ? 50 : 1400);
+  }
+
+
+  /* ---------------- film: plays muted while in view ---------------- */
+  const film = { v: null, userPaused: false };
+  function updateFilmBtn() {
+    const b = $("#film-toggle"); if (!b || !film.v) return;
+    const playing = !film.v.paused;
+    b.textContent = t(playing ? "film.pause" : "film.play");
+    b.setAttribute("aria-pressed", String(!playing));
+  }
+  function setupFilm() {
+    film.v = $("#film-video"); if (!film.v) return;
+    const v = film.v;
+    v.addEventListener("play", updateFilmBtn); v.addEventListener("pause", updateFilmBtn);
+    $("#film-toggle").addEventListener("click", () => {
+      if (v.paused) { film.userPaused = false; v.play().catch(() => {}); }
+      else { film.userPaused = true; v.pause(); }
+    });
+    if (reduce) { v.preload = "metadata"; updateFilmBtn(); return; }
+    new IntersectionObserver(([en]) => {
+      if (en.isIntersecting && !film.userPaused) { v.preload = "auto"; v.play().catch(() => {}); }
+      else if (!en.isIntersecting) v.pause();
+    }, { threshold: 0.35 }).observe(v);
+    updateFilmBtn();
   }
 
   /* ---------------- exhibitions: floating image ---------------- */
@@ -441,6 +481,7 @@
   applyLang();
   setupPlate();
   setupForm();
+  setupFilm();
   setupExFloat();
   setupTilt();
   if (window.gsap && window.ScrollTrigger) setupScroll();

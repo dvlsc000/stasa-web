@@ -31,10 +31,17 @@ Copy one entry in `WORKS` and give it a new `id`.
 - For framed originals, use `wing:"wall"`.
 - For prints, use `wing:"print"`.
 
-Each room shows its first two pieces in the walk layout. To show more per room, the walk layout needs a third position, so ask a developer, or Claude, to add one.
+A room can hold any number of pieces. The walk gets longer by itself, and pieces alternate between hanging on the wall and standing lower. A piece can have extra photos for the detail view: `gallery:["images/works/extra.jpg"]`. Framed works take `frame:"black"`, `"wood"` or `"float"`.
 
 ## Room walls
-Each room's wall pattern is set in `ROOMS` (`wall:`): `eyes-ink`, `stripes-red`, `dots-red`, `dots-ink`, `eyes-red`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
+Each room's wall pattern is set in `ROOMS` (`wall:`). The patterns are taken from Staša's collages:
+`curtain` (red velvet, like her studio photos), `anemone` (white flower print on black with pink stripes), `lips-red`, `lips-ink`, `eyes-red`, `eyes-ink`, `satin-stripes`, plus `stripes-red`, `dots-red`, `dots-ink`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
+
+## 3D hat
+The rotating black hat in front of the red curtain is drawn in code in `js/hat3d.js`, using three.js from `vendor/`. It's modelled on the black straw hat with the bow. Brim waves, colours and lights are all at the top of that file. It only renders while it's on screen, and visitors can drag it or turn it with the arrow keys.
+
+## Film
+`media/film.mp4` is a silent, smaller copy of the six-looks film. It plays muted while on screen, and visitors can pause it. To replace it, keep the same file name, or change the `src` in `index.html`.
 
 ## Contact form
 The form checks the fields but doesn't send anything yet. To connect it, look for `TODO` in `js/main.js`. A form service such as Formspree or Netlify Forms takes a few lines.
@@ -48,10 +55,14 @@ Drag this folder onto https://app.netlify.com/drop, or push it to GitHub and imp
 - `css/fonts.css` and `fonts/`: self-hosted Bodoni Moda, Newsreader and Cutive Mono (all open licence)
 - `js/content.js`: all content
 - `js/thread.js`: the hand-drawn thread lines and printed eye pattern
-- `js/main.js`: languages, the walk, detail view, halftone effect, form
+- `js/main.js`: languages, the walk, detail view, halftone effect, film, form
+- `js/hat3d.js`: the 3D hat
+- `media/`: the film
 - `vendor/`: GSAP + ScrollTrigger and Lenis (smooth scroll)
 
 Motion respects the visitor's "reduce motion" setting. With that setting on, the walk becomes a normal vertical page and every effect switches off.
 
-## Photo rights
-The three artwork photos currently in `images/works/` were taken from the web as stand-ins. Replace them with Staša's own photographs before the site goes public.
+## Photos
+Most photos in `images/works/` are Staša's own. Three were first taken from the web as stand-ins: `matadors-darling.jpg`, `vrpce.jpg` and `oko.jpg`. Replace them with her own files before launch. The `look-*.jpg` stills come from the fashion-shoot video, so they're small. Swap in the original photographs when you have them.
+
+Titles, years and materials for the newer pieces are best guesses from the photos. Check them in `js/content.js`.

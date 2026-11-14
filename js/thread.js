@@ -156,6 +156,65 @@
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
   }
 
+
+  /* ---------- Flower print: white starbursts and bubbles on black (Swan, Red hat) ---------- */
+  function anemoneTile({ bg = "#111010", fg = "#ECE7DC", w = 260, h = 260, seed = 4 }) {
+    const r = rng(seed); let g = "";
+    // bubbles
+    for (let i = 0; i < 70; i++) {
+      const x = r() * w, y = r() * h, rx = 1.2 + r() * 3.4, ry = rx * (0.7 + r() * 0.6);
+      const ring = r() < 0.35;
+      const one = (ox, oy) => ring
+        ? `<ellipse cx="${(x + ox).toFixed(1)}" cy="${(y + oy).toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="none" stroke="${fg}" stroke-width="1.1"/>`
+        : `<ellipse cx="${(x + ox).toFixed(1)}" cy="${(y + oy).toFixed(1)}" rx="${(rx * .8).toFixed(1)}" ry="${(ry * .8).toFixed(1)}" fill="${fg}"/>`;
+      g += one(0, 0); if (x > w - 8) g += one(-w, 0); if (y > h - 8) g += one(0, -h);
+    }
+    // starburst flowers
+    const flower = (cx, cy, R) => {
+      let f = "";
+      const n = 46;
+      for (let i = 0; i < n; i++) {
+        const a = i / n * 6.283 + r() * .08, len = R * (0.62 + r() * 0.38), bend = (r() - .5) * 0.25;
+        const x1 = cx + Math.cos(a) * R * .2, y1 = cy + Math.sin(a) * R * .2;
+        const x2 = cx + Math.cos(a + bend) * len, y2 = cy + Math.sin(a + bend) * len;
+        const mx = cx + Math.cos(a + bend * .5) * len * .6, my = cy + Math.sin(a + bend * .5) * len * .6;
+        f += `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="${fg}" stroke-width="${(1 + r() * 1.6).toFixed(1)}" stroke-linecap="round" fill="none"/>`;
+      }
+      f += `<circle cx="${cx}" cy="${cy}" r="${R * .2}" fill="${bg}" stroke="${fg}" stroke-width="1.4"/>`;
+      for (let i = 0; i < 14; i++) { const a = r() * 6.283, d = r() * R * .16; f += `<circle cx="${(cx + Math.cos(a) * d).toFixed(1)}" cy="${(cy + Math.sin(a) * d).toFixed(1)}" r="1.4" fill="${fg}"/>`; }
+      return f;
+    };
+    g += flower(w * .3, h * .28, 52) + flower(w * .78, h * .74, 46) + flower(w * .78 - w, h * .74, 46) + flower(w * .3, h * .28 + h, 52);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${g}</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
+
+  /* ---------- Lips print (Platinum, Embrace, Under lace) ---------- */
+  function lipsTile({ bg, fg, w = 190, h = 150, seed = 6 }) {
+    const r = rng(seed);
+    const lips = (cx, cy, sc, rot) => {
+      const speck = Array.from({ length: 7 }, () => `<circle cx="${((r() - .5) * 44).toFixed(1)}" cy="${((r() - .5) * 16).toFixed(1)}" r="${(0.8 + r() * 1.6).toFixed(1)}" fill="${bg}" opacity=".85"/>`).join("");
+      return `<g transform="translate(${cx} ${cy}) rotate(${rot}) scale(${sc})">
+        <path d="M-30 0 C-22 -6 -14 -14 -6 -12 C-3 -11 -1 -9 0 -8 C1 -9 3 -11 6 -12 C14 -14 22 -6 30 0 C20 2 10 1 0 2 C-10 1 -20 2 -30 0Z" fill="${fg}"/>
+        <path d="M-30 0 C-20 4 -10 4 0 4 C10 4 20 4 30 0 C24 12 12 17 0 17 C-12 17 -24 12 -30 0Z" fill="${fg}"/>
+        <path d="M-27 1.5 C-15 4.5 15 4.5 27 1.5" stroke="${bg}" stroke-width="1.6" fill="none" opacity=".9"/>
+        <path d="M-12 9 C-6 12 6 12 12 9" stroke="${bg}" stroke-width="1.1" fill="none" opacity=".5"/>
+        ${speck}</g>`;
+    };
+    const a = lips(w * .26, h * .3, 0.95, -10 + r() * 6), b = lips(w * .76, h * .78, 0.9, 8 + r() * 8);
+    const b2 = lips(w * .76 - w, h * .78, 0.9, 12), a2 = lips(w * .26, h * .3 + h, 0.95, -8);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${a}${b}${b2}${a2}</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
+
+  /* ---------- Faint white lashes on cotton (Embrace) ---------- */
+  function lashesTile({ bg, fg, w = 220, h = 170 }) {
+    const eye = (cx, cy, rot) => `<g transform="translate(${cx} ${cy}) rotate(${rot})" stroke="${fg}" stroke-width="2.2" stroke-linecap="round" fill="none">
+      <path d="M-26 0 Q0 12 26 0"/><path d="M-20 4 l-4 7 M-12 7 l-2 8 M-4 8 v8 M4 8 l1 8 M12 7 l3 8 M20 4 l5 7"/></g>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${eye(w * .28, h * .3, -6)}${eye(w * .78, h * .78, 7)}${eye(w * .78 - w, h * .78, 7)}${eye(w * .28, h * .3 + h, -6)}</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
+
   function lace(color) {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="16" viewBox="0 0 28 16"><path d="M0 0H28V6Q21 16 14 6Q7 16 0 6Z" fill="${color}"/><circle cx="7" cy="7.6" r="1.6" fill="#111010"/><circle cx="21" cy="7.6" r="1.6" fill="#111010"/><circle cx="14" cy="3" r="1" fill="#111010"/><circle cx="0" cy="3" r="1" fill="#111010"/><circle cx="28" cy="3" r="1" fill="#111010"/></svg>`;
     return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
@@ -170,6 +229,10 @@
     root.setProperty("--tex-eyes-ink", eyeTile({ bg: ink, fg: "#D6D0C3", iris: ink, seed: 3 }));
     root.setProperty("--tex-eyes-red", eyeTile({ bg: cotton, fg: red, iris: cotton, seed: 9, w: 200, h: 160 }));
     root.setProperty("--tex-lace", lace(cotton));
+    root.setProperty("--tex-anemone", anemoneTile({ bg: ink }));
+    root.setProperty("--tex-lips-red", lipsTile({ bg: cotton, fg: red, seed: 6 }));
+    root.setProperty("--tex-lips-ink", lipsTile({ bg: cotton, fg: ink, seed: 11, w: 170, h: 136 }));
+    root.setProperty("--tex-lashes", lashesTile({ bg: cotton, fg: "#F8F5EF" }));
   }
 
   window.Thread = { draw, drawAll, wobble, installTextures };
