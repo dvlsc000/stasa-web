@@ -1,142 +1,57 @@
-# Salon Čimbur — the StashaHats website
+# Staša Čimbur — website
 
-A walk-through collage for Staša Čimbur, in Croatian, English, Dutch, Spanish, German and French.
+A static website: plain HTML, CSS and JavaScript. It needs no build step and no framework.
 
-- `DESIGN.md` explains the colours, patterns, fonts and motion.
-- `AUDITS.md` lists what was checked and fixed.
-
----
-
-## 1. Run it on your computer
-
-You need **Node.js 20 or newer** (download from nodejs.org). Then open a terminal in this folder and run:
-
-```bash
-npm install        # once
-npm run dev        # opens at http://localhost:4321  — changes appear as you save
-```
-
-To make the finished site (the `dist` folder):
-
-```bash
-npm run build
-npm run preview    # look at the finished build
-```
-
----
-
-## 2. Change text
-
-All words live in **one file per language** in `content/i18n/`:
+## Run it locally
+Open a terminal in this folder and run:
 
 ```
-content/i18n/hr.json   ← Croatian (the default)
-content/i18n/en.json   content/i18n/nl.json   content/i18n/es.json
-content/i18n/de.json   content/i18n/fr.json
+python3 -m http.server 8000
 ```
 
-Each file has two parts:
+Then open http://localhost:8000. Use a local server rather than double-clicking `index.html`. Without one, the halftone "print" effect can't read the photos, so it switches itself off.
 
-- **`"ui"`** holds the site text: headings, the prologue, the quote, the form labels and so on. Change the text inside the quotes, and keep the key on the left the same.
-- **`"works"`** holds, for each piece (by its plate number, e.g. `"pl-017"`), its `title`, `materials`, `technique`, `story` (2–4 sentences) and `alt`. The `alt` is a short description of the photo for blind visitors; describe what it looks like.
+## Swap a photo
+1. Put the photo in `images/works/`, for example `crni-labud.jpg`. A JPG about 1600px on the long side is plenty.
+2. Open `js/content.js`, find the work (e.g. `id:"pl-001"`) and change `image:null` to `image:"images/works/crni-labud.jpg"`.
 
-Text inside the quotes can use any letters (č ć š ž đ é ü ß…). If the text itself needs a straight double quote, write it as `\"`. It's easier to use the language's own quotation marks: „…“ « … » “…”.
+That's all. The placeholder plate disappears, and the photo gets the halftone reveal and the zoomable detail view automatically.
 
-Other settings are in `content/site.json`: email, Instagram link, web address, the portrait, and which pieces land in the opening collage (`heroCutouts`).
+## Change text
+Everything you can read is in `js/content.js`:
+- `UI` holds the interface text, one block per language: hr, en, nl, es, de, fr.
+- `STORIES` holds the descriptions. Each work uses the story of its room, or its own `story` key.
+- `WORKS` holds titles, years, materials, dimensions, availability and prices. Use `price: 450` to show a price, or `null` for "price on request".
+- `EXHIBITIONS` holds the exhibition list. Years are left blank where they still need confirming.
+- `SITE` holds the contact email, Instagram link and default language.
 
-> ⚠️ **To check before launch.** The **email address and Instagram link** in `content/site.json` are guesses. The **exhibition list** in `content/exhibitions.json` is a placeholder: only "All you need is a Hat" at MUO Zagreb, a Gemeentemuseum Den Haag show and the Josipa Lisac collaboration come from the brief. Every year, title and venue must be checked or replaced. The **prologue text, the quote and all 36 pieces** are placeholder copy.
+## Add a new piece
+Copy one entry in `WORKS` and give it a new `id`.
+- For the walk (Wing I), use `wing:"wearable"` and a `room` (hats, headpieces, bags, parasols, textiles, clothes).
+- For framed originals, use `wing:"wall"`.
+- For prints, use `wing:"print"`.
 
----
+Each room shows its first two pieces in the walk layout. To show more per room, the walk layout needs a third position, so ask a developer, or Claude, to add one.
 
-## 3. Swap photos
+## Room walls
+Each room's wall pattern is set in `ROOMS` (`wall:`): `eyes-ink`, `stripes-red`, `dots-red`, `dots-ink`, `eyes-red`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
 
-Put photos in `public/images/works/`, named after the plate number:
+## Contact form
+The form checks the fields but doesn't send anything yet. To connect it, look for `TODO` in `js/main.js`. A form service such as Formspree or Netlify Forms takes a few lines.
 
-| File | What it is |
-|---|---|
-| `pl-017.jpg` | the main photo of plate 017 |
-| `pl-017-detail.jpg` | a close-up (stitching, texture), shown in the plate view |
-| `public/images/cutouts/pl-017.webp` | optional: the piece with a transparent background, used in the hero and the walk (see section 5) |
-| `public/images/portrait.jpg` | Staša's portrait in the prologue |
+## Publish online
+Drag this folder onto https://app.netlify.com/drop, or push it to GitHub and import it into Vercel or Netlify. No settings are needed.
 
-JPG, PNG or WebP all work, up to any size. The site makes small AVIF/WebP versions automatically when you run `npm run dev` or `npm run build`. Until a photo exists, the piece is shown as a stitched paper placeholder with its plate number and a small red eye.
+## What's inside
+- `index.html`: page structure
+- `css/style.css`: all styling (colours and fonts are at the top in `:root`)
+- `css/fonts.css` and `fonts/`: self-hosted Bodoni Moda, Newsreader and Cutive Mono (all open licence)
+- `js/content.js`: all content
+- `js/thread.js`: the hand-drawn thread lines and printed eye pattern
+- `js/main.js`: languages, the walk, detail view, halftone effect, eye cursor, form
+- `vendor/`: GSAP + ScrollTrigger and Lenis (smooth scroll)
 
-To use the reference artwork's colours, see the note at the top of `DESIGN.md`.
+Motion respects the visitor's "reduce motion" setting. With that setting on, the walk becomes a normal vertical page and every effect switches off.
 
----
-
-## 4. Add a new piece
-
-1. Open `content/works.json` and copy one block `{ … }`. Paste it at the end, with a comma between blocks. Then change:
-
-   | Field | Meaning |
-   |---|---|
-   | `id` | new plate number, e.g. `"pl-037"` |
-   | `slug` | the web address part, e.g. `"red-velvet-cloche"`: lowercase, hyphens, no spaces |
-   | `wing` | `"wearable"` (the walk) or `"wall"` (the salon hang) |
-   | `room` | wearable: `hats`, `headpieces`, `bags`, `parasols`, `textiles` or `clothes`; wall: `framed` or `collage` |
-   | `year` | the year |
-   | `dimensions` | e.g. `"50 × 70 cm"` |
-   | `available` | `true` or `false` |
-   | `price` | a number in euro, e.g. `950`, or `null` to show "Price on request" |
-   | `depth` | `0` to `1`: how far back it hangs in the walk (0 = close and large) |
-   | `wallpaper` | the pattern behind it on its plate: `wallpaper-ink`, `eyes`, `dots-red`, `dots-ink`, `stripes-red` or `gingham` |
-   | `size`, `frame` | wall pieces only. `size`: `s`, `m`, `l`, `xl` or `wide`. `frame`: `lacquer`, `dots` or `stitched` |
-   | `placeholder` | which stitched silhouette to show until there's a photo, e.g. `cloche`, `brim`, `parasol-open` |
-
-2. Add its texts (`title`, `materials`, `technique`, `story`, `alt`) under `"works"` in **each** of the six language files, using the same `id`.
-3. Add its photo as `public/images/works/pl-037.jpg`.
-
-Rooms grow by themselves: each extra piece makes its room a little longer.
-
----
-
-## 5. Make cut-outs (transparent backgrounds)
-
-This needs Python 3.10+ (on Windows, tick "Add Python to PATH" when installing). Install the background remover once:
-
-```bash
-pip install "rembg[cpu]" pillow
-```
-
-Then run:
-
-```bash
-npm run cutouts
-```
-
-This makes `public/images/cutouts/pl-xxx.webp` for every photo in `public/images/works/` (detail shots are skipped). The first run downloads a ~170 MB model. Existing cut-outs are kept; run `node scripts/run-python.mjs scripts/cutouts.py --force` to redo them. Check veils, tulle and feathers by eye, since you may want to tidy those in an image editor.
-
----
-
-## 6. The contact form
-
-The form sends its data (as JSON) to whatever address you set:
-
-1. Create a free form endpoint, e.g. at formspree.io.
-2. Copy `.env.example` to `.env` and fill in `PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxx`.
-3. On Netlify or Vercel, add the same variable under **Environment variables**, then redeploy.
-
-Until then the form shows a success message but **sends nothing** (marked `TODO` in `src/scripts/form.ts`).
-
----
-
-## 7. Put it online
-
-**Netlify:** push this folder to a GitHub repository. In Netlify choose **Add new site → Import from Git** and pick the repository. The settings come from `netlify.toml`, so just press Deploy.
-
-**Vercel:** same idea. **Add New → Project**, import the repository, and the settings come from `vercel.json`.
-
-After the first deploy, set your real domain in `content/site.json` (`siteUrl`) and in `public/robots.txt`, then deploy again. This matters for the share images and search engines.
-
----
-
-## How it's built (for developers)
-
-- **Astro 7**, static output. Pages: `/{lang}/` and `/{lang}/work/{slug}/` (216 plate pages), plus `sitemap.xml`. `/` redirects using the browser language.
-- **Scripts:** vanilla TypeScript in `src/scripts/`, with GSAP ScrollTrigger and Lenis. There is no UI framework.
-- **Plate overlay:** the plate opens by fetching its own page into a `<dialog>`, and updates the URL with `history.pushState`.
-- **Styles:** plain CSS in `src/styles/` (tokens, base, cuts, components, sections, plate).
-- **Patterns:** `scripts/build-patterns.py` writes the SVG patterns. Rerun with `npm run patterns` after editing.
-- **Images:** `scripts/images.mjs` makes responsive images and `src/data/image-manifest.json`.
-- **Fonts:** in `public/fonts/` with their licences, all SIL Open Font License.
+## Photo rights
+The three artwork photos currently in `images/works/` were taken from the web as stand-ins. Replace them with Staša's own photographs before the site goes public.
