@@ -191,21 +191,55 @@ function init(host) {
      double-click / double-tap to reset. On phones vertical drags still scroll the page. */
   let yaw = -0.5, pitch = 0, tPitch = 0, vel = 0, dragging = false, lastX = 0, lastY = 0, visible = false, raf = 0, lastT = 0, idleUntil = 0;
   const el = renderer.domElement;
-  el.style.touchAction = "pan-y";
+  /* Touch: the hat area owns its gestures (touch-action none) and locks each one to one axis.
+     Sideways = turn the hat, nothing else moves. Clearly vertical = we scroll the page ourselves,
+     1:1 with a glide, so the walk can still continue from here. Never both at once. */
+  el.style.touchAction = touch ? "none" : "pan-y";
   const wake = () => { if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(loop); } };
+  const pageScroller = () => document.documentElement.classList.contains("app-scroll") ? document.body : document.scrollingElement;
+  let axis = 0, sx = 0, sy = 0, sv = 0, lastMoveT = 0, glide = 0;      // axis: 0 undecided, 1 turn, 2 scroll
   el.addEventListener("pointerdown", e => {
-    dragging = true; lastX = e.clientX; lastY = e.clientY; vel = 0;
+    cancelAnimationFrame(glide);
+    dragging = true; lastX = sx = e.clientX; lastY = sy = e.clientY; vel = 0; sv = 0; lastMoveT = e.timeStamp;
+    axis = e.pointerType === "mouse" ? 1 : 0;
     try { el.setPointerCapture(e.pointerId); } catch (_) {}
-    host.classList.add("is-dragging", "was-touched"); wake();
+    host.classList.add("was-touched"); wake();
   });
   el.addEventListener("pointermove", e => {
     if (!dragging) return;
-    const dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
+    if (!axis) {
+      const ax = Math.abs(e.clientX - sx), ay = Math.abs(e.clientY - sy);
+      if (ax < 7 && ay < 7) return;
+      axis = ax >= ay * 0.8 ? 1 : 2;                                   // a near-diagonal drag turns the hat
+      lastX = e.clientX; lastY = e.clientY;
+      if (axis === 1) host.classList.add("is-dragging");
+      return;
+    }
+    const dx = e.clientX - lastX, dy = e.clientY - lastY, dt = Math.max(1, e.timeStamp - lastMoveT);
+    lastX = e.clientX; lastY = e.clientY; lastMoveT = e.timeStamp;
+    if (axis === 2) {                                                  // vertical: walk on, hat untouched
+      const sc = pageScroller(); sc.scrollTop -= dy;
+      sv = 0.75 * sv + 0.25 * (-dy / dt);
+      return;
+    }
     yaw += dx * 0.012; vel = dx * 0.012;
     if (e.pointerType === "mouse") tPitch = Math.max(-0.35, Math.min(0.45, tPitch + dy * 0.006));
     idleUntil = performance.now() + 2600; wake();
   });
-  const end = () => { if (!dragging) return; dragging = false; host.classList.remove("is-dragging"); idleUntil = performance.now() + 2600; host.dataset.yaw = yaw.toFixed(2); };
+  const end = () => {
+    if (!dragging) return; dragging = false; host.classList.remove("is-dragging");
+    idleUntil = performance.now() + 2600; host.dataset.yaw = yaw.toFixed(2);
+    if (axis === 2 && Math.abs(sv) > 0.08) {                           // let a vertical flick glide like a normal scroll
+      const sc = pageScroller(); let v = sv, last = performance.now();
+      const step = now => {
+        const d = Math.min(32, now - last); last = now;
+        sc.scrollTop += v * d; v *= Math.pow(0.9965, d);
+        if (Math.abs(v) > 0.03) glide = requestAnimationFrame(step);
+      };
+      glide = requestAnimationFrame(step);
+    }
+    axis = 0;
+  };
   el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end); el.addEventListener("lostpointercapture", end);
   el.addEventListener("dblclick", () => { tPitch = 0; vel = 0; yaw = Math.round(yaw / (Math.PI * 2)) * Math.PI * 2 - 0.5; wake(); });
   // keyboard: arrow keys turn the hat

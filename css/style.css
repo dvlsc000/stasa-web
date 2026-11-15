@@ -436,7 +436,7 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
 @media (max-width: 899px) {
   html.pin-on .walk-viewport { height: 100svh; }
   html.pin-mob .walk-track { will-change: transform; backface-visibility: hidden; }
-  html.pin-mob .hat3d canvas { touch-action: pan-y; }        /* sideways drag turns the hat, up/down still scrolls */
+  html.pin-mob .hat3d canvas { touch-action: none; }         /* the hat area locks each drag to one direction (see hat3d.js) */
   html.pin-mob .piece-frame { box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 16px 22px -14px rgba(0,0,0,.7); }
   html.pin-mob .label { box-shadow: 0 6px 12px -8px rgba(0,0,0,.6); }
   html.pin-on .walk-intro { width: 100vw; padding: 0 7vw; }
