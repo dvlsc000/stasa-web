@@ -238,8 +238,13 @@
 
     // the walk: horizontal, pinned, only on wide screens with motion allowed
     const mm = gsap.matchMedia();
-    mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
+    ScrollTrigger.config({ ignoreMobileResize: true });          // no jumps when the phone's address bar hides
+    mm.add({ desk: "(min-width: 900px) and (prefers-reduced-motion: no-preference)",
+             mob: "(max-width: 899px) and (prefers-reduced-motion: no-preference)" }, ctx => {
+      const { desk, mob } = ctx.conditions;
+      if (!desk && !mob) return;
       html.classList.add("pin-on");
+      html.classList.toggle("pin-mob", !!mob);
       const track = $("#walk-track");
       const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
       const rooms = $$(".room", track);
@@ -254,7 +259,8 @@
       const tween = gsap.to(track, {
         x: () => -dist(), ease: "none",
         scrollTrigger: {
-          trigger: "#salon", pin: true, scrub: 0.7, start: "top top", end: () => "+=" + dist(),
+          trigger: "#salon", pin: true, scrub: mob ? 0.35 : 0.7, start: "top top", end: () => "+=" + dist() * (mob ? 1.15 : 1),
+          anticipatePin: 1,
           invalidateOnRefresh: true, onRefresh: measure,
           onUpdate: self => {
             prog.style.transform = `scaleX(${self.progress})`;
@@ -265,7 +271,8 @@
       });
       measure();
       $$(".piece", track).forEach(el => {
-        const d = parseFloat(el.dataset.depth || 0) * 110;
+        const d = mob ? 0 : parseFloat(el.dataset.depth || 0) * 110;   // phones: no extra depth, just a calm walk
+        if (!d) return;
         gsap.fromTo(el, { x: d }, { x: -d, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
       });
       $$(".walk-ribbon", track).forEach(el => {
@@ -278,7 +285,7 @@
         scrollTo(st.start + marks[i] * (st.end - st.start) + 4, { duration: 1.8 });
       };
       $("#floorplan").addEventListener("click", onGo);
-      return () => { html.classList.remove("pin-on"); $("#floorplan").removeEventListener("click", onGo); };
+      return () => { html.classList.remove("pin-on", "pin-mob"); $("#floorplan").removeEventListener("click", onGo); };
     });
 
     // header colour (created after the pin so positions include its spacing) follows the section under it

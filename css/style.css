@@ -328,6 +328,39 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
 .plate-thumb[aria-pressed="true"], .plate-thumb:hover { opacity: 1; }
 .plate-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
+/* ---------- the walk on phones: same sideways walk, portrait proportions ---------- */
+@media (max-width: 899px) {
+  html.pin-on .walk-viewport { height: 100svh; }
+  html.pin-on .walk-intro { width: 100vw; padding: 0 7vw; }
+  html.pin-on .walk-intro .display { font-size: clamp(56px, 17vw, 96px); }
+  html.pin-on .walk-intro-text { font-size: 17px; }
+  html.pin-on .walk-feature { width: 100vw; }
+  html.pin-on .hat3d { left: 0; bottom: 30%; }
+  html.pin-on .feature-card { left: 6vw; right: 6vw; bottom: 9svh; max-width: none; padding: 14px 18px 16px; }
+  html.pin-on .feature-note { display: none; }
+  html.pin-on .room { width: max(100vw, calc((26 + var(--n, 2) * 76) * 1vw)); }
+  html.pin-on .room-wall { inset: 0 0 36% 0; }
+  html.pin-on .room-lace { top: 64%; }
+  html.pin-on .piece { left: calc((13 + var(--j, 0) * 76) * 1vw); }
+  html.pin-on .piece--a { top: calc(66px + 5svh); width: 66vw; }
+  html.pin-on .piece--b { top: calc(66px + 17svh); width: 72vw; }
+  html.pin-on .label { padding: 8px 12px 10px; }
+  html.pin-on .label .label-title { font-size: 17px; }
+  html.pin-on .label .label-mat { font-size: 13px; }
+  html.pin-on .room-title { bottom: 8svh; left: 7vw; max-width: 86vw; }
+  html.pin-on .room-title h3 { font-size: clamp(32px, min(11vw, 6svh), 56px); }
+  html.pin-on .walk-ribbon { width: 24px; margin: 0 -12px; height: 66%; }
+  html.pin-on .walk-end { width: 80vw; }
+  html.pin-on .walk-end a { font-size: 13px; }
+  /* slim room indicator: progress line + the room you are in */
+  html.pin-on .floorplan { bottom: max(14px, env(safe-area-inset-bottom)); }
+  html.pin-on .floorplan-rooms li { display: none; left: 0 !important; }
+  html.pin-on .floorplan-rooms li:has(button[aria-current="true"]) { display: block; }
+  html.pin-on .floorplan-rooms button { border-left: 0; padding-left: 0; opacity: 1; font-size: 11px; }
+  html.pin-on .walk-hint .thread { animation: nudge 2.4s ease-in-out infinite; }
+  @keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+}
+
 /* ---------- halftone overlay ---------- */
 .ht { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity .8s var(--ease-walk); }
 .ht.is-done { opacity: 0; }
