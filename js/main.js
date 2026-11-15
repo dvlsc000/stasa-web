@@ -9,10 +9,10 @@
   /* Phones: the page body scrolls instead of the browser window. The browser's address bar and
      toolbar then stay still, so they can never push the screen up and down mid-walk, and the
      screen height never changes while scrolling. */
-  const appScroll = !fine && matchMedia("(max-width: 899px)").matches;
-  if (appScroll) html.classList.add("app-scroll");
-  const scroller = appScroll ? document.body : window;
-  const getY = () => appScroll ? document.body.scrollTop : window.scrollY;
+  const appScroll = false;                                  // the window scrolls (Android likes this best)
+  const phone = !fine && matchMedia("(max-width: 899px)").matches;
+  const scroller = window;
+  const getY = () => window.scrollY;
   const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
   /* ---------------- language ---------------- */
@@ -180,7 +180,7 @@
       requestAnimationFrame(() => {
         const y = getY(), dy = y - lastY;
         // phones: the bar stays put; sliding it in and out on every small swipe made the gallery feel loose
-        if (!appScroll && !html.classList.contains("menu-open") && !$("#lang-dd").classList.contains("is-open")) {
+        if (!phone && !html.classList.contains("menu-open") && !$("#lang-dd").classList.contains("is-open")) {
           if (y < 120 || dy < -6) top.classList.remove("is-hidden");
           else if (dy > 8) top.classList.add("is-hidden");
         }
@@ -421,98 +421,12 @@
         lis.forEach((li, i) => li.firstElementChild.setAttribute("aria-current", String(i === c)));
       };
 
-      if (mob) {
-        /* Phones: the section is tall and its viewport is position:sticky, so the browser itself
-           keeps it in place (no JS pinning). The sideways movement is a CSS scroll-driven animation
-           that runs on the compositor, exactly in step with the finger, even while JS is busy.
-           Browsers without scroll timelines get the same layout with a light GSAP fallback. */
-        html.classList.add("pin-sticky");
-        const native = window.CSS && CSS.supports("animation-timeline: view()");
-        const kf = document.createElement("style"); document.head.appendChild(kf);
-        let lastW = 0;
-        const layout = () => {
-          const d = dist();
-          $("#salon").style.setProperty("--walk-run", Math.round(d * 1.25) + "px");
-          kf.textContent = `@keyframes walk-x{from{transform:translate3d(0,0,0)}to{transform:translate3d(${-d}px,0,0)}}`;
-          measure();
-        };
-        layout(); lastW = window.innerWidth;
-        if (native) html.classList.add("walk-native");
-        const st = ScrollTrigger.create({
-          trigger: "#salon", start: "top top", end: "bottom bottom",
-          onRefreshInit: () => { if (window.innerWidth !== lastW) { lastW = window.innerWidth; layout(); } },
-          onUpdate: self => {
-            if (!native) { track.style.transform = `translate3d(${-self.progress * dist()}px,0,0)`; prog.style.transform = `scaleX(${self.progress})`; }
-            setCurrent(self.progress);
-          }
-        });
-        const onGoM = e => {
-          const b = e.target.closest("[data-goto]"); if (!b) return;
-          const i = ROOMS.findIndex(r => r.id === b.dataset.goto);
-          scroller.scrollTo({ top: st.start + marks[i] * (st.end - st.start) + 4, behavior: "smooth" });
-        };
-        $("#floorplan").addEventListener("click", onGoM);
-
-        /* Sideways swipes walk the gallery too. The browser keeps vertical swipes (native,
-           with momentum); a gesture that starts sideways is ours: it moves the walk 1:1 with
-           the finger and glides out on release. */
-        const vp = $(".walk-viewport");
-        vp.style.touchAction = "pan-y";
-        let sx = 0, sy = 0, lx = 0, lt = 0, v = 0, mode = 0, glide = 0, pid = null;
-        const sc = scroller === window ? document.scrollingElement : scroller;
-        const k = () => (st.end - st.start) / Math.max(1, dist());           // scroll px per track px
-        const clampTop = y => Math.max(st.start, Math.min(st.end, y));
-        vp.addEventListener("pointerdown", e => {
-          if (e.pointerType === "mouse" || e.target.closest(".hat3d, .floorplan")) return;
-          cancelAnimationFrame(glide); pid = e.pointerId; mode = 0; v = 0;
-          sx = lx = e.clientX; sy = e.clientY; lt = e.timeStamp;
-        }, { passive: true });
-        vp.addEventListener("pointermove", e => {
-          if (e.pointerId !== pid) return;
-          if (!mode) {
-            const ax = Math.abs(e.clientX - sx), ay = Math.abs(e.clientY - sy);
-            if (ax < 6 && ay < 6) return;
-            mode = ax > ay ? 1 : -1;                                          // 1 = sideways, ours
-          }
-          if (mode !== 1) return;
-          const dx = e.clientX - lx, dt = Math.max(1, e.timeStamp - lt);
-          sc.scrollTop = clampTop(sc.scrollTop - dx * k());
-          v = 0.8 * v + 0.2 * (-dx * k() / dt);                               // px per ms, smoothed
-          lx = e.clientX; lt = e.timeStamp;
-        }, { passive: true });
-        let swiped = 0;
-        vp.addEventListener("click", e => {                                 // a swipe is not a tap on a piece
-          if (performance.now() - swiped < 350) { e.preventDefault(); e.stopPropagation(); }
-        }, true);
-        const release = e => {
-          if (e.pointerId !== pid) return; pid = null;
-          if (mode === 1) swiped = performance.now();
-          if (mode !== 1 || Math.abs(v) < 0.05) return;
-          let last = performance.now();
-          const step = now => {
-            const dt = Math.min(32, now - last); last = now;
-            sc.scrollTop = clampTop(sc.scrollTop + v * dt);
-            v *= Math.pow(0.994, dt);                                         // gentle friction
-            if (Math.abs(v) > 0.02) glide = requestAnimationFrame(step);
-          };
-          glide = requestAnimationFrame(step);
-        };
-        vp.addEventListener("pointerup", release); vp.addEventListener("pointercancel", e => { if (e.pointerId === pid) pid = null; });
-        sc.addEventListener("touchstart", () => cancelAnimationFrame(glide), { passive: true });
-
-        return () => {
-          html.classList.remove("pin-on", "pin-mob", "pin-sticky", "walk-native");
-          track.style.transform = ""; kf.remove(); $("#salon").style.removeProperty("--walk-run");
-          $("#floorplan").removeEventListener("click", onGoM);
-        };
-      }
-
       const tween = gsap.to(track, {
         x: () => -dist(), ease: "none",
         scrollTrigger: {
           trigger: "#salon", pin: true, start: "top top",
-          scrub: 0.7,
-          end: () => "+=" + dist(),
+          scrub: mob ? true : 0.7,                             // phones: the gallery moves exactly with the finger
+          end: () => "+=" + dist() * (mob ? 1.25 : 1),          // phones: a calmer pace per swipe
           fastScrollEnd: true,
           anticipatePin: 1,
           invalidateOnRefresh: true, onRefresh: measure,
@@ -520,11 +434,11 @@
         }
       });
       measure();
-      $$(".piece", track).forEach(el => {
+      if (!mob) $$(".piece", track).forEach(el => {             // phones: no extra depth motion, just the walk
         const d = parseFloat(el.dataset.depth || 0) * 110;
         gsap.fromTo(el, { x: d }, { x: -d, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
       });
-      $$(".walk-ribbon", track).forEach(el => {
+      if (!mob) $$(".walk-ribbon", track).forEach(el => {
         gsap.fromTo(el, { x: 160 }, { x: -160, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
       });
       const onGo = e => {
