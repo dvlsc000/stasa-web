@@ -56,7 +56,6 @@
     $("#lang-code").textContent = lang.toUpperCase(); $("#lang-flag").innerHTML = flagIcon(lang);
     const mm = $("#menu-mail"); if (mm) { mm.textContent = SITE.contactEmail; mm.href = "mailto:" + SITE.contactEmail; }
     const mi = $("#menu-insta"); if (mi) mi.href = SITE.instagram;
-    if ($("#marquee")) renderMarquee();
     updateHeroCaption();
     const mail = $("#mail-link"); mail.textContent = SITE.contactEmail; mail.href = "mailto:" + SITE.contactEmail;
     const fm = $("#foot-mail"); if (fm) { fm.textContent = SITE.contactEmail; fm.href = "mailto:" + SITE.contactEmail; }
@@ -194,8 +193,9 @@
     $("#hero-total").textContent = String(hero.ids.length).padStart(2, "0");
     const go = (n, user) => {
       const slides = $$(".hero-slide");
+      const prev = hero.i;
       hero.i = (n + slides.length) % slides.length;
-      slides.forEach((el, k) => el.classList.toggle("is-on", k === hero.i));
+      slides.forEach((el, k) => { el.classList.toggle("was-on", k === prev && k !== hero.i); el.classList.toggle("is-on", k === hero.i); });
       $("#hero-n").textContent = String(hero.i + 1).padStart(2, "0");
       updateHeroCaption();
       const bar = $("#hero-bar"); bar.classList.remove("run"); void bar.offsetWidth; if (!reduce) bar.classList.add("run");
@@ -207,17 +207,15 @@
     const fig = $(".hero-work");
     fig.addEventListener("pointerenter", () => { hero.paused = true; fig.classList.add("is-paused"); });
     fig.addEventListener("pointerleave", () => { hero.paused = false; fig.classList.remove("is-paused"); });
+    const heroEl = $(".hero"); heroEl.classList.add("no-anim");     // the first work is simply there, no intro
     hero.go = go; go(0); restart();
+    requestAnimationFrame(() => requestAnimationFrame(() => heroEl.classList.remove("no-anim")));
   }
   function updateHeroCaption() {
     const cap = $("#hero-cap"); if (!cap || !hero.ids.length) return;
     cap.textContent = field(byId[hero.ids[hero.i]], "title");
   }
-  function renderMarquee() {
-    const words = t("hero.marquee").split("|");
-    const run = words.map(w => `<span>${w}</span><svg class="mq-stitch" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 19 19M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`).join("");
-    $("#marquee").innerHTML = `<div class="mq-run">${run}</div><div class="mq-run">${run}</div>`;
-  }
+
 
   function renderWalk() {
     const end = $(".walk-end");

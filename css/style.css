@@ -183,7 +183,7 @@ svg[data-sew] { color: var(--red); }                       /* sewn drawings are 
 /* ---------- 01 the opening stage ---------- */
 .hero {
   position: relative; overflow: hidden;
-  height: clamp(820px, 100svh, 1040px);
+  height: clamp(780px, 100svh, 1040px);
   background: var(--ink); color: var(--cotton);
 }
 .hero-wall {
@@ -197,8 +197,8 @@ svg[data-sew] { color: var(--red); }                       /* sewn drawings are 
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 20px), 0 100%);
   filter: drop-shadow(3px 0 6px rgba(0,0,0,.45));
 }
-.ribbon--a { left: 13vw; }
-.ribbon--b { left: calc(13vw + clamp(30px, 3.2vw, 50px)); height: calc(100% + 30px); }
+.ribbon--a { left: 6vw; }
+.ribbon--b { left: calc(6vw + clamp(30px, 3.2vw, 50px)); height: calc(100% + 30px); }
 .hero-floor { position: absolute; inset: 46% 0 0 0; background: var(--ink); }
 .lace-line, .room-lace {
   position: absolute; left: 0; right: 0; height: 16px; z-index: 1;
@@ -206,28 +206,18 @@ svg[data-sew] { color: var(--red); }                       /* sewn drawings are 
 }
 .hero .lace-line { top: 46%; }
 
-/* red velvet curtains, drawn back */
-.curtain {
-  position: absolute; top: 0; bottom: 56px; z-index: 4; width: 8vw; max-width: 140px;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.35), transparent 18%, transparent 75%, rgba(0,0,0,.45)),
-    repeating-linear-gradient(90deg, #5e050a 0px, #9c0f18 14px, #cf2229 26px, #e43b3e 31px, #bb131b 42px, #7a080e 58px);
-  filter: drop-shadow(0 0 18px rgba(0,0,0,.5));
-}
-.curtain--l { left: 0; clip-path: polygon(0 0, 100% 0, 92% 30%, 70% 52%, 38% 60%, 64% 70%, 100% 100%, 0 100%); }
-.curtain--r { right: 0; transform: scaleX(-1); clip-path: polygon(0 0, 100% 0, 92% 30%, 70% 52%, 38% 60%, 64% 70%, 100% 100%, 0 100%); }
-.tieback { position: absolute; left: 0; top: 52%; width: 70%; height: 10px; background: linear-gradient(180deg, #e2c27a, #a8813a); border-radius: 0 6px 6px 0; box-shadow: 0 4px 8px rgba(0,0,0,.5); }
-@media (prefers-reduced-motion: no-preference) {
-  .curtain { animation: curtain-part 1.5s cubic-bezier(.65,0,.35,1) .15s both; }
-}
-@keyframes curtain-part { from { width: 26vw; max-width: 460px; } }
-
 /* the rotating exhibition */
-.hero-work { position: absolute; z-index: 3; margin: 0; right: calc(8vw + 4vw); top: 104px; width: clamp(230px, 23vw, 380px); }
+.hero-work { position: absolute; z-index: 3; margin: 0; right: calc(var(--gutter) + 5vw); top: 104px; width: clamp(240px, 24vw, 400px); }
 .hero-stage { position: relative; aspect-ratio: 3 / 4; transform: rotate(-2deg); }
-.hero-slide { position: absolute; inset: 0; display: block; opacity: 0; visibility: hidden; transform: scale(1.04);
-  transition: opacity 1.1s ease, transform 1.6s cubic-bezier(.22,1,.36,1), visibility 0s linear 1.1s; }
-.hero-slide.is-on { opacity: 1; visibility: visible; transform: none; transition: opacity 1.1s ease, transform 1.6s cubic-bezier(.22,1,.36,1), visibility 0s; }
+.hero-slide { position: absolute; inset: 0; display: block; visibility: hidden; z-index: 0;
+  clip-path: inset(100% 0 0 0); }
+.hero-slide.is-on { visibility: visible; z-index: 2; clip-path: inset(0 0 0 0);
+  transition: clip-path 1.25s cubic-bezier(.77, 0, .18, 1); }
+.hero-slide.was-on { visibility: visible; z-index: 1; clip-path: inset(0 0 0 0); }
+.hero-slide .mat img { transform: scale(1.1); transition: transform 1.9s cubic-bezier(.16, 1, .3, 1); will-change: transform; }
+.hero-slide.is-on .mat img { transform: none; }
+.hero-slide.was-on .mat img { transform: none; }
+.hero.no-anim .hero-slide.is-on { transition: none; }
 .hero-slide .mat { position: absolute; inset: 0; display: grid; place-items: center; background: var(--paper); padding: clamp(10px, 1vw, 16px);
   box-shadow: 0 1px 0 rgba(0,0,0,.35), 0 30px 50px -20px rgba(0,0,0,.85); }
 .hero-slide img { width: 100%; height: 100%; object-fit: contain; }
@@ -248,7 +238,7 @@ svg[data-sew] { color: var(--red); }                       /* sewn drawings are 
 @keyframes hero-prog { to { transform: scaleX(1); } }
 
 /* name, line, buttons */
-.hero-text { position: absolute; z-index: 3; left: calc(8vw + var(--gutter)); top: calc(46% + 30px); max-width: 56vw; }
+.hero-text { position: absolute; z-index: 3; left: var(--gutter); top: calc(46% + 34px); max-width: 56vw; }
 .hero-kicker { display: none; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .18em; font-size: 11px; opacity: .75; margin-bottom: 16px; }
 .hero-name {
   font-family: var(--display); font-weight: 400; letter-spacing: -.03em;
@@ -264,21 +254,6 @@ svg[data-sew] { color: var(--red); }                       /* sewn drawings are 
 .hero-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-family: var(--display); font-size: 19px; }
 .hero-link .thread { width: 50px; height: 16px; transition: transform .45s cubic-bezier(.22,1,.36,1); }
 .hero-link:hover .thread { transform: translateX(5px); }
-
-/* red satin ribbon with her crafts running along it */
-.marquee { position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; height: 56px; overflow: hidden; display: flex; align-items: center;
-  background: var(--satin); color: var(--cotton); box-shadow: 0 -10px 24px -12px rgba(0,0,0,.6); }
-.marquee::before, .marquee::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(255,255,255,.28); }
-.marquee::before { top: 6px; } .marquee::after { bottom: 6px; }
-.marquee-track { display: flex; width: max-content; }
-.mq-run { display: flex; align-items: center; flex: none; }
-.mq-run span { font-family: var(--display); font-style: italic; font-size: 25px; padding: 0 26px; white-space: nowrap; }
-.mq-stitch { width: 12px; height: 12px; opacity: .75; flex: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-track { animation: marquee 48s linear infinite; }
-  .marquee:hover .marquee-track { animation-play-state: paused; }
-}
-@keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- 02 prolog ---------- */
 .prolog {
@@ -647,7 +622,6 @@ html:has(.plate:not([hidden])) .pthread { opacity: 0; pointer-events: none; }
 .hero-wall { background-position: calc(var(--mx) * -10px) calc(var(--my) * -6px); }
 .hero-stage { translate: calc(var(--mx) * 14px) calc(var(--my) * 10px); }
 .hero-text { transform: translate3d(calc(var(--mx) * -8px), calc(var(--my) * -4px), 0); }
-.curtain--l { translate: calc(var(--mx) * -6px) 0; } .curtain--r { translate: calc(var(--mx) * -6px) 0; }
 .ribbon { translate: calc(var(--mx) * -4px) 0; }
 
 /* ---------- salon: gallery light ---------- */
@@ -698,18 +672,15 @@ html:has(.plate:not([hidden])) .pthread { opacity: 0; pointer-events: none; }
   .lang-code { display: none; }
   .lang-list { right: -60px; }
   .lang-list::before { right: 82px; }
-  .hero { height: max(800px, 100svh); }
+  .hero { height: max(760px, 100svh); }
   .hero-wall { bottom: 62%; }
   .hero-floor { top: 38%; }
   .hero .lace-line { top: 38%; }
-  .curtain { width: 5vw; bottom: 48px; }
-  .tieback { display: none; }
-  @keyframes curtain-part { from { width: 30vw; } }
   .hero-work { right: auto; left: calc(50% - min(26vw, 130px)); top: 82px; width: min(52vw, 260px); }
   .hero-caption { margin-top: 14px; }
   .hero-caption em { font-size: 17px; }
   .hero-ctrl { margin-top: 6px; }
-  .hero-text { left: calc(5vw + 16px); right: calc(5vw + 12px); top: calc(82px + min(52vw, 260px) * 4 / 3 + 82px); max-width: none; }
+  .hero-text { left: var(--gutter); right: var(--gutter); top: calc(82px + min(52vw, 260px) * 4 / 3 + 82px); max-width: none; }
   .hero-kicker { display: none; }
   .hero-name { font-size: clamp(46px, 13vw, 82px); }
   .hero-underline { width: 72vw; margin: 6px 0 8px .4em; }
@@ -717,9 +688,7 @@ html:has(.plate:not([hidden])) .pthread { opacity: 0; pointer-events: none; }
   .hero-ctas { margin-top: 16px; gap: 10px 18px; }
   .hero-ctas .ribbon-btn { font-size: 17px; padding: 11px 38px 12px 16px; }
   .hero-link { font-size: 17px; }
-  .marquee { height: 48px; }
-  .mq-run span { font-size: 20px; padding: 0 18px; }
-  .ribbon--a { left: 9vw; } .ribbon--b { left: calc(9vw + 26px); }
+  .ribbon--a { left: 6vw; } .ribbon--b { left: calc(6vw + 26px); }
   .prolog { grid-template-columns: 1fr; gap: 56px; }
   .prolog-plate { grid-column: 1; width: min(78%, 380px); }
   .prolog-text { grid-column: 1; padding-top: 0; }
