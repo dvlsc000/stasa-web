@@ -35,7 +35,15 @@ A room can hold any number of pieces. The walk gets longer by itself, and pieces
 
 ## Room walls
 Each room's wall pattern is set in `ROOMS` (`wall:`). The patterns are taken from Staša's collages:
-`curtain` (red velvet, like her studio photos), `eyes-stripes` (red eyes in bands between black stripes), `lips-stripes` (red lips between satin and black pinstripes), `eyes-ribbons` (white eyes on black with red ribbons), `lips-red`, `lips-ink`, `eyes-red`, `eyes-ink`, `satin-stripes`, plus `stripes-red`, `dots-red`, `dots-ink`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
+`curtain` (red velvet, like her studio photos), `hands` (her hand wallpaper), `eyes-stripes` (red eyes in bands between black stripes), `lips-stripes` (red lips between satin and black pinstripes), `eyes-ribbons` (white eyes on black with red ribbons), `lips-red`, `lips-ink`, `eyes-red`, `eyes-ink`, `satin-stripes`, plus `stripes-red`, `dots-red`, `dots-ink`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
+
+## Her print patterns (eyes, lips, hands)
+The room walls, the opening wall and the footer use real samples of Staša's prints, stored in `images/textures/source/`. `tools/make_textures.py` turns each sample into a seamless repeating tile, in her original tones plus red versions.
+- `eyes-sample.png`: one lashed eye (cut from the collage *Oči*)
+- `lips-sample.png`: the black lips print with white satin stripes (*Pod čipkom*)
+- `hands-sample.png`: the hand wallpaper with grey bands (*Matador's Darling*)
+
+The samples are small screenshots, so the tiles are slightly soft. For sharp walls, photograph a piece of each fabric straight on, in good light. Save the photos over these files and run `python3 tools/make_textures.py`. If the new photo has a different size, adjust the crop numbers marked SOURCE in the script.
 
 ## 3D hat
 The rotating black hat in front of the red curtain is drawn in code in `js/hat3d.js`, using three.js from `vendor/`. It's modelled on the black straw hat with the bow. Brim waves, colours and lights are all at the top of that file. It only renders while it's on screen, and visitors can drag it or turn it with the arrow keys.

@@ -17,11 +17,11 @@ window.SITE = {
 /* ---------- Rooms of Wing I (the walk). wall = texture name in css ---------- */
 window.ROOMS = [
   { id: "hats",       wall: "curtain"       },   // red velvet curtain, like her studio photos
-  { id: "headpieces", wall: "eyes-stripes"  },   // red eye print in cotton bands between black stripes (Platinum)
-  { id: "bags",       wall: "lips-stripes"  },   // red lips between red satin and black pinstripes (Embrace)
-  { id: "parasols",   wall: "lips-ink"      },   // black lips with white satin stripes (Under lace)
-  { id: "textiles",   wall: "eyes-ribbons"  },   // white eyes on black with red satin ribbons (Ribbons)
-  { id: "clothes",    wall: "satin-stripes" }    // red satin, black and cotton stripes (Embrace)
+  { id: "headpieces", wall: "eyes-stripes"  },   // her lashed-eye print in red, in cotton bands between black stripes
+  { id: "bags",       wall: "lips-stripes"  },   // her lips print in red, between red satin and black pinstripes
+  { id: "parasols",   wall: "lips-ink"      },   // her black lips print with white satin stripes, as in Under lace
+  { id: "textiles",   wall: "eyes-ribbons"  },   // her lashed-eye print with red satin ribbons
+  { id: "clothes",    wall: "hands"         }    // her hand wallpaper with grey bands (Matador's Darling)
 ];
 
 /* ---------- Works ----------

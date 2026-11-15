@@ -241,13 +241,7 @@
     const cotton = cs.getPropertyValue("--cotton").trim() || "#EEE9DF";
     const red = cs.getPropertyValue("--red").trim() || "#C8161E";
     const root = document.documentElement.style;
-    root.setProperty("--tex-eyes-ink", eyeTile({ bg: ink, fg: "#D6D0C3", iris: ink, seed: 3 }));
-    root.setProperty("--tex-eyes-red", eyeTile({ bg: cotton, fg: red, iris: cotton, seed: 9, w: 200, h: 160 }));
     root.setProperty("--tex-lace", lace(cotton));
-    root.setProperty("--tex-eyes-stripes", eyesBandTile({ cotton, ink, fg: red }));
-    root.setProperty("--tex-lips-stripes", lipsBandTile({ cotton, ink, red }));
-    root.setProperty("--tex-lips-red", lipsTile({ bg: cotton, fg: red, seed: 6 }));
-    root.setProperty("--tex-lips-ink", lipsTile({ bg: cotton, fg: ink, seed: 11, w: 170, h: 136 }));
     root.setProperty("--tex-lashes", lashesTile({ bg: cotton, fg: "#F8F5EF" }));
   }
 
