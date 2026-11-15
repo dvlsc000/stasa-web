@@ -74,3 +74,28 @@ Motion respects the visitor's "reduce motion" setting. With that setting on, the
 Most photos in `images/works/` are Staša's own. Three were first taken from the web as stand-ins: `matadors-darling.jpg`, `vrpce.jpg` and `oko.jpg`. Replace them with her own files before launch. The `look-*.jpg` stills come from the fashion-shoot video, so they're small. Swap in the original photographs when you have them.
 
 Titles, years and materials for the newer pieces are best guesses from the photos. Check them in `js/content.js`.
+
+## Content in Supabase + the admin page
+
+All works, exhibitions, the opening stage, the contact e-mail and Instagram now live in
+Supabase (project **stasa-web**, Frankfurt). Photos live in the Supabase storage bucket **works**.
+
+* **Admin page:** `https://<your-site>/admin/`
+  - First time: type your e-mail and a new password, press *First time? Create your password*,
+    confirm the e-mail you receive, then sign in.
+  - **Works**: pick Wearable / For the wall / Prints, click a card to edit, *+ New work* to add.
+    Drop a photo on the big frame; it is resized in the browser (1800 px + a 1000 px phone copy)
+    and uploaded. Titles and stories in all six languages. Drag ⠿ to reorder. Untick
+    *Visible on the site* to hide a piece without deleting it.
+  - **Exhibitions**, **Opening & contact** (works on the opening stage), **Admins** (who may edit).
+  - *Import photos into Supabase* (Works tab, shown while needed) copies the photos that still
+    live with the website files into Supabase storage in one click.
+* **How the site loads it:** `js/data.js` fetches everything in one request (`site_content()`),
+  `js/config.js` holds the project URL and the public publishable key (read-only by design).
+  If Supabase is unreachable the site falls back to the last copy it saw, then to `js/content.js`.
+* **Security:** everyone can read published content; only e-mails in the `admins` table can
+  change anything (row-level security on every table and on the photo bucket).
+* **One-time setting in Supabase** (Dashboard → Authentication → URL Configuration):
+  Site URL = `https://stasa-web.vercel.app`, and add `https://stasa-web.vercel.app/admin/`
+  to Redirect URLs, so confirmation and password e-mails link back to the admin page.
+* Interface words (menus, buttons) are still in `js/content.js` → `UI`.

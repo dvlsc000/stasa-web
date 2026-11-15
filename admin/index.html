@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Atelier · StashaHats admin</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Cutive+Mono&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+<link rel="stylesheet" href="admin.css?v=2611151841">
+</head>
+<body>
+
+<!-- sign in -->
+<main class="gate" id="gate" hidden>
+  <div class="gate-card">
+    <p class="brand">Stasha<em>Hats</em></p>
+    <p class="mono kicker">Atelier · admin</p>
+    <form id="login-form" autocomplete="on">
+      <label>E-mail<input type="email" id="login-email" required autocomplete="username"></label>
+      <label>Password<input type="password" id="login-pass" required minlength="8" autocomplete="current-password"></label>
+      <button class="btn btn--red" type="submit" id="login-btn">Sign in</button>
+      <p class="gate-links">
+        <button type="button" class="link" id="signup-btn">First time? Create your password</button>
+        <button type="button" class="link" id="forgot-btn">Forgot password</button>
+      </p>
+      <p class="msg" id="login-msg" role="status"></p>
+    </form>
+    <form id="newpass-form" hidden>
+      <p>Choose a new password.</p>
+      <label>New password<input type="password" id="newpass" required minlength="8" autocomplete="new-password"></label>
+      <button class="btn btn--red" type="submit">Save password</button>
+      <p class="msg" id="newpass-msg" role="status"></p>
+    </form>
+  </div>
+</main>
+
+<!-- the workspace -->
+<div class="app" id="app" hidden>
+  <header class="bar">
+    <p class="brand">Stasha<em>Hats</em> <span class="mono">atelier</span></p>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="works" aria-selected="true">Works</button>
+      <button role="tab" data-tab="exhibitions">Exhibitions</button>
+      <button role="tab" data-tab="settings">Opening &amp; contact</button>
+      <button role="tab" data-tab="admins">Admins</button>
+    </nav>
+    <div class="bar-right">
+      <a class="btn btn--ghost" href="../" target="_blank" rel="noopener">View site ↗</a>
+      <button class="btn btn--ghost" id="logout">Sign out</button>
+    </div>
+  </header>
+
+  <!-- WORKS -->
+  <section class="panel" id="tab-works">
+    <div class="panel-head">
+      <div class="seg" id="wing-filter">
+        <button data-wing="wearable" aria-pressed="true">Wearable</button>
+        <button data-wing="wall" aria-pressed="false">For the wall</button>
+        <button data-wing="print" aria-pressed="false">Prints</button>
+      </div>
+      <select id="room-filter" aria-label="Room"></select>
+      <span class="grow"></span>
+      <button class="btn btn--red" id="new-work">+ New work</button>
+    </div>
+    <p class="hint">Drag the cards to change the order they appear on the site. Click a card to edit it.</p>
+    <ol class="cards" id="cards"></ol>
+    <div class="import" id="import-box" hidden>
+      <p><b>Move the current photos into Supabase.</b> Some works still use photos stored with the website files.
+        One click copies them into your Supabase storage (in two sizes) and updates the works.</p>
+      <button class="btn" id="import-btn">Import photos into Supabase</button>
+      <p class="msg" id="import-msg"></p>
+    </div>
+  </section>
+
+  <!-- EXHIBITIONS -->
+  <section class="panel" id="tab-exhibitions" hidden>
+    <div class="panel-head">
+      <h2>Exhibitions</h2><span class="grow"></span>
+      <button class="btn btn--red" id="new-ex">+ New exhibition</button>
+    </div>
+    <p class="hint">Drag rows to reorder. Changes are saved when you press Save on a row.</p>
+    <ol class="rows" id="ex-list"></ol>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="panel" id="tab-settings" hidden>
+    <h2>Opening stage</h2>
+    <p class="hint">The works that take turns on the stage at the top of the site. Click to add, drag to reorder, × to remove.</p>
+    <ol class="stage" id="stage-list"></ol>
+    <details class="picker"><summary class="btn">+ Add a work to the stage</summary><div class="pick-grid" id="stage-pick"></div></details>
+    <h2>Contact</h2>
+    <form class="form-grid" id="settings-form">
+      <label>Contact e-mail<input type="email" id="s-email"></label>
+      <label>Instagram link<input type="url" id="s-insta" placeholder="https://www.instagram.com/…"></label>
+      <div><button class="btn btn--red" type="submit">Save</button> <span class="msg" id="settings-msg"></span></div>
+    </form>
+  </section>
+
+  <!-- ADMINS -->
+  <section class="panel" id="tab-admins" hidden>
+    <h2>Who can edit</h2>
+    <p class="hint">People on this list can sign in here and change the site. They create their own password with “First time? Create your password”.</p>
+    <ul class="admins" id="admin-list"></ul>
+    <form class="inline" id="admin-form">
+      <input type="email" id="admin-email" placeholder="name@example.com" required>
+      <button class="btn btn--red" type="submit">Add</button>
+      <span class="msg" id="admin-msg"></span>
+    </form>
+  </section>
+</div>
+
+<!-- work editor -->
+<dialog class="editor" id="editor">
+  <form method="dialog" id="work-form">
+    <header class="ed-head">
+      <h2 id="ed-title">Edit work</h2>
+      <span class="mono" id="ed-id"></span>
+      <span class="grow"></span>
+      <button type="button" class="btn btn--ghost" id="close-editor">Close</button>
+      <button class="btn btn--red" id="save-work" value="save">Save</button>
+    </header>
+    <div class="ed-body">
+      <div class="ed-photos">
+        <p class="lbl">Main photo</p>
+        <div class="drop" id="drop-main" tabindex="0">
+          <img id="main-img" alt="">
+          <span class="drop-txt">Drop a photo here or <u>choose a file</u><br><small>JPG, PNG or WebP · resized automatically</small></span>
+          <input type="file" accept="image/*" id="main-file" hidden>
+          <div class="progress" hidden><i></i></div>
+        </div>
+        <button type="button" class="link danger" id="main-remove">Remove main photo</button>
+        <p class="lbl">More photos (shown in the detail view)</p>
+        <ol class="gallery" id="gallery"></ol>
+        <label class="btn btn--small">+ Add photos<input type="file" accept="image/*" multiple id="gallery-file" hidden></label>
+      </div>
+
+      <div class="ed-fields">
+        <div class="row3">
+          <label>Section
+            <select id="f-wing">
+              <option value="wearable">Wearable (gallery walk)</option>
+              <option value="wall">For the wall (collages)</option>
+              <option value="print">Prints</option>
+            </select></label>
+          <label id="room-wrap">Room <select id="f-room"></select></label>
+          <label class="check"><input type="checkbox" id="f-published"> Visible on the site</label>
+        </div>
+
+        <fieldset class="langs">
+          <legend>Title</legend>
+          <div class="lang-tabs" data-group="title"></div>
+          <div class="lang-fields" id="title-fields"></div>
+          <button type="button" class="link" data-copy="title">Use the Croatian title for every language</button>
+        </fieldset>
+
+        <fieldset class="langs">
+          <legend>Story <small>(leave empty to use the general text for this room)</small></legend>
+          <div class="lang-tabs" data-group="story"></div>
+          <div class="lang-fields" id="story-fields"></div>
+        </fieldset>
+
+        <div class="row3">
+          <label>Year<input id="f-year" placeholder="e.g. 2024"></label>
+          <label>Dimensions<input id="f-dim" placeholder="e.g. 30 × 42 cm"></label>
+          <label id="frame-wrap">Frame
+            <select id="f-frame"><option value="">—</option><option value="black">Black</option><option value="wood">Wood</option><option value="float">Float mount</option></select></label>
+        </div>
+
+        <label>Technique <select id="f-tech"></select></label>
+        <div><p class="lbl">Materials</p><div class="chips" id="f-mats"></div></div>
+
+        <div class="row3">
+          <label class="check"><input type="checkbox" id="f-avail"> Available</label>
+          <label>Price (EUR) <input id="f-price" type="number" min="0" step="1" placeholder="empty = on request"></label>
+          <span></span>
+        </div>
+
+        <p class="danger-zone"><button type="button" class="link danger" id="delete-work">Delete this work</button></p>
+      </div>
+    </div>
+    <p class="msg ed-msg" id="ed-msg" role="status"></p>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../vendor/supabase.min.js"></script>
+<script src="../js/content.js"></script>
+<script src="../js/config.js"></script>
+<script src="admin.js?v=2611151841"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 /* Staša Čimbur — salon. Behaviour: languages, rendering from content.js,
    the walk, plates, halftone reveals, form. */
-(() => {
+window.__startSite = () => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const html = document.documentElement;
@@ -40,7 +40,8 @@
       case "phNo": return no + " · " + t("p.photoSoon");
       case "materials": return cap(w.materials.map(m => tr(MATERIALS[m])).join(", "));
       case "technique": return cap(tr(TECHNIQUES[w.technique]));
-      case "story": return tr(STORIES[w.story || (w.wing === "wearable" ? w.room : w.wing === "print" ? "print" : "wall")]);
+      case "story": return w.story && typeof w.story === "object" ? tr(w.story)
+        : tr(STORIES[w.story || (w.wing === "wearable" ? w.room : w.wing === "print" ? "print" : "wall")]);
       case "status":
         if (!w.available) return t("p.sold");
         return t("p.available") + " · " + (w.price ? "€ " + w.price.toLocaleString(lang) : t("p.onRequest"));
@@ -82,8 +83,8 @@
 
   /* ---------------- render from content ---------------- */
   // phones get the 1000px copies, large screens the 1800px originals
-  const srcset = (src, sizes) => /\/hd\/[^/]+\.webp$/.test(src)
-    ? ` srcset="${src.replace("/hd/", "/hd/m/")} 1000w, ${src} 1800w" sizes="${sizes}"` : "";
+  const srcset = (src, sizes) => src && (/\/hd\/[^/]+\.webp$/.test(src) || src.includes("/storage/v1/object/public/"))
+    ? ` srcset="${src.replace(/\/([^/]+)$/, "/m/$1")} 1000w, ${src} 1800w" sizes="${sizes}"` : "";
   function media(w, opts = {}) {
     if (w.image) {
       const ht = opts.halftone ? ` data-halftone="${opts.halftone}"` : "";
@@ -831,4 +832,5 @@
   setupGalleryLight();
   $$("[data-top]").forEach(b => b.addEventListener("click", () => scrollTo(0)));
   setupHalftones();
-})();
+};
+(window.__siteData || Promise.resolve()).then(() => window.__startSite());
