@@ -38,6 +38,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+@media (hover: none) { body::after { display: none; } }   /* phones: no full-screen blend layer */
 body::after { /* cotton grain over everything */
   content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 300;
   background: url("../images/textures/grain.png"); opacity: .06; mix-blend-mode: multiply;
@@ -332,8 +333,9 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
 @media (max-width: 899px) {
   html.pin-on .walk-viewport { height: 100svh; }
   html.pin-mob .walk-track { will-change: transform; backface-visibility: hidden; }
-  html.pin-mob .hat3d, html.pin-mob .hat3d canvas { pointer-events: none; touch-action: auto; }
-  html.pin-mob .feature-hint { display: none; }
+  html.pin-mob .hat3d canvas { touch-action: pan-y; }        /* sideways drag turns the hat, up/down still scrolls */
+  html.pin-mob .piece-frame { box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 16px 22px -14px rgba(0,0,0,.7); }
+  html.pin-mob .label { box-shadow: 0 6px 12px -8px rgba(0,0,0,.6); }
   html.pin-on .walk-intro { width: 100vw; padding: 0 7vw; }
   html.pin-on .walk-intro .display { font-size: clamp(56px, 17vw, 96px); }
   html.pin-on .walk-intro-text { font-size: 17px; }

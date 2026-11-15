@@ -8,11 +8,12 @@ if (host) init(host);
 
 function init(host) {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const touch = matchMedia("(hover: none), (pointer: coarse)").matches;
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    renderer = new THREE.WebGLRenderer({ antialias: !touch, alpha: true, powerPreference: "high-performance" });
   } catch (e) { host.classList.add("no-webgl"); return; }
-  renderer.setPixelRatio(Math.min(1.75, window.devicePixelRatio || 1));
+  renderer.setPixelRatio(Math.min(touch ? 1.3 : 1.75, window.devicePixelRatio || 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
@@ -160,13 +161,27 @@ function init(host) {
   resize();
   new ResizeObserver(resize).observe(host);
 
-  let yaw = -0.5, vel = 0, dragging = false, lastX = 0, visible = false, raf = 0, lastT = 0;
+  /* controls: drag sideways to turn (mouse and touch), drag up/down with a mouse to tilt,
+     double-click / double-tap to reset. On phones vertical drags still scroll the page. */
+  let yaw = -0.5, pitch = 0, tPitch = 0, vel = 0, dragging = false, lastX = 0, lastY = 0, visible = false, raf = 0, lastT = 0, idleUntil = 0;
   const el = renderer.domElement;
   el.style.touchAction = "pan-y";
-  el.addEventListener("pointerdown", e => { dragging = true; lastX = e.clientX; el.setPointerCapture(e.pointerId); host.classList.add("is-dragging"); });
-  el.addEventListener("pointermove", e => { if (!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; yaw += dx * 0.01; vel = dx * 0.01; });
-  const end = () => { dragging = false; host.classList.remove("is-dragging"); };
-  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
+  const wake = () => { if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(loop); } };
+  el.addEventListener("pointerdown", e => {
+    dragging = true; lastX = e.clientX; lastY = e.clientY; vel = 0;
+    try { el.setPointerCapture(e.pointerId); } catch (_) {}
+    host.classList.add("is-dragging", "was-touched"); wake();
+  });
+  el.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
+    yaw += dx * 0.012; vel = dx * 0.012;
+    if (e.pointerType === "mouse") tPitch = Math.max(-0.35, Math.min(0.45, tPitch + dy * 0.006));
+    idleUntil = performance.now() + 2600; wake();
+  });
+  const end = () => { if (!dragging) return; dragging = false; host.classList.remove("is-dragging"); idleUntil = performance.now() + 2600; host.dataset.yaw = yaw.toFixed(2); };
+  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end); el.addEventListener("lostpointercapture", end);
+  el.addEventListener("dblclick", () => { tPitch = 0; vel = 0; yaw = Math.round(yaw / (Math.PI * 2)) * Math.PI * 2 - 0.5; wake(); });
   // keyboard: arrow keys turn the hat
   host.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft") { yaw -= 0.25; e.preventDefault(); }
@@ -176,20 +191,22 @@ function init(host) {
 
   function draw() {
     model.rotation.y = yaw;
+    model.rotation.x = pitch;
     renderer.render(scene, camera);
   }
   function loop(t) {
     const dt = Math.min(0.05, (t - lastT) / 1000 || 0.016); lastT = t;
     if (!dragging) {
-      yaw += vel; vel *= 0.92;
-      if (!reduce) yaw += dt * 0.32;
+      yaw += vel; vel *= 0.93;                                       // glide after a flick
+      if (!reduce && t > idleUntil) yaw += dt * 0.3;                 // turn on its own when left alone
     }
+    pitch += (tPitch - pitch) * 0.12;
     draw();
-    raf = visible ? requestAnimationFrame(loop) : 0;
+    raf = visible || dragging || Math.abs(vel) > 0.0005 ? requestAnimationFrame(loop) : 0;
   }
   new IntersectionObserver(([en]) => {
     visible = en.isIntersecting;
-    if (visible && !raf) { lastT = performance.now(); raf = requestAnimationFrame(loop); }
+    if (visible) wake();
   }, { rootMargin: "200px" }).observe(host);
   draw();
   host.classList.add("is-ready");

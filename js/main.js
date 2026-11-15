@@ -189,7 +189,7 @@
     }), { threshold: 0.35 });
     $$("img[data-halftone]").forEach(img => {
       const mode = img.dataset.halftone, hover = mode.endsWith("-hover");
-      if (reduce && !hover) return;
+      if ((reduce || !fine) && !hover) return;
       const ink = INKS[mode.replace("-hover", "")];
       const canvas = document.createElement("canvas"); canvas.className = "ht"; canvas.setAttribute("aria-hidden", "true");
       const go = () => {
@@ -245,23 +245,12 @@
       if (!desk && !mob) return;
       html.classList.add("pin-on");
       html.classList.toggle("pin-mob", !!mob);
-      if (mob) ScrollTrigger.normalizeScroll(true);          // phones: steady touch scrolling, no address-bar jumps
       const track = $("#walk-track");
       const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
       const rooms = $$(".room", track);
       const lis = $$(".floorplan-rooms li");
       const prog = $(".floorplan-progress");
       let marks = [];
-      const stops = [0, 1];                                     // piece centres, as walk progress (0..1)
-      const measureStops = () => {
-        const d = dist() || 1, tr = track.getBoundingClientRect().left;
-        stops.length = 0; stops.push(0, 1);
-        $$(".piece, .walk-feature", track).forEach(el => {
-          const r = el.getBoundingClientRect();
-          stops.push(Math.min(1, Math.max(0, (r.left - tr + r.width / 2 - innerWidth / 2) / d)));
-        });
-        stops.sort((a, b) => a - b);
-      };
       const measure = () => {
         const d = dist() || 1;
         marks = rooms.map(r => Math.min(1, Math.max(0, (r.offsetLeft - window.innerWidth * 0.15) / d)));
@@ -272,10 +261,10 @@
         scrollTrigger: {
           trigger: "#salon", pin: true, start: "top top",
           scrub: mob ? true : 0.7,                             // phones: the gallery moves exactly with the finger
-          end: () => "+=" + dist() * (mob ? 1.35 : 1),          // phones: a calmer pace per swipe
+          end: () => "+=" + dist() * (mob ? 1.25 : 1),          // phones: a calmer pace per swipe
+          fastScrollEnd: true,
           anticipatePin: 1,
-          snap: mob ? { snapTo: stops, directional: true, duration: { min: .35, max: .8 }, delay: .05, ease: "power3.out", inertia: false } : false,
-          invalidateOnRefresh: true, onRefresh: () => { measure(); if (mob) measureStops(); },
+          invalidateOnRefresh: true, onRefresh: measure,
           onUpdate: self => {
             prog.style.transform = `scaleX(${self.progress})`;
             let cur = -1; marks.forEach((m, i) => { if (self.progress >= m - 0.001) cur = i; });
@@ -283,7 +272,7 @@
           }
         }
       });
-      measure(); if (mob) measureStops();
+      measure();
       $$(".piece", track).forEach(el => {
         if (mob) return;                                     // phones: no extra depth motion, just the walk
         const d = parseFloat(el.dataset.depth || 0) * 110;
@@ -299,7 +288,7 @@
         scrollTo(st.start + marks[i] * (st.end - st.start) + 4, { duration: 1.8 });
       };
       $("#floorplan").addEventListener("click", onGo);
-      return () => { html.classList.remove("pin-on", "pin-mob"); $("#floorplan").removeEventListener("click", onGo); if (mob) ScrollTrigger.normalizeScroll(false); };
+      return () => { html.classList.remove("pin-on", "pin-mob"); $("#floorplan").removeEventListener("click", onGo); };
     });
 
     // header colour (created after the pin so positions include its spacing) follows the section under it
