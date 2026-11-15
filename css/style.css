@@ -732,3 +732,5 @@ html.pin-sticky .walk-track { will-change: transform; transform: translate3d(0,0
 /* phones: the body is the scroller, so browser bars never move the screen */
 html.app-scroll { height: 100%; overflow: hidden; }
 html.app-scroll body { height: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: none; -webkit-overflow-scrolling: touch; }
+/* phones: the navbar is a fixed, steady frame above the gallery (its own layer, never moves) */
+html.app-scroll .top { transform: translateZ(0) !important; transition: color .4s ease, background-color .4s ease, border-color .4s ease; }

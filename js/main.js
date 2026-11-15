@@ -179,7 +179,8 @@
       if (ticking) return; ticking = true;
       requestAnimationFrame(() => {
         const y = getY(), dy = y - lastY;
-        if (!html.classList.contains("menu-open") && !$("#lang-dd").classList.contains("is-open")) {
+        // phones: the bar stays put; sliding it in and out on every small swipe made the gallery feel loose
+        if (!appScroll && !html.classList.contains("menu-open") && !$("#lang-dd").classList.contains("is-open")) {
           if (y < 120 || dy < -6) top.classList.remove("is-hidden");
           else if (dy > 8) top.classList.add("is-hidden");
         }
