@@ -14,7 +14,7 @@ function init(host) {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   } catch (e) { host.classList.add("no-webgl"); return; }
   // full sharpness on retina phones too (capped at 2x: past that the eye cannot tell, the GPU can)
-  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.setPixelRatio(Math.min(touch ? 1.75 : 2, window.devicePixelRatio || 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
@@ -222,6 +222,8 @@ function init(host) {
   }
   function loop(t) {
     const dt = Math.min(0.05, (t - lastT) / 1000 || 0.016); lastT = t;
+    // while the page is scrolling the canvas just rides along as a still image: no GPU work
+    if (!dragging && t - (window.__scrolling || 0) < 180) { raf = requestAnimationFrame(loop); return; }
     if (!dragging) {
       yaw += vel; vel *= 0.93;                                       // glide after a flick
       if (!reduce && t > idleUntil) yaw += dt * 0.3;                 // turn on its own when left alone
