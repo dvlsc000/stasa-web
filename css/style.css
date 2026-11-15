@@ -443,7 +443,7 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
   html.pin-on .walk-intro .display { font-size: clamp(56px, 17vw, 96px); }
   html.pin-on .walk-intro-text { font-size: 17px; }
   html.pin-on .walk-feature { width: 100vw; }
-  html.pin-on .hat3d { left: 0; bottom: 30%; }
+  html.pin-on .hat3d { left: 0; right: 0; width: auto; top: 64px; bottom: 26%; }
   html.pin-on .feature-card { left: 6vw; right: 6vw; bottom: 9svh; max-width: none; padding: 14px 18px 16px; }
   html.pin-on .feature-note { display: none; }
   html.pin-on .room { width: max(100vw, calc((26 + var(--n, 2) * 76) * 1vw)); }
@@ -717,3 +717,14 @@ html:has(.plate:not([hidden])) .pthread { opacity: 0; pointer-events: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+/* ---------- phones: the walk held by position:sticky, moved by the compositor ---------- */
+html.pin-sticky .walk { height: calc(100svh + var(--walk-run, 300vh)); background: var(--ink); }
+html.pin-sticky .walk-viewport { position: sticky; top: 0; height: 100svh; overflow: hidden; contain: layout paint; }
+html.pin-sticky .walk-track { will-change: transform; transform: translate3d(0,0,0); }
+@supports (animation-timeline: view()) {
+  html.walk-native .walk { view-timeline: --walk block; }
+  html.walk-native .walk-track { animation: walk-x linear both; animation-timeline: --walk; animation-range: contain 0% contain 100%; }
+  html.walk-native .floorplan-progress { animation: walk-p linear both; animation-timeline: --walk; animation-range: contain 0% contain 100%; }
+}
+@keyframes walk-p { from { transform: scaleX(0); } to { transform: scaleX(1); } }

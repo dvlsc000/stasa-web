@@ -11,9 +11,10 @@ function init(host) {
   const touch = matchMedia("(hover: none), (pointer: coarse)").matches;
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: !touch, alpha: true, powerPreference: "high-performance" });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   } catch (e) { host.classList.add("no-webgl"); return; }
-  renderer.setPixelRatio(Math.min(touch ? 1.3 : 1.75, window.devicePixelRatio || 1));
+  // full sharpness on retina phones too (capped at 2x: past that the eye cannot tell, the GPU can)
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
@@ -32,18 +33,40 @@ function init(host) {
   const under = new THREE.DirectionalLight(0xffe9e0, 0.9); under.position.set(0, -2.5, 2.5); scene.add(under);
   const rim = new THREE.DirectionalLight(0xff3b30, 2.4); rim.position.set(0.5, 1.4, -3); scene.add(rim);
 
+  // --- soft studio reflections: a small room of light panels baked once into an environment map
+  {
+    const env = new THREE.Scene();
+    const room = new THREE.Mesh(new THREE.BoxGeometry(10, 10, 10), new THREE.MeshBasicMaterial({ color: 0x1a1414, side: THREE.BackSide }));
+    env.add(room);
+    const panel = (w, h, color, x, y, z) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }));
+      m.position.set(x, y, z); m.lookAt(0, 0, 0); env.add(m);
+    };
+    panel(4, 2.4, 0xfff3e6, -3, 3.5, 3);      // big warm softbox, top left
+    panel(2, 3, 0xdcdcdc, 4.2, 0.5, 2);       // fill strip, right
+    panel(5, 4, 0xb3121b, 0, 0.5, -4.6);      // the red curtain behind
+    panel(6, 1, 0x4a3a34, 0, -4.6, 0);        // floor bounce
+    const pm = new THREE.PMREMGenerator(renderer);
+    scene.environment = pm.fromScene(env, 0.035).texture;
+    pm.dispose();
+  }
+
   // --- straw braid texture: fine concentric lines (bump) + slight tonal variation (colour)
   function strawTexture() {
-    const c = document.createElement("canvas"); c.width = 64; c.height = 512;
+    const c = document.createElement("canvas"); c.width = 256; c.height = 1024;
     const g = c.getContext("2d");
-    g.fillStyle = "#808080"; g.fillRect(0, 0, 64, 512);
-    for (let y = 0; y < 512; y += 6) {
+    g.fillStyle = "#808080"; g.fillRect(0, 0, 256, 1024);
+    for (let y = 0; y < 1024; y += 12) {                     // braided rows
       const v = 150 + Math.random() * 60;
-      g.fillStyle = `rgb(${v},${v},${v})`; g.fillRect(0, y, 64, 3.2);
-      g.fillStyle = "rgb(40,40,40)"; g.fillRect(0, y + 4, 64, 0.8);
+      g.fillStyle = `rgb(${v},${v},${v})`; g.fillRect(0, y, 256, 6.4);
+      g.fillStyle = "rgb(40,40,40)"; g.fillRect(0, y + 8, 256, 1.6);
+      for (let x = (y / 12 % 2) * 8; x < 256; x += 16) {   // the weave inside each row
+        g.fillStyle = "rgba(60,60,60,.55)"; g.fillRect(x, y, 1.2, 6.4);
+      }
     }
     const t = new THREE.CanvasTexture(c);
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
     return t;
   }
   const bump = strawTexture();
@@ -54,13 +77,13 @@ function init(host) {
     color: 0x121111, roughness: 0.48, metalness: 0.05,
     sheen: 0.7, sheenColor: new THREE.Color(0x6a6a6a), sheenRoughness: 0.5,
     clearcoat: 0.15, clearcoatRoughness: 0.6,
-    bumpMap: map, bumpScale: 1.4, side: THREE.DoubleSide
+    bumpMap: map, bumpScale: 1.4, side: THREE.DoubleSide, envMapIntensity: 0.55
   });
 
   const hat = new THREE.Group();
 
   // --- brim: an annulus whose outer part rolls into big soft waves
-  const R0 = 0.37, R1 = 1.12, SEG = 220, RINGS = 34;
+  const R0 = 0.37, R1 = 1.12, SEG = 360, RINGS = 56;
   const wave = (t, a) =>
     0.15 * Math.pow(t, 1.6) * Math.sin(3 * a + 0.7) +
     0.09 * Math.pow(t, 1.8) * Math.sin(2 * a + 2.4) +
@@ -90,20 +113,21 @@ function init(host) {
   // bound edge of the brim
   const edgePts = [];
   for (let i = 0; i < SEG; i++) { const a = (i / SEG) * Math.PI * 2, r = radius(1, a); edgePts.push(new THREE.Vector3(Math.cos(a) * r, wave(1, a), Math.sin(a) * r)); }
-  const edge = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(edgePts, true), 400, 0.011, 6, true),
-    new THREE.MeshStandardMaterial({ color: 0x0c0b0b, roughness: 0.35 }));
+  const edge = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(edgePts, true), 720, 0.011, 10, true),
+    new THREE.MeshStandardMaterial({ color: 0x0c0b0b, roughness: 0.32, envMapIntensity: 0.7 }));
   hat.add(edge);
 
   // --- crown: lathe profile, soft dome
   const prof = [[0.37, 0.0], [0.375, 0.1], [0.37, 0.2], [0.34, 0.28], [0.27, 0.34], [0.16, 0.375], [0.0, 0.385]]
     .map(p => new THREE.Vector2(p[0], p[1]));
-  const crown = new THREE.Mesh(new THREE.LatheGeometry(prof, 96), straw(crownBump));
+  const crownPts = new THREE.SplineCurve(prof).getPoints(40);           // smooth dome, no facets
+  const crown = new THREE.Mesh(new THREE.LatheGeometry(crownPts, 192), straw(crownBump));
   hat.add(crown);
 
   // --- bow: folded straw ribbon loops on the crown
   function ribbonLoop(points, width) {
     const curve = new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(...p)), true);
-    const N = 120, P = [], I = [], UV = [];
+    const N = 240, P = [], I = [], UV = [];
     const up = new THREE.Vector3(0, 0, 1);
     for (let i = 0; i <= N; i++) {
       const u = i / N, p = curve.getPointAt(u % 1), tan = curve.getTangentAt(u % 1);
@@ -123,7 +147,7 @@ function init(host) {
   const loopL = [[0, 0, 0], [-0.1, 0.07, 0.02], [-0.24, 0.1, 0.03], [-0.3, 0.02, 0.02], [-0.22, -0.06, 0.01], [-0.08, -0.03, 0]];
   bow.add(new THREE.Mesh(ribbonLoop(loopL, 0.12), bowMat));
   bow.add(new THREE.Mesh(ribbonLoop(loopL.map(p => [-p[0] * 0.85, p[1] * 1.1, p[2]]), 0.12), bowMat));
-  const knot = new THREE.Mesh(new THREE.SphereGeometry(0.055, 20, 14), bowMat); knot.scale.set(1, 1.15, 0.7); bow.add(knot);
+  const knot = new THREE.Mesh(new THREE.SphereGeometry(0.055, 40, 28), bowMat); knot.scale.set(1, 1.15, 0.7); bow.add(knot);
   // place the bow on the front-right of the crown, following its curve
   const bowAngle = -0.75;
   bow.position.set(Math.cos(bowAngle) * 0.33, 0.27, Math.sin(-bowAngle) * 0.33);
@@ -132,11 +156,11 @@ function init(host) {
   hat.add(bow);
 
   // --- white stand: head + long neck + block
-  const white = new THREE.MeshStandardMaterial({ color: 0xf1eee8, roughness: 0.92 });
+  const white = new THREE.MeshPhysicalMaterial({ color: 0xf1eee8, roughness: 0.62, sheen: 0.4, sheenColor: new THREE.Color(0xffffff), envMapIntensity: 0.45 });
   const stand = new THREE.Group();
-  const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 48, 32), white); head.scale.set(1.02, 1.14, 1.08); head.position.set(0, -0.2, 0.02);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 96, 64), white); head.scale.set(1.02, 1.14, 1.08); head.position.set(0, -0.2, 0.02);
   const neckProf = [[0.0, -1.62], [0.17, -1.62], [0.15, -1.3], [0.12, -0.9], [0.115, -0.5], [0.14, -0.45], [0.0, -0.44]].map(p => new THREE.Vector2(p[0], p[1]));
-  const neck = new THREE.Mesh(new THREE.LatheGeometry(neckProf, 48), white); neck.rotation.x = 0.06;
+  const neck = new THREE.Mesh(new THREE.LatheGeometry(new THREE.SplineCurve(neckProf).getPoints(48), 128), white); neck.rotation.x = 0.06;
   const block = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.22, 0.75), white); block.position.y = -1.73;
   stand.add(head, neck, block);
 
@@ -155,7 +179,9 @@ function init(host) {
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camera.position.z = w / h < 0.8 ? 8.6 : 6.4;
+    // fit the brim to the frame: on a narrow phone frame the hat fills ~90% of the width
+    const asp = w / h;
+    camera.position.z = asp < 0.8 ? Math.max(6.2, 5.0 / asp) : 6.4;
     camera.updateProjectionMatrix();
   }
   resize();

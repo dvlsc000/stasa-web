@@ -71,10 +71,13 @@
   }
 
   /* ---------------- render from content ---------------- */
+  // phones get the 1000px copies, large screens the 1800px originals
+  const srcset = (src, sizes) => /\/hd\/[^/]+\.webp$/.test(src)
+    ? ` srcset="${src.replace("/hd/", "/hd/m/")} 1000w, ${src} 1800w" sizes="${sizes}"` : "";
   function media(w, opts = {}) {
     if (w.image) {
       const ht = opts.halftone ? ` data-halftone="${opts.halftone}"` : "";
-      return `<div class="img"><img src="${w.image}" loading="lazy" decoding="async" data-wt="${w.id}|alt"${ht}></div>`;
+      return `<div class="img"><img src="${w.image}"${srcset(w.image, "(max-width: 899px) 72vw, 24vw")} loading="lazy" decoding="async" data-wt="${w.id}|alt"${ht}></div>`;
     }
     return `<div class="ph"><svg class="thread" data-draw="${w.draw}" data-seed="${w.id}"></svg><span class="mono" data-wt="${w.id}|phNo"></span></div>`;
   }
@@ -188,7 +191,7 @@
     $("#hero-stage").innerHTML = hero.ids.map((id, i) => {
       const w = byId[id];
       return `<button class="hero-slide${i === 0 ? " is-on" : ""}" type="button" data-open="${id}" data-wt="${id}|aria">
-        <span class="mat"><img src="${w.image}" alt="" data-wt="${id}|alt" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}></span></button>`;
+        <span class="mat"><img src="${w.image}"${srcset(w.image, "(max-width: 899px) 52vw, 24vw")} alt="" decoding="async" data-wt="${id}|alt" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}></span></button>`;
     }).join("");
     $("#hero-total").textContent = String(hero.ids.length).padStart(2, "0");
     const go = (n, user) => {
@@ -363,7 +366,7 @@
       html.classList.add("lenis");
     }
 
-    if (!reduce) {
+    if (!reduce && fine) {
       $$(".hero [data-parallax]").forEach(el => gsap.to(el, {
         y: parseFloat(el.dataset.parallax), ease: "none",
         scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
@@ -385,35 +388,74 @@
       const rooms = $$(".room", track);
       const lis = $$(".floorplan-rooms li");
       const prog = $(".floorplan-progress");
-      let marks = [];
+      let marks = [], cur = -2;
       const measure = () => {
         const d = dist() || 1;
         marks = rooms.map(r => Math.min(1, Math.max(0, (r.offsetLeft - window.innerWidth * 0.15) / d)));
         lis.forEach((li, i) => li.style.left = (marks[i] * 100) + "%");
       };
+      const setCurrent = p => {
+        let c = -1; marks.forEach((m, i) => { if (p >= m - 0.001) c = i; });
+        if (c === cur) return; cur = c;
+        lis.forEach((li, i) => li.firstElementChild.setAttribute("aria-current", String(i === c)));
+      };
+
+      if (mob) {
+        /* Phones: the section is tall and its viewport is position:sticky, so the browser itself
+           keeps it in place (no JS pinning). The sideways movement is a CSS scroll-driven animation
+           that runs on the compositor, exactly in step with the finger, even while JS is busy.
+           Browsers without scroll timelines get the same layout with a light GSAP fallback. */
+        html.classList.add("pin-sticky");
+        const native = window.CSS && CSS.supports("animation-timeline: view()");
+        const kf = document.createElement("style"); document.head.appendChild(kf);
+        let lastW = 0;
+        const layout = () => {
+          const d = dist();
+          $("#salon").style.setProperty("--walk-run", Math.round(d * 1.25) + "px");
+          kf.textContent = `@keyframes walk-x{from{transform:translate3d(0,0,0)}to{transform:translate3d(${-d}px,0,0)}}`;
+          measure();
+        };
+        layout(); lastW = window.innerWidth;
+        if (native) html.classList.add("walk-native");
+        const st = ScrollTrigger.create({
+          trigger: "#salon", start: "top top", end: "bottom bottom",
+          onRefreshInit: () => { if (window.innerWidth !== lastW) { lastW = window.innerWidth; layout(); } },
+          onUpdate: self => {
+            if (!native) { track.style.transform = `translate3d(${-self.progress * dist()}px,0,0)`; prog.style.transform = `scaleX(${self.progress})`; }
+            setCurrent(self.progress);
+          }
+        });
+        const onGoM = e => {
+          const b = e.target.closest("[data-goto]"); if (!b) return;
+          const i = ROOMS.findIndex(r => r.id === b.dataset.goto);
+          window.scrollTo({ top: st.start + marks[i] * (st.end - st.start) + 4, behavior: "smooth" });
+        };
+        $("#floorplan").addEventListener("click", onGoM);
+        return () => {
+          html.classList.remove("pin-on", "pin-mob", "pin-sticky", "walk-native");
+          track.style.transform = ""; kf.remove(); $("#salon").style.removeProperty("--walk-run");
+          $("#floorplan").removeEventListener("click", onGoM);
+        };
+      }
+
       const tween = gsap.to(track, {
         x: () => -dist(), ease: "none",
         scrollTrigger: {
           trigger: "#salon", pin: true, start: "top top",
-          scrub: mob ? true : 0.7,                             // phones: the gallery moves exactly with the finger
-          end: () => "+=" + dist() * (mob ? 1.25 : 1),          // phones: a calmer pace per swipe
+          scrub: 0.7,
+          end: () => "+=" + dist(),
           fastScrollEnd: true,
           anticipatePin: 1,
           invalidateOnRefresh: true, onRefresh: measure,
-          onUpdate: self => {
-            prog.style.transform = `scaleX(${self.progress})`;
-            let cur = -1; marks.forEach((m, i) => { if (self.progress >= m - 0.001) cur = i; });
-            lis.forEach((li, i) => li.firstElementChild.setAttribute("aria-current", String(i === cur)));
-          }
+          onUpdate: self => { prog.style.transform = `scaleX(${self.progress})`; setCurrent(self.progress); }
         }
       });
       measure();
       $$(".piece", track).forEach(el => {
-        if (mob) return;                                     // phones: no extra depth motion, just the walk
         const d = parseFloat(el.dataset.depth || 0) * 110;
         gsap.fromTo(el, { x: d }, { x: -d, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
       });
-      if (!mob) $$(".walk-ribbon", track).forEach(el => {
+      $$(".walk-ribbon", track).forEach(el => {
         gsap.fromTo(el, { x: 160 }, { x: -160, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
       });
       const onGo = e => {
