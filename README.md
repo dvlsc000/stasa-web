@@ -38,12 +38,12 @@ Each room's wall pattern is set in `ROOMS` (`wall:`). The patterns are taken fro
 `curtain` (red velvet, like her studio photos), `hands` (her hand wallpaper), `eyes-stripes` (red eyes in bands between black stripes), `lips-stripes` (red lips between satin and black pinstripes), `eyes-ribbons` (white eyes on black with red ribbons), `lips-red`, `lips-ink`, `eyes-red`, `eyes-ink`, `satin-stripes`, plus `stripes-red`, `dots-red`, `dots-ink`, `halftone`. You can replace a pattern with a crop of one of Staša's own fabrics. Add a CSS class `.tex-yourname { background: url(../images/textures/yourfile.jpg); }` to `css/style.css` and use `wall:"yourname"`.
 
 ## Her print patterns (eyes, lips, hands)
-The room walls, the opening wall and the footer use real samples of Staša's prints, stored in `images/textures/source/`. `tools/make_textures.py` turns each sample into a seamless repeating tile, in her original tones plus red versions.
-- `eyes-sample.png`: one lashed eye (cut from the collage *Oči*)
-- `lips-sample.png`: the black lips print with white satin stripes (*Pod čipkom*)
-- `hands-sample.png`: the hand wallpaper with grey bands (*Matador's Darling*)
+The walls, the opening screen and the footer use Staša's own prints, rebuilt in high quality by `tools/make_textures.py`. The script:
+1. enlarges the sample photos in `images/textures/source/` 4x with an AI super-resolution model (EDSR); the enlarged `*-x4.png` copies are saved, so this runs only once,
+2. cuts every clean lip, lashed eye and hand out of the samples, keeping the real printed tones,
+3. scatters them at random positions, angles and sizes over seamless 1200 px tiles (shown at 600 px, so they stay sharp on retina screens), adding the satin ribbons and fabric bands.
 
-The samples are small screenshots, so the tiles are slightly soft. For sharp walls, photograph a piece of each fabric straight on, in good light. Save the photos over these files and run `python3 tools/make_textures.py`. If the new photo has a different size, adjust the crop numbers marked SOURCE in the script.
+The samples are `lips-sample.png` (*Pod čipkom*), `eyes-sample.png` (lashed-eye print) and `hands-sample.png` (hand wallpaper and red eyes). To change the random arrangement, edit `SEED` in the script and run `python3 tools/make_textures.py`. A sharper photo of a fabric gives even crisper walls: save it over the sample, delete its `-x4.png` and update the boxes in the script.
 
 ## 3D hat
 The rotating black hat in front of the red curtain is drawn in code in `js/hat3d.js`, using three.js from `vendor/`. It's modelled on the black straw hat with the bow. Brim waves, colours and lights are all at the top of that file. It only renders while it's on screen, and visitors can drag it or turn it with the arrow keys.

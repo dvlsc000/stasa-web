@@ -103,7 +103,7 @@ h1, h2, h3, p { margin: 0; }
 }
 .hero-wall {
   position: absolute; inset: 0 0 44% 0;
-  background: url("../images/textures/eyes-ink-band.jpg") var(--cotton); background-size: 228px 186px;
+  background: url("../images/textures/eyes-ink-band.webp") var(--cotton); background-size: 600px 600px;
 }
 .ribbon {
   position: absolute; top: 0; z-index: 2;
@@ -197,8 +197,8 @@ h1, h2, h3, p { margin: 0; }
 .room-title h3 { font-family: var(--display); font-weight: 400; font-size: clamp(30px, 3.2vw, 52px); line-height: 1; margin-top: 4px; }
 
 /* wall textures */
-.tex-eyes-ink { background: url("../images/textures/eyes-ink-band.jpg") var(--cotton); background-size: 228px 186px; }
-.tex-eyes-red { background: url("../images/textures/eyes-red.jpg") var(--cotton); background-size: 286px 195px; }
+.tex-eyes-ink { background: url("../images/textures/eyes-ink-band.webp") var(--cotton); background-size: 600px 600px; }
+.tex-eyes-red { background: url("../images/textures/eyes-red.webp") var(--cotton); background-size: 600px 600px; }
 .tex-stripes-red { background: repeating-linear-gradient(90deg, var(--red) 0 34px, var(--cotton) 34px 68px); }
 .tex-dots-red { background-color: var(--cotton); background-image: radial-gradient(circle, var(--red) 0 11px, transparent 11.5px), radial-gradient(circle, var(--red) 0 11px, transparent 11.5px); background-size: 64px 64px; background-position: 0 0, 32px 32px; }
 .tex-dots-ink { background-color: var(--ink); background-image: radial-gradient(circle, var(--cotton) 0 6px, transparent 6.5px), radial-gradient(circle, var(--cotton) 0 6px, transparent 6.5px); background-size: 44px 44px; background-position: 0 0, 22px 22px; }
@@ -207,12 +207,12 @@ h1, h2, h3, p { margin: 0; }
     linear-gradient(180deg, rgba(0,0,0,.28), transparent 22%, transparent 72%, rgba(0,0,0,.34)),
     repeating-linear-gradient(90deg, #6f060b 0px, #a8101a 22px, #d4232a 42px, #e33a3c 50px, #c0141c 66px, #8a0a10 92px, #b1121a 112px, #d52a30 124px, #9c0d14 140px, #6f060b 156px);
 }
-.tex-eyes-stripes { background: url("../images/textures/eyes-red-band.jpg") var(--cotton); background-size: 228px 186px; }
-.tex-lips-stripes { background: repeating-linear-gradient(90deg, #8f0c12 0 3px, var(--red) 3px 13px, #e1383d 13px 17px, var(--red) 17px 24px, #8f0c12 24px 26px, var(--cotton) 26px 29px, var(--ink) 29px 33px, transparent 33px 140px, var(--ink) 140px 144px, var(--cotton) 144px 148px), url("../images/textures/lips-red.jpg") var(--cotton); background-size: auto, 148px 902px; }
-.tex-eyes-ribbons { background: repeating-linear-gradient(90deg, transparent 0 250px, #8f0c12 250px 253px, var(--red) 253px 266px, #e1383d 266px 271px, var(--red) 271px 284px, #8f0c12 284px 287px, transparent 287px 302px, #8f0c12 302px 304px, var(--red) 304px 316px, #8f0c12 316px 318px), url("../images/textures/eyes-print.jpg") var(--cotton); background-size: auto, 286px 195px; }
-.tex-lips-red { background: url("../images/textures/lips-red.jpg") var(--cotton); background-size: 148px 902px; }
-.tex-lips-ink { background: url("../images/textures/lips-print.jpg") var(--cotton); background-size: 148px 902px; }
-.tex-hands { background: url("../images/textures/hands-print.jpg") var(--cotton); background-size: 172px 489px; }
+.tex-eyes-stripes { background: url("../images/textures/eyes-red-band.webp") var(--cotton); background-size: 600px 600px; }
+.tex-lips-stripes { background: url("../images/textures/lips-red.webp") var(--cotton); background-size: 600px 600px; }
+.tex-eyes-ribbons { background: repeating-linear-gradient(90deg, transparent 0 470px, #8f0c12 470px 473px, var(--red) 473px 486px, #e1383d 486px 491px, var(--red) 491px 504px, #8f0c12 504px 507px, transparent 507px 522px, #8f0c12 522px 524px, var(--red) 524px 536px, #8f0c12 536px 538px, transparent 538px 600px), url("../images/textures/eyes-print.webp") var(--cotton); background-size: auto, 600px 600px; }
+.tex-lips-red { background: url("../images/textures/lips-red-plain.webp") var(--cotton); background-size: 600px 600px; }
+.tex-lips-ink { background: url("../images/textures/lips-print.webp") var(--cotton); background-size: 600px 600px; }
+.tex-hands { background: url("../images/textures/hands-print.webp") var(--cotton); background-size: 600px 600px; }
 .tex-satin-stripes { background: repeating-linear-gradient(90deg, #a80f17 0 6px, var(--red) 6px 22px, #e1383d 22px 28px, var(--red) 28px 42px, var(--cotton) 42px 56px, var(--ink) 56px 62px, var(--cotton) 62px 76px); }
 .tex-halftone { background: url("../images/textures/halftone-blue.png") var(--cotton); background-size: 480px 480px; }
 
@@ -311,7 +311,7 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
 .film {
   position: relative; display: grid; grid-template-columns: 5fr 1fr 5fr; align-items: center;
   padding: clamp(96px, 12vw, 170px) var(--gutter);
-  background: url("../images/textures/lips-red.jpg") var(--cotton); background-size: 148px 902px;
+  background: url("../images/textures/lips-red-plain.webp") var(--cotton); background-size: 600px 600px;
 }
 .film::before { content: ""; position: absolute; inset: 0; background: rgba(238,233,223,.86); }
 .film > * { position: relative; }
@@ -429,7 +429,7 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
 
 /* ---------- footer ---------- */
 .foot { background: var(--ink); color: var(--cotton); }
-.foot-eyes { height: 120px; background: url("../images/textures/eyes-ink-band.jpg") var(--cotton); background-size: 228px 186px; }
+.foot-eyes { height: 120px; background: url("../images/textures/eyes-ink-band.webp") var(--cotton); background-size: 600px 600px; }
 .foot-row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 36px; padding: 28px var(--gutter) 34px; }
 .foot-name { font-family: var(--display); font-size: 26px; margin-right: auto; }
 .foot a { text-decoration: none; }
