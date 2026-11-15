@@ -6,6 +6,13 @@
   const html = document.documentElement;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  /* Phones: the page body scrolls instead of the browser window. The browser's address bar and
+     toolbar then stay still, so they can never push the screen up and down mid-walk, and the
+     screen height never changes while scrolling. */
+  const appScroll = !fine && matchMedia("(max-width: 899px)").matches;
+  if (appScroll) html.classList.add("app-scroll");
+  const scroller = appScroll ? document.body : window;
+  const getY = () => appScroll ? document.body.scrollTop : window.scrollY;
   const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
   /* ---------------- language ---------------- */
@@ -167,11 +174,11 @@
 
   /* ---------------- navbar: hides on the way down, returns on the way up ---------------- */
   function setupNavbar() {
-    const top = $(".top"); let lastY = scrollY, ticking = false;
+    const top = $(".top"); let lastY = getY(), ticking = false;
     const onScroll = () => {
       if (ticking) return; ticking = true;
       requestAnimationFrame(() => {
-        const y = scrollY, dy = y - lastY;
+        const y = getY(), dy = y - lastY;
         if (!html.classList.contains("menu-open") && !$("#lang-dd").classList.contains("is-open")) {
           if (y < 120 || dy < -6) top.classList.remove("is-hidden");
           else if (dy > 8) top.classList.add("is-hidden");
@@ -180,7 +187,7 @@
         lastY = y; ticking = false;
       });
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
+    scroller.addEventListener("scroll", onScroll, { passive: true });
     top.addEventListener("focusin", () => top.classList.remove("is-hidden"));
   }
 
@@ -352,12 +359,25 @@
   function scrollTo(target, opts = {}) {
     const el = typeof target === "string" ? $(target) : target;
     if (lenis) lenis.scrollTo(el ?? target, { duration: 1.5, ...opts });
-    else if (typeof target === "number") window.scrollTo({ top: target, behavior: reduce ? "auto" : "smooth" });
-    else el && el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    else if (typeof target === "number") scroller.scrollTo({ top: target, behavior: reduce ? "auto" : "smooth" });
+    else if (el) {
+      // native smooth scroll; photos that finish loading on the way can push the target down,
+      // so when the scroll ends we check where it is and finish the last stretch
+      const sc = appScroll ? document.body : window;
+      el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+      let tries = 0;
+      const fix = () => {
+        const off = el.getBoundingClientRect().top;
+        if (Math.abs(off) > 3 && tries++ < 4) { sc.scrollBy({ top: off, behavior: "smooth" }); }
+        else sc.removeEventListener("scrollend", fix);
+      };
+      if ("onscrollend" in window) sc.addEventListener("scrollend", fix);
+    }
   }
 
   function setupScroll() {
     gsap.registerPlugin(ScrollTrigger);
+    if (appScroll) ScrollTrigger.defaults({ scroller: document.body });
     if (!reduce && window.Lenis && fine) {          // touch devices keep 100% native scrolling
       lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
       lenis.on("scroll", ScrollTrigger.update);
@@ -428,9 +448,57 @@
         const onGoM = e => {
           const b = e.target.closest("[data-goto]"); if (!b) return;
           const i = ROOMS.findIndex(r => r.id === b.dataset.goto);
-          window.scrollTo({ top: st.start + marks[i] * (st.end - st.start) + 4, behavior: "smooth" });
+          scroller.scrollTo({ top: st.start + marks[i] * (st.end - st.start) + 4, behavior: "smooth" });
         };
         $("#floorplan").addEventListener("click", onGoM);
+
+        /* Sideways swipes walk the gallery too. The browser keeps vertical swipes (native,
+           with momentum); a gesture that starts sideways is ours: it moves the walk 1:1 with
+           the finger and glides out on release. */
+        const vp = $(".walk-viewport");
+        vp.style.touchAction = "pan-y";
+        let sx = 0, sy = 0, lx = 0, lt = 0, v = 0, mode = 0, glide = 0, pid = null;
+        const sc = scroller === window ? document.scrollingElement : scroller;
+        const k = () => (st.end - st.start) / Math.max(1, dist());           // scroll px per track px
+        const clampTop = y => Math.max(st.start, Math.min(st.end, y));
+        vp.addEventListener("pointerdown", e => {
+          if (e.pointerType === "mouse" || e.target.closest(".hat3d, .floorplan")) return;
+          cancelAnimationFrame(glide); pid = e.pointerId; mode = 0; v = 0;
+          sx = lx = e.clientX; sy = e.clientY; lt = e.timeStamp;
+        }, { passive: true });
+        vp.addEventListener("pointermove", e => {
+          if (e.pointerId !== pid) return;
+          if (!mode) {
+            const ax = Math.abs(e.clientX - sx), ay = Math.abs(e.clientY - sy);
+            if (ax < 6 && ay < 6) return;
+            mode = ax > ay ? 1 : -1;                                          // 1 = sideways, ours
+          }
+          if (mode !== 1) return;
+          const dx = e.clientX - lx, dt = Math.max(1, e.timeStamp - lt);
+          sc.scrollTop = clampTop(sc.scrollTop - dx * k());
+          v = 0.8 * v + 0.2 * (-dx * k() / dt);                               // px per ms, smoothed
+          lx = e.clientX; lt = e.timeStamp;
+        }, { passive: true });
+        let swiped = 0;
+        vp.addEventListener("click", e => {                                 // a swipe is not a tap on a piece
+          if (performance.now() - swiped < 350) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+        const release = e => {
+          if (e.pointerId !== pid) return; pid = null;
+          if (mode === 1) swiped = performance.now();
+          if (mode !== 1 || Math.abs(v) < 0.05) return;
+          let last = performance.now();
+          const step = now => {
+            const dt = Math.min(32, now - last); last = now;
+            sc.scrollTop = clampTop(sc.scrollTop + v * dt);
+            v *= Math.pow(0.994, dt);                                         // gentle friction
+            if (Math.abs(v) > 0.02) glide = requestAnimationFrame(step);
+          };
+          glide = requestAnimationFrame(step);
+        };
+        vp.addEventListener("pointerup", release); vp.addEventListener("pointercancel", e => { if (e.pointerId === pid) pid = null; });
+        sc.addEventListener("touchstart", () => cancelAnimationFrame(glide), { passive: true });
+
         return () => {
           html.classList.remove("pin-on", "pin-mob", "pin-sticky", "walk-native");
           track.style.transform = ""; kf.remove(); $("#salon").style.removeProperty("--walk-run");
