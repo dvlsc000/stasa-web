@@ -287,15 +287,8 @@
       onToggle: self => self.isActive && top.classList.toggle("is-light", tone === "light")
     }));
 
-    // thread drawings that draw in once
-    if (!reduce) {
-      html.classList.add("js-reveal");
-      $$("[data-reveal] path").forEach(p => p.setAttribute("pathLength", "1"));
-      const io = new IntersectionObserver(es => es.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add("is-drawn"); io.unobserve(e.target); }
-      }), { threshold: 0.4 });
-      $$("[data-reveal]").forEach(el => io.observe(el));
-    }
+    // line drawings are sewn in by a little needle when they come into view
+    Thread.sewOnView();
 
     $$("[data-scroll]").forEach(a => a.addEventListener("click", e => {
       e.preventDefault(); scrollTo(a.dataset.scroll);
@@ -325,6 +318,7 @@
         `<button type="button" class="plate-thumb" data-src="${src}" aria-label="${i + 1} / ${imgs.length}" aria-pressed="${i === 0}"><img src="${src}" alt=""></button>`).join("")}</div>`);
     }
     Thread.drawAll(m);
+    if (!reduce) m.querySelectorAll("svg[data-sew]").forEach(svg => Thread.sew(svg));
     $("#plate-no").textContent = field(w, "meta") + (w.wing === "wearable" ? " · " + t("rooms." + w.room) : "");
     $("#plate-title").textContent = field(w, "title");
     $("#plate-story").textContent = field(w, "story");

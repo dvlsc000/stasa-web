@@ -69,10 +69,10 @@ h1, h2, h3, p { margin: 0; }
 
 /* ---------- thread lines ---------- */
 .thread { display: block; overflow: visible; color: currentColor; }
-.thread .t-line { stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.thread .t-ghost { opacity: .32; stroke-width: .8; }
-.js-reveal [data-reveal] .t-line { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s var(--ease-walk); }
-.js-reveal [data-reveal].is-drawn .t-line { stroke-dashoffset: 0; }
+.thread .t-line { stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.thread .t-needle { transition: opacity .35s ease; }
+.thread .t-needle line { stroke: #8a8378; stroke-width: 1.2; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.thread .t-needle circle { fill: var(--red); }
 
 /* ---------- header ---------- */
 .top {
@@ -161,9 +161,9 @@ h1, h2, h3, p { margin: 0; }
   position: relative; display: grid; place-items: center;
   background: var(--cotton-2); color: var(--ink); aspect-ratio: 4 / 5; overflow: hidden;
 }
-.ph .thread { width: 50%; color: var(--ink); opacity: .85; margin-bottom: 14%; }
+.ph .thread { width: 64%; color: var(--ink); opacity: .9; margin-bottom: 12%; }
 .ph .mono { position: absolute; left: 14px; right: 14px; bottom: 12px; font-size: 11px; color: var(--muted); text-align: left; }
-.prolog-shoe { position: absolute; width: 58%; right: -22%; bottom: -14%; color: var(--ink); }
+.prolog-shoe { display: block; width: 62%; margin: 34px 0 0 30%; color: var(--ink); }
 .prolog-text { grid-column: 7 / span 5; padding-top: clamp(0px, 4vw, 60px); }
 .prolog-lead {
   font-family: var(--display); font-style: italic; font-weight: 400;

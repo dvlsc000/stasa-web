@@ -52,87 +52,120 @@
     return out;
   }
 
-  // Drawings: viewBox + strokes (each stroke is a list of points)
+  /* ---------- Line drawings ----------
+     Drawn by hand as smooth curves, after the stitched wire drawings in her work
+     (shoes, heels and hats drawn in one thin black line over the print).
+     Each drawing: a viewBox and its strokes, in the order the needle sews them. */
   const D = {
-    hat: { vb: "0 0 100 62", s: [
-      ellipse(50, 44, 47, 10, 18, -0.03),
-      [[24, 42], [23, 30], [27, 17], [38, 9], [52, 7], [64, 10], [73, 18], [76, 30], [75, 42]],
-      [[23, 33], [50, 37], [76, 33]],
-      [[64, 35], [70, 27], [78, 31], [71, 37], [66, 36]]
+    shoe: { vb: "0 0 300 180", s: [
+      "M18 150 C40 158 82 161 112 156 C150 150 192 122 232 93 C244 86 256 85 262 92 C263 118 259 146 257 166 L265 166 C267 140 272 112 277 89 C281 71 277 53 264 47 C240 52 202 74 168 92 C132 110 92 119 60 124 C36 128 15 136 14 146 C14 149 16 150 18 150",
+      "M64 129 C120 124 196 99 250 82",
+      "M264 47 C268 40 276 38 282 42"
     ]},
-    headpiece: { vb: "0 0 100 72", s: [
-      ellipse(42, 50, 27, 10, 16, -0.2),
-      [[48, 46], [57, 32], [70, 20], [84, 10], [97, 6]],
-      [[52, 48], [62, 36], [76, 24], [92, 14]],
-      [[18, 54], [24, 66], [31, 56], [38, 68], [46, 58]]
+    hat: { vb: "0 0 300 170", s: [
+      "M12 116 C30 142 128 156 200 146 C252 139 294 124 290 106 C287 93 262 90 242 95 C206 104 128 110 74 105 C34 101 2 102 12 116",
+      "M90 104 C84 74 94 42 132 33 C168 25 202 36 207 60 C211 76 209 90 205 101",
+      "M90 92 C128 101 172 99 206 88",
+      "M200 90 C214 70 240 66 237 82 C234 95 214 95 203 91 C219 98 232 112 219 119 C207 124 199 108 201 93"
     ]},
-    bag: { vb: "0 0 100 82", s: [
-      [[14, 34], [86, 34], [80, 78], [20, 78], [14, 34]],
-      [[14, 34], [50, 52], [86, 34]],
-      [[30, 34], [31, 16], [50, 6], [69, 16], [70, 34]],
-      ellipse(50, 53, 3, 3, 8)
+    headpiece: { vb: "0 0 300 200", s: [
+      "M40 150 C40 120 120 100 170 112 C214 122 220 150 180 162 C130 176 40 176 40 150",
+      "M80 146 C96 128 150 124 168 140",
+      "M150 118 C170 80 214 40 286 16",
+      "M176 96 C188 90 202 92 210 100 M196 72 C210 66 224 68 232 76 M220 50 C234 44 248 46 256 54",
+      "M118 112 C108 72 82 50 58 40 M52 40 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0"
     ]},
-    parasol: { vb: "0 0 100 92", s: [
-      [[4, 40], [14, 22], [30, 10], [50, 6], [70, 10], [86, 22], [96, 40]],
-      [[96, 40], [88, 46], [80, 40], [72, 46], [64, 40], [56, 46], [48, 40], [40, 46], [32, 40], [24, 46], [16, 40], [8, 46], [4, 40]],
-      [[50, 6], [50, 41]], [[50, 6], [30, 41]], [[50, 6], [72, 41]],
-      [[50, 41], [50, 80], [52, 87], [58, 89], [62, 84]]
+    bag: { vb: "0 0 260 220", s: [
+      "M76 94 C70 40 104 14 130 14 C156 14 190 40 184 94",
+      "M40 96 C36 140 44 186 56 200 C100 210 160 210 204 200 C216 186 224 140 220 96 C170 90 90 90 40 96",
+      "M40 96 C80 130 112 142 130 142 C148 142 180 130 220 96",
+      "M124 142 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0"
     ]},
-    scarf: { vb: "0 0 100 82", s: [
-      [[10, 14], [40, 9], [70, 16], [92, 10]],
-      [[10, 14], [15, 40], [8, 70]],
-      [[92, 10], [86, 40], [94, 68]],
-      [[8, 70], [30, 62], [50, 73], [72, 62], [94, 68]],
-      [[44, 30], [52, 24], [60, 31], [52, 37], [44, 30], [38, 50]]
+    parasol: { vb: "0 0 280 260", s: [
+      "M140 6 L140 18 C190 18 250 50 266 106 C254 118 238 118 230 104 C218 118 196 118 186 104 C172 118 152 118 140 104 C128 118 108 118 94 104 C84 118 62 118 50 104 C42 118 26 118 14 106 C30 50 90 18 140 18",
+      "M140 18 C120 50 102 80 94 104 M140 18 C160 50 178 80 186 104 M140 18 L140 104",
+      "M140 104 L140 222 C140 244 160 248 168 236 C172 228 166 222 160 226"
     ]},
-    dress: { vb: "0 0 80 100", s: [
-      [[30, 8], [34, 3], [46, 3], [50, 8], [52, 30], [28, 30], [30, 8]],
-      [[28, 30], [17, 58], [7, 88]],
-      [[52, 30], [63, 58], [73, 88]],
-      [[7, 88], [12, 93], [18, 88], [24, 93], [30, 88], [36, 93], [42, 88], [48, 93], [54, 88], [60, 93], [66, 88], [73, 88]],
-      [[13, 70], [24, 66], [40, 70], [56, 66], [67, 70]]
+    scarf: { vb: "0 0 280 200", s: [
+      "M20 60 C70 30 130 50 150 80 C170 110 230 120 262 96 C254 120 258 150 262 170 C240 186 210 180 190 160 C170 140 140 160 100 150 C60 140 30 100 20 60",
+      "M140 92 C150 80 168 84 166 98 C164 112 146 110 140 100",
+      "M60 74 C90 70 120 84 136 100 M200 132 C220 138 240 134 258 128"
     ]},
-    frame: { vb: "0 0 80 100", s: [
-      [[4, 4], [76, 4], [76, 96], [4, 96], [4, 4]],
-      [[14, 14], [66, 14], [66, 86], [14, 86], [14, 14]]
+    dress: { vb: "0 0 220 300", s: [
+      "M84 14 C84 32 82 46 80 60 C78 80 84 96 90 106 C70 160 40 220 18 262 C30 276 44 276 52 264 C62 278 80 278 88 266 C98 280 118 280 126 266 C136 280 156 280 164 266 C174 278 192 278 202 262 C180 220 150 160 130 106 C136 96 142 80 140 60 C138 46 136 32 136 14",
+      "M84 14 C96 40 124 40 136 14",
+      "M90 106 C104 114 118 114 130 106",
+      "M42 200 C56 210 72 210 82 202 C96 212 120 212 134 202 C146 210 164 210 178 200"
     ]},
-    shoe: { vb: "0 0 100 72", s: [
-      [[4, 56], [14, 59], [30, 58], [42, 52], [56, 42], [70, 34], [80, 31], [82, 36], [84, 66], [88, 66], [89, 34], [93, 24], [92, 14], [84, 13], [76, 20], [62, 30], [44, 40], [26, 44], [10, 47], [4, 52], [4, 56]],
-      [[76, 20], [72, 8], [80, 4], [86, 9], [84, 13]],
-      [[20, 45], [22, 54]]
+    eye: { vb: "0 0 200 110", s: [
+      "M10 62 C50 24 150 20 190 56 C140 92 60 94 10 62",
+      "M76 58 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0 M93 58 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0",
+      "M34 42 C28 30 24 24 16 20 M56 31 C52 18 50 12 44 6 M82 26 C80 14 80 8 76 2 M110 25 C112 13 114 7 118 2 M136 29 C142 17 146 12 152 7 M160 38 C168 28 174 24 182 21"
     ]},
-    eye: { vb: "0 0 100 50", s: [
-      [[4, 30], [20, 17], [50, 11], [80, 17], [96, 30]],
-      [[4, 30], [24, 41], [50, 45], [76, 41], [96, 30]],
-      ellipse(50, 29, 12, 12, 14),
-      [[16, 20], [10, 10]], [[28, 15], [25, 4]], [[40, 12], [39, 1]], [[52, 11], [53, 0]], [[64, 12], [67, 2]], [[76, 15], [81, 6]], [[86, 20], [93, 12]]
-    ]},
-    arrow: { vb: "0 0 100 30", s: [ [[2, 16], [30, 13], [60, 17], [96, 14]], [[84, 6], [96, 14], [85, 23]] ] },
-    arrowDown: { vb: "0 0 30 100", s: [ [[15, 2], [13, 40], [17, 70], [15, 96]], [[6, 84], [15, 96], [24, 84]] ] },
-    arrowLeft: { vb: "0 0 100 30", s: [ [[98, 15], [70, 18], [40, 13], [4, 16]], [[16, 7], [4, 16], [15, 24]] ] },
-    close: { vb: "0 0 100 100", s: [ [[10, 12], [50, 50], [90, 88]], [[90, 10], [50, 52], [12, 90]] ] },
-    underline: { vb: "0 0 300 12", s: [ [[2, 7], [80, 5], [160, 8], [240, 5], [298, 7]] ] },
-    lineLong: { vb: "0 0 600 40", s: [ [[2, 30], [120, 22], [260, 28], [400, 16], [520, 18], [598, 6]] ] }
+    frame: { vb: "0 0 200 250", s: [ "M10 10 L190 10 L190 240 L10 240 Z", "M30 30 L170 30 L170 220 L30 220 Z" ] },
+    arrow: { vb: "0 0 100 30", s: [ "M4 16 C40 12 70 18 96 14", "M84 6 L97 14 L85 23" ] },
+    arrowLeft: { vb: "0 0 100 30", s: [ "M96 16 C60 12 30 18 4 14", "M16 6 L3 14 L15 23" ] },
+    arrowDown: { vb: "0 0 30 100", s: [ "M15 2 C12 40 18 70 15 96", "M6 84 L15 97 L24 84" ] },
+    close: { vb: "0 0 100 100", s: [ "M12 12 C40 42 62 60 88 88", "M88 12 C60 40 42 62 12 88" ] },
+    underline: { vb: "0 0 300 18", s: [ "M2 9 C80 4 160 12 232 7 C252 6 266 2 270 6 C274 11 262 15 258 10 C255 6 266 3 298 8" ] },
+    lineLong: { vb: "0 0 600 40", s: [ "M2 30 C140 20 260 34 380 20 C410 16 426 6 418 3 C408 0 402 14 420 17 C462 22 520 12 598 8" ] }
   };
+  const ANIMATED = new Set(["shoe", "hat", "headpiece", "bag", "parasol", "scarf", "dress", "eye", "lineLong", "underline"]);
 
-  function draw(svg, name, opts = {}) {
+  function draw(svg, name) {
     const def = D[name]; if (!def) return;
     svg.setAttribute("viewBox", def.vb);
-    if (!svg.hasAttribute("aria-hidden")) svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("fill", "none");
-    const seed = hash((opts.seed || svg.dataset.seed || name) + "");
-    const amp = parseFloat(svg.dataset.amp || opts.amp || 0.7);
-    const doubled = svg.dataset.double !== "no";
-    let html = "";
-    def.s.forEach((stroke, i) => {
-      html += `<path class="t-line" d="${wobble(stroke, seed + i * 97, amp)}"/>`;
-      if (doubled && i % 2 === 0) html += `<path class="t-line t-ghost" d="${wobble(stroke, seed + i * 131 + 7, amp * 1.4)}"/>`;
-    });
-    svg.innerHTML = html;
+    svg.innerHTML = def.s.map(d => `<path class="t-line" d="${d}"/>`).join("");
+    if (ANIMATED.has(name)) svg.dataset.sew = "";
   }
 
   function drawAll(root = document) {
     root.querySelectorAll("svg[data-draw]").forEach(s => draw(s, s.dataset.draw));
+  }
+
+  /* ---------- Sewing animation: a red needle runs ahead of the thread ---------- */
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  function sew(svg) {
+    if (svg.dataset.sewn) return; svg.dataset.sewn = "1";
+    const paths = Array.from(svg.querySelectorAll(".t-line"));
+    const lens = paths.map(p => p.getTotalLength());
+    const total = lens.reduce((a, b) => a + b, 0) || 1;
+    const vb = svg.viewBox.baseVal;
+    const unit = Math.max(vb.width, vb.height);
+    paths.forEach(p => { p.setAttribute("pathLength", "1"); p.style.strokeDasharray = "1 1"; p.style.strokeDashoffset = "1"; });
+    const ns = "http://www.w3.org/2000/svg";
+    const needle = document.createElementNS(ns, "g"); needle.setAttribute("class", "t-needle");
+    needle.innerHTML = `<line x1="0" y1="0" x2="${(unit * .055).toFixed(1)}" y2="${(-unit * .02).toFixed(1)}"/><circle r="${(unit * .009 + 1).toFixed(1)}"/>`;
+    svg.appendChild(needle);
+    const dur = Math.min(3200, 900 + total / unit * 650);
+    const t0 = performance.now();
+    (function frame(now) {
+      const t = Math.min(1, (now - t0) / dur), at = ease(t) * total;
+      let acc = 0, tip = null;
+      paths.forEach((p, i) => {
+        const local = Math.max(0, Math.min(1, (at - acc) / lens[i]));
+        p.style.strokeDashoffset = String(1 - local);
+        if (local > 0 && local < 1) tip = p.getPointAtLength(local * lens[i]);
+        acc += lens[i];
+      });
+      if (tip) needle.setAttribute("transform", `translate(${tip.x.toFixed(1)} ${tip.y.toFixed(1)})`);
+      needle.style.opacity = t < .97 && tip ? "1" : "0";
+      if (t < 1) requestAnimationFrame(frame);
+      else { paths.forEach(p => { p.style.strokeDasharray = ""; p.style.strokeDashoffset = ""; }); setTimeout(() => needle.remove(), 400); }
+    })(t0);
+  }
+  function sewOnView(root = document) {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const list = root.querySelectorAll("svg[data-sew]:not([data-sewn])");
+    if (reduce || !("IntersectionObserver" in window)) return;
+    // hide until sewn; stays visible if scripts stop
+    list.forEach(svg => svg.querySelectorAll(".t-line").forEach(p => { p.setAttribute("pathLength", "1"); p.style.strokeDasharray = "1 1"; p.style.strokeDashoffset = "1"; }));
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { io.unobserve(e.target); setTimeout(() => sew(e.target), 120); }
+    }), { threshold: .45 });
+    list.forEach(svg => io.observe(svg));
   }
 
   /* ---------- Printed eye (after the eye prints in her collages) ---------- */
@@ -245,5 +278,5 @@
     root.setProperty("--tex-lashes", lashesTile({ bg: cotton, fg: "#F8F5EF" }));
   }
 
-  window.Thread = { draw, drawAll, wobble, installTextures };
+  window.Thread = { draw, drawAll, wobble, installTextures, sew, sewOnView };
 })();
