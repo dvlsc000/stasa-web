@@ -11,7 +11,8 @@ window.SITE = {
   instagram: "https://www.instagram.com/",         // TODO: real profile
   languages: ["hr", "en", "nl", "es", "de", "fr"],
   defaultLanguage: "hr",
-  heroWork: "w-01"                                 // which work stands on the hero stage
+  heroWork: "w-01",
+  heroWorks: ["w-01", "w-02", "pl-001", "w-04", "w-07", "w-09"]   // the rotating exhibition on the opening stage
 };
 
 /* ---------- Rooms of Wing I (the walk). wall = texture name in css ---------- */
@@ -511,12 +512,12 @@ Object.assign(window.STORIES, {
         "film.kicker":"Film","film.title":"Six silhouettes","film.text":"Chapeaux et coiffes de la séance photo de la collection : haut-de-forme, rubans, sinamay rouge et noir, plumes et couronne.","film.play":"Lire le film","film.pause":"Mettre en pause"}
   };
   const more = {
-    hr:{"wing1.swipe":"Povucite za šetnju","foot.bye":"Do sljedećeg susreta","foot.write":"Pišite","foot.top":"Na vrh","f.mailing":"Otvaramo vaš program za e-poštu s porukom za"},
-    en:{"wing1.swipe":"Swipe to walk","foot.bye":"Until we meet again","foot.write":"Write","foot.top":"Back to top","f.mailing":"Opening your e-mail app with the message to"},
-    nl:{"wing1.swipe":"Veeg om te wandelen","foot.bye":"Tot de volgende keer","foot.write":"Schrijf","foot.top":"Naar boven","f.mailing":"Uw e-mailprogramma opent met het bericht aan"},
-    es:{"wing1.swipe":"Deslice para pasear","foot.bye":"Hasta el próximo encuentro","foot.write":"Escriba","foot.top":"Volver arriba","f.mailing":"Abrimos su programa de correo con el mensaje para"},
-    de:{"wing1.swipe":"Wischen zum Rundgang","foot.bye":"Bis zum nächsten Mal","foot.write":"Schreiben","foot.top":"Nach oben","f.mailing":"Ihr E-Mail-Programm öffnet sich mit der Nachricht an"},
-    fr:{"wing1.swipe":"Balayez pour avancer","foot.bye":"À la prochaine rencontre","foot.write":"Écrire","foot.top":"Haut de page","f.mailing":"Votre messagerie s'ouvre avec le message pour"}
+    hr:{"hero.tag":"Šeširi, oglavlja i šivane slike. Skulpture koje se nose i slike koje se dodiruju.","hero.cta2":"Šešir po mjeri","nav.cta":"Narudžba","menu.open":"Izbornik","menu.close":"Zatvori","hero.marquee":"Šeširi|Oglavlja|Fascinatori|Torbe|Suncobrani|Marame|Šivane slike|Tiskovi","wing1.swipe":"Povucite za šetnju","foot.bye":"Do sljedećeg susreta","foot.write":"Pišite","foot.top":"Na vrh","f.mailing":"Otvaramo vaš program za e-poštu s porukom za"},
+    en:{"hero.tag":"Hats, headpieces and sewn pictures. Sculptures you wear and pictures you can touch.","hero.cta2":"A hat made for you","nav.cta":"Commission","menu.open":"Menu","menu.close":"Close","hero.marquee":"Hats|Headpieces|Fascinators|Bags|Parasols|Scarves|Sewn pictures|Prints","wing1.swipe":"Swipe to walk","foot.bye":"Until we meet again","foot.write":"Write","foot.top":"Back to top","f.mailing":"Opening your e-mail app with the message to"},
+    nl:{"hero.tag":"Hoeden, hoofdstukken en genaaide beelden. Sculpturen om te dragen, beelden om aan te raken.","hero.cta2":"Hoed op maat","nav.cta":"Opdracht","menu.open":"Menu","menu.close":"Sluiten","hero.marquee":"Hoeden|Hoofdstukken|Fascinators|Tassen|Parasols|Sjaals|Genaaide beelden|Prints","wing1.swipe":"Veeg om te wandelen","foot.bye":"Tot de volgende keer","foot.write":"Schrijf","foot.top":"Naar boven","f.mailing":"Uw e-mailprogramma opent met het bericht aan"},
+    es:{"hero.tag":"Sombreros, tocados y cuadros cosidos. Esculturas que se llevan y cuadros que se tocan.","hero.cta2":"Sombrero a medida","nav.cta":"Encargo","menu.open":"Menú","menu.close":"Cerrar","hero.marquee":"Sombreros|Tocados|Fascinadores|Bolsos|Sombrillas|Pañuelos|Cuadros cosidos|Láminas","wing1.swipe":"Deslice para pasear","foot.bye":"Hasta el próximo encuentro","foot.write":"Escriba","foot.top":"Volver arriba","f.mailing":"Abrimos su programa de correo con el mensaje para"},
+    de:{"hero.tag":"Hüte, Kopfschmuck und genähte Bilder. Skulpturen zum Tragen, Bilder zum Berühren.","hero.cta2":"Hut nach Maß","nav.cta":"Auftrag","menu.open":"Menü","menu.close":"Schließen","hero.marquee":"Hüte|Kopfschmuck|Fascinators|Taschen|Sonnenschirme|Tücher|Genähte Bilder|Drucke","wing1.swipe":"Wischen zum Rundgang","foot.bye":"Bis zum nächsten Mal","foot.write":"Schreiben","foot.top":"Nach oben","f.mailing":"Ihr E-Mail-Programm öffnet sich mit der Nachricht an"},
+    fr:{"hero.tag":"Chapeaux, coiffes et tableaux cousus. Des sculptures à porter, des tableaux à toucher.","hero.cta2":"Chapeau sur mesure","nav.cta":"Commande","menu.open":"Menu","menu.close":"Fermer","hero.marquee":"Chapeaux|Coiffes|Bibis|Sacs|Ombrelles|Foulards|Tableaux cousus|Tirages","wing1.swipe":"Balayez pour avancer","foot.bye":"À la prochaine rencontre","foot.write":"Écrire","foot.top":"Haut de page","f.mailing":"Votre messagerie s'ouvre avec le message pour"}
   };
   for (const l in add) Object.assign(window.UI[l], add[l], more[l]);
 })();

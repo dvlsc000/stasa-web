@@ -51,7 +51,13 @@
       else if (f === "aria") el.setAttribute("aria-label", v);
       else el.textContent = v;
     });
-    $$(".langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    $$(".langs button, .menu-langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    $$("#lang-list [data-lang]").forEach(li => li.setAttribute("aria-selected", String(li.dataset.lang === lang)));
+    $("#lang-code").textContent = lang.toUpperCase(); $("#lang-flag").innerHTML = flagIcon(lang);
+    const mm = $("#menu-mail"); if (mm) { mm.textContent = SITE.contactEmail; mm.href = "mailto:" + SITE.contactEmail; }
+    const mi = $("#menu-insta"); if (mi) mi.href = SITE.instagram;
+    if ($("#marquee")) renderMarquee();
+    updateHeroCaption();
     const mail = $("#mail-link"); mail.textContent = SITE.contactEmail; mail.href = "mailto:" + SITE.contactEmail;
     const fm = $("#foot-mail"); if (fm) { fm.textContent = SITE.contactEmail; fm.href = "mailto:" + SITE.contactEmail; }
     $("#insta-link").href = SITE.instagram;
@@ -74,12 +80,143 @@
     return `<div class="ph"><svg class="thread" data-draw="${w.draw}" data-seed="${w.id}"></svg><span class="mono" data-wt="${w.id}|phNo"></span></div>`;
   }
 
+  /* ---------------- languages: round flag icons, header dropdown ---------------- */
+  const LANG_NAMES = { hr: "Hrvatski", en: "English", nl: "Nederlands", es: "Español", de: "Deutsch", fr: "Français" };
+  function flag(code) {
+    const stripesH = (a, b, c) => `<rect width="60" height="20" fill="${a}"/><rect y="20" width="60" height="20" fill="${b}"/><rect y="40" width="60" height="20" fill="${c}"/>`;
+    const art = {
+      hr: stripesH("#FF0000", "#FFFFFF", "#171796") +
+          `<g transform="translate(22 17)"><path d="M0 0h16v13c0 6-4 9-8 10-4-1-8-4-8-10z" fill="#fff" stroke="#171796" stroke-width=".8"/>` +
+          Array.from({ length: 20 }, (_, i) => { const x = i % 4, y = (i / 4) | 0; return (x + y) % 2 ? "" : `<rect x="${x * 4}" y="${y * 4}" width="4" height="4" fill="#FF0000"/>`; }).join("") + `</g>`,
+      en: `<rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="4"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="20"/><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="12"/>`,
+      nl: stripesH("#AE1C28", "#FFFFFF", "#21468B"),
+      es: `<rect width="60" height="60" fill="#AA151B"/><rect y="15" width="60" height="30" fill="#F1BF00"/>`,
+      de: stripesH("#000000", "#DD0000", "#FFCE00"),
+      fr: `<rect width="20" height="60" fill="#0055A4"/><rect x="20" width="20" height="60" fill="#FFFFFF"/><rect x="40" width="20" height="60" fill="#EF4135"/>`
+    }[code];
+    const id = "fc" + Math.random().toString(36).slice(2, 8);     // clip ids must be unique per icon
+    return `<svg class="flag-svg" viewBox="0 0 60 60" aria-hidden="true"><defs><clipPath id="${id}"><circle cx="30" cy="30" r="30"/></clipPath></defs>` +
+      `<g clip-path="url(#${id})">${art}</g><circle cx="30" cy="30" r="29.2" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1.6"/></svg>`;
+  }
+  const flagIcon = flag;
+
   function renderLangs() {
-    $$(".langs").forEach(box => {
-      box.innerHTML = SITE.languages.map((l, i) =>
-        (i ? `<span aria-hidden="true">·</span>` : "") + `<button type="button" data-lang="${l}" lang="${l}">${l.toUpperCase()}</button>`).join("");
+    $$(".langs, .menu-langs").forEach(box => {
+      box.innerHTML = SITE.languages.map(l =>
+        `<button type="button" data-lang="${l}" lang="${l}" aria-label="${LANG_NAMES[l]}"><span class="flag">${flagIcon(l)}</span><span class="mono">${l.toUpperCase()}</span></button>`).join("");
     });
-    document.addEventListener("click", e => { const b = e.target.closest(".langs button"); if (b) setLang(b.dataset.lang); });
+    $("#lang-list").innerHTML = SITE.languages.map(l =>
+      `<li role="option" tabindex="-1" data-lang="${l}" lang="${l}"><span class="flag">${flagIcon(l)}</span><span class="lang-name">${LANG_NAMES[l]}</span><span class="mono">${l.toUpperCase()}</span></li>`).join("");
+    document.addEventListener("click", e => {
+      const b = e.target.closest(".langs button, .menu-langs button, #lang-list [data-lang]");
+      if (b) { setLang(b.dataset.lang); closeLangDD(); }
+    });
+    setupLangDD();
+  }
+  function closeLangDD(focus) {
+    const btn = $(".lang-btn"), list = $("#lang-list");
+    if (list.hidden) return;
+    $("#lang-dd").classList.remove("is-open"); btn.setAttribute("aria-expanded", "false");
+    setTimeout(() => { if (!$("#lang-dd").classList.contains("is-open")) list.hidden = true; }, 260);
+    if (focus) btn.focus();
+  }
+  function setupLangDD() {
+    const dd = $("#lang-dd"), btn = $(".lang-btn"), list = $("#lang-list");
+    const open = () => {
+      list.hidden = false; requestAnimationFrame(() => dd.classList.add("is-open"));
+      btn.setAttribute("aria-expanded", "true");
+      const cur = list.querySelector(`[data-lang="${lang}"]`); (cur || list.firstElementChild).focus({ preventScroll: true });
+    };
+    btn.addEventListener("click", () => (dd.classList.contains("is-open") ? closeLangDD() : open()));
+    document.addEventListener("click", e => { if (!e.target.closest("#lang-dd")) closeLangDD(); });
+    list.addEventListener("keydown", e => {
+      const items = $$("[data-lang]", list), i = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (items[i]) { setLang(items[i].dataset.lang); closeLangDD(true); } }
+      else if (e.key === "Escape" || e.key === "Tab") closeLangDD(e.key === "Escape");
+    });
+  }
+
+  /* ---------------- phone menu: a curtain that drops ---------------- */
+  function setupMenu() {
+    const menu = $("#menu"), btn = $(".menu-btn");
+    const label = btn.querySelector(".menu-label");
+    const isOpen = () => !menu.hidden && menu.classList.contains("is-open");
+    const open = () => {
+      menu.hidden = false; requestAnimationFrame(() => menu.classList.add("is-open"));
+      btn.setAttribute("aria-expanded", "true"); html.classList.add("menu-open");
+      label.dataset.i18n = "menu.close"; label.textContent = t("menu.close");
+      document.body.style.overflow = "hidden"; if (lenis) lenis.stop();
+    };
+    const close = (then) => {
+      menu.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); html.classList.remove("menu-open");
+      label.dataset.i18n = "menu.open"; label.textContent = t("menu.open");
+      document.body.style.overflow = ""; if (lenis) lenis.start();
+      setTimeout(() => { if (!menu.classList.contains("is-open")) menu.hidden = true; then && then(); }, reduce ? 0 : 520);
+    };
+    btn.addEventListener("click", () => (isOpen() ? close() : open()));
+    menu.addEventListener("click", e => {
+      const a = e.target.closest("[data-menu-go]"); if (!a) return;
+      e.preventDefault(); close(() => scrollTo(a.dataset.menuGo));
+    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && isOpen()) { close(); btn.focus(); } });
+  }
+
+  /* ---------------- navbar: hides on the way down, returns on the way up ---------------- */
+  function setupNavbar() {
+    const top = $(".top"); let lastY = scrollY, ticking = false;
+    const onScroll = () => {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY, dy = y - lastY;
+        if (!html.classList.contains("menu-open") && !$("#lang-dd").classList.contains("is-open")) {
+          if (y < 120 || dy < -6) top.classList.remove("is-hidden");
+          else if (dy > 8) top.classList.add("is-hidden");
+        }
+        top.classList.toggle("is-scrolled", y > 40);
+        lastY = y; ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    top.addEventListener("focusin", () => top.classList.remove("is-hidden"));
+  }
+
+  /* ---------------- opening stage: a rotating exhibition ---------------- */
+  const hero = { i: 0, timer: 0, ids: [] };
+  function renderHero() {
+    hero.ids = (SITE.heroWorks || [SITE.heroWork]).filter(id => byId[id] && byId[id].image);
+    $("#hero-stage").innerHTML = hero.ids.map((id, i) => {
+      const w = byId[id];
+      return `<button class="hero-slide${i === 0 ? " is-on" : ""}" type="button" data-open="${id}" data-wt="${id}|aria">
+        <span class="mat"><img src="${w.image}" alt="" data-wt="${id}|alt" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}></span></button>`;
+    }).join("");
+    $("#hero-total").textContent = String(hero.ids.length).padStart(2, "0");
+    const go = (n, user) => {
+      const slides = $$(".hero-slide");
+      hero.i = (n + slides.length) % slides.length;
+      slides.forEach((el, k) => el.classList.toggle("is-on", k === hero.i));
+      $("#hero-n").textContent = String(hero.i + 1).padStart(2, "0");
+      updateHeroCaption();
+      const bar = $("#hero-bar"); bar.classList.remove("run"); void bar.offsetWidth; if (!reduce) bar.classList.add("run");
+      if (user) restart();
+    };
+    const restart = () => { clearInterval(hero.timer); if (!reduce) hero.timer = setInterval(() => { if (!hero.paused && !document.hidden) go(hero.i + 1); }, 6000); };
+    $("#hero-prev").addEventListener("click", () => go(hero.i - 1, true));
+    $("#hero-next").addEventListener("click", () => go(hero.i + 1, true));
+    const fig = $(".hero-work");
+    fig.addEventListener("pointerenter", () => { hero.paused = true; fig.classList.add("is-paused"); });
+    fig.addEventListener("pointerleave", () => { hero.paused = false; fig.classList.remove("is-paused"); });
+    hero.go = go; go(0); restart();
+  }
+  function updateHeroCaption() {
+    const cap = $("#hero-cap"); if (!cap || !hero.ids.length) return;
+    cap.textContent = field(byId[hero.ids[hero.i]], "title");
+  }
+  function renderMarquee() {
+    const words = t("hero.marquee").split("|");
+    const run = words.map(w => `<span>${w}</span><svg class="mq-stitch" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 19 19M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`).join("");
+    $("#marquee").innerHTML = `<div class="mq-run">${run}</div><div class="mq-run">${run}</div>`;
   }
 
   function renderWalk() {
@@ -297,6 +434,10 @@
     tones.forEach(([sel, tone]) => ScrollTrigger.create({
       trigger: sel, start: "top 36px", end: "bottom 36px",
       onToggle: self => self.isActive && top.classList.toggle("is-light", tone === "light")
+    }));
+    $$(".top-nav [data-sec]").forEach(a => ScrollTrigger.create({
+      trigger: a.dataset.sec, start: "top 50%", end: "bottom 50%",
+      onToggle: self => a.classList.toggle("is-active", self.isActive)
     }));
     ScrollTrigger.create({ trigger: ".foot", start: "top 45%", end: "bottom bottom",
       onToggle: self => top.classList.toggle("is-light", !self.isActive) });
@@ -607,6 +748,7 @@
   /* ---------------- start ---------------- */
   Thread.installTextures();
   renderLangs();
+  renderHero();
   renderWalk();
   renderSalon();
   renderExhibitions();
@@ -619,6 +761,8 @@
   setupTilt();
   if (window.gsap && window.ScrollTrigger) { setupScroll(); setupProgressThread(); }
   setupHeroDepth();
+  setupMenu();
+  setupNavbar();
   setupGalleryLight();
   $$("[data-top]").forEach(b => b.addEventListener("click", () => scrollTo(0)));
   setupHalftones();
