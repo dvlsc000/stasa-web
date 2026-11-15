@@ -83,7 +83,7 @@
     </div>
     <div class="prolog-text">
       <p class="kicker mono" id="prolog-k"><span class="tab"></span><span data-i18n="prolog.kicker">Prolog</span></p>
-      <p class="prolog-lead" data-i18n="prolog.lead">„Šeširi su mjesta moje oblikovne slobode.“</p>
+      <p class="prolog-lead" data-split data-i18n="prolog.lead">„Šeširi su mjesta moje oblikovne slobode.“</p>
       <p class="prolog-body dropcap" data-i18n="prolog.p1"></p>
       <p class="prolog-body" data-i18n="prolog.p2"></p>
     </div>
@@ -95,7 +95,7 @@
       <div class="walk-track" id="walk-track">
         <div class="walk-intro">
           <p class="kicker mono"><span class="tab"></span><span data-i18n="wing1.kicker">Krilo I</span></p>
-          <h2 id="walk-title" class="display" data-i18n="wing1.title">Nosivo</h2>
+          <h2 id="walk-title" class="display" data-split data-i18n="wing1.title">Nosivo</h2>
           <p class="walk-intro-text" data-i18n="wing1.text"></p>
           <p class="walk-hint mono"><span data-i18n="wing1.scroll">Listajte za šetnju</span>
             <svg class="thread" data-draw="arrow" data-seed="walk-hint"></svg></p>
@@ -128,7 +128,7 @@
   <section class="film" id="film" aria-labelledby="film-title">
     <div class="film-text">
       <p class="kicker mono"><span class="tab"></span><span data-i18n="film.kicker">Film</span></p>
-      <h2 id="film-title" class="display" data-i18n="film.title">Šest lica</h2>
+      <h2 id="film-title" class="display" data-split data-i18n="film.title">Šest lica</h2>
       <p class="section-text" data-i18n="film.text"></p>
       <button type="button" class="link-btn film-toggle" id="film-toggle" aria-pressed="false">Zaustavi film</button>
     </div>
@@ -144,7 +144,7 @@
       <img src="images/works/oko.jpg" alt="" loading="lazy" data-wt="w-03|alt" width="1000" height="880">
     </div>
     <blockquote class="interlude-quote">
-      <p data-i18n="quote">„Često pustim da me materijal vodi, da me ponese, slušam ga.“</p>
+      <p data-split data-i18n="quote">„Često pustim da me materijal vodi, da me ponese, slušam ga.“</p>
       <footer class="mono" data-i18n="quote.by">Staša Čimbur</footer>
     </blockquote>
     <svg class="thread interlude-shoe" data-draw="shoe" data-seed="interlude-shoe" data-reveal></svg>
@@ -154,7 +154,7 @@
   <section class="wall" id="zid" aria-labelledby="wall-title">
     <header class="section-head">
       <p class="kicker mono"><span class="tab"></span><span data-i18n="wing2.kicker">Krilo II</span></p>
-      <h2 id="wall-title" class="display" data-i18n="wing2.title">Za zid</h2>
+      <h2 id="wall-title" class="display" data-split data-i18n="wing2.title">Za zid</h2>
       <p class="section-text" data-i18n="wing2.text"></p>
     </header>
     <div class="salon" id="salon-hang"></div>
@@ -162,7 +162,7 @@
     <div class="prints">
       <header class="section-head section-head--small">
         <p class="kicker mono"><span class="tab tab--blue"></span><span data-i18n="prints.kicker">Grafički kabinet</span></p>
-        <h3 class="display display--m" data-i18n="prints.title">Tiskovi</h3>
+        <h3 class="display display--m" data-split data-i18n="prints.title">Tiskovi</h3>
         <p class="section-text" data-i18n="prints.text"></p>
       </header>
       <div class="prints-row" id="prints-row"></div>
@@ -173,7 +173,7 @@
   <section class="ex" id="izlozbe" aria-labelledby="ex-title">
     <header class="section-head section-head--light">
       <p class="kicker mono"><span class="tab"></span><span data-i18n="ex.kicker">Izložbe i tisak</span></p>
-      <h2 id="ex-title" class="display" data-i18n="ex.title">Izbor</h2>
+      <h2 id="ex-title" class="display" data-split data-i18n="ex.title">Izbor</h2>
     </header>
     <div class="ex-table" role="table" aria-labelledby="ex-title">
       <div class="ex-row ex-head mono" role="row">
@@ -192,7 +192,7 @@
   <section class="contact" id="kontakt" aria-labelledby="contact-title">
     <div class="contact-text">
       <p class="kicker mono"><span class="tab"></span><span data-i18n="contact.kicker">Narudžbe</span></p>
-      <h2 id="contact-title" class="display" data-i18n="contact.title">Šešir po mjeri</h2>
+      <h2 id="contact-title" class="display" data-split data-i18n="contact.title">Šešir po mjeri</h2>
       <p class="section-text" data-i18n="contact.text"></p>
       <p class="contact-mail mono"><a id="mail-link" href="#"></a></p>
       <svg class="thread contact-hat" data-draw="hat" data-seed="contact-hat" data-reveal></svg>
@@ -217,11 +217,20 @@
 
 <footer class="foot">
   <div class="foot-eyes" aria-hidden="true"></div>
+  <div class="foot-main">
+    <p class="kicker mono"><span class="tab"></span><span data-i18n="foot.bye">Do sljedećeg susreta</span></p>
+    <a class="foot-big" href="#kontakt" data-scroll="#kontakt"><span>Stasha</span><em>Hats</em></a>
+    <svg class="thread foot-line" data-draw="lineLong" data-seed="foot-line"></svg>
+    <div class="foot-cols">
+      <div><p class="mono foot-h" data-i18n="foot.write">Pišite</p><a class="foot-link" id="foot-mail" href="#"></a></div>
+      <div><p class="mono foot-h">Instagram</p><a class="foot-link" id="insta-link" href="#" rel="noopener">@stashahats</a></div>
+      <div><p class="mono foot-h" data-i18n="nav.lang">Jezik</p><div class="langs langs--foot" role="group" aria-label="Jezik" data-i18n-aria="nav.lang"></div></div>
+      <div class="foot-top-wrap"><button type="button" class="foot-top" data-top><svg class="thread" data-draw="arrowUp" data-seed="top"></svg><span class="mono" data-i18n="foot.top">Na vrh</span></button></div>
+    </div>
+  </div>
   <div class="foot-row">
-    <span class="foot-name">Staša Čimbur</span>
-    <div class="langs langs--foot" role="group" aria-label="Jezik" data-i18n-aria="nav.lang"></div>
-    <a class="mono" id="insta-link" href="#" rel="noopener">Instagram</a>
-    <span class="mono">© StashaHats · <span data-i18n="footer.rights">Sva prava pridržana</span></span>
+    <span class="mono">© StashaHats · Staša Čimbur · <span data-i18n="footer.rights">Sva prava pridržana</span></span>
+    <span class="mono">Zagreb — Amsterdam</span>
   </div>
 </footer>
 

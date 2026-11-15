@@ -510,5 +510,13 @@ Object.assign(window.STORIES, {
     fr:{"hat3d.kicker":"Étude en 3D","hat3d.title":"Chapeau noir à nœud","hat3d.hint":"Faites glisser pour tourner","hat3d.note":"Une étude en trois dimensions d'après le chapeau de paille noire.","hat3d.label":"Modèle 3D du chapeau de paille noire. Tournez-le avec les flèches gauche et droite.",
         "film.kicker":"Film","film.title":"Six silhouettes","film.text":"Chapeaux et coiffes de la séance photo de la collection : haut-de-forme, rubans, sinamay rouge et noir, plumes et couronne.","film.play":"Lire le film","film.pause":"Mettre en pause"}
   };
-  for (const l in add) Object.assign(window.UI[l], add[l]);
+  const more = {
+    hr:{"foot.bye":"Do sljedećeg susreta","foot.write":"Pišite","foot.top":"Na vrh","f.mailing":"Otvaramo vaš program za e-poštu s porukom za"},
+    en:{"foot.bye":"Until we meet again","foot.write":"Write","foot.top":"Back to top","f.mailing":"Opening your e-mail app with the message to"},
+    nl:{"foot.bye":"Tot de volgende keer","foot.write":"Schrijf","foot.top":"Naar boven","f.mailing":"Uw e-mailprogramma opent met het bericht aan"},
+    es:{"foot.bye":"Hasta el próximo encuentro","foot.write":"Escriba","foot.top":"Volver arriba","f.mailing":"Abrimos su programa de correo con el mensaje para"},
+    de:{"foot.bye":"Bis zum nächsten Mal","foot.write":"Schreiben","foot.top":"Nach oben","f.mailing":"Ihr E-Mail-Programm öffnet sich mit der Nachricht an"},
+    fr:{"foot.bye":"À la prochaine rencontre","foot.write":"Écrire","foot.top":"Haut de page","f.mailing":"Votre messagerie s'ouvre avec le message pour"}
+  };
+  for (const l in add) Object.assign(window.UI[l], add[l], more[l]);
 })();

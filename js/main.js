@@ -53,9 +53,11 @@
     });
     $$(".langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     const mail = $("#mail-link"); mail.textContent = SITE.contactEmail; mail.href = "mailto:" + SITE.contactEmail;
+    const fm = $("#foot-mail"); if (fm) { fm.textContent = SITE.contactEmail; fm.href = "mailto:" + SITE.contactEmail; }
     $("#insta-link").href = SITE.instagram;
     if (plateState.id) fillPlate(plateState.id);
     updateFilmBtn();
+    splitTitles();
   }
   function setLang(l) {
     lang = l; try { localStorage.setItem("sc-lang", l); } catch (e) {}
@@ -280,12 +282,14 @@
     });
 
     // header colour (created after the pin so positions include its spacing) follows the section under it
-    const tones = [[".hero", "dark"], [".prolog", "light"], [".walk", "dark"], [".film", "light"], [".interlude", "light"], [".wall", "light"], [".ex", "dark"], [".contact", "light"], [".foot", "dark"]];
+    const tones = [[".hero", "dark"], [".prolog", "light"], [".walk", "dark"], [".film", "light"], [".interlude", "light"], [".wall", "light"], [".ex", "dark"], [".contact", "light"]];
     const top = $(".top");
     tones.forEach(([sel, tone]) => ScrollTrigger.create({
       trigger: sel, start: "top 36px", end: "bottom 36px",
       onToggle: self => self.isActive && top.classList.toggle("is-light", tone === "light")
     }));
+    ScrollTrigger.create({ trigger: ".foot", start: "top 45%", end: "bottom bottom",
+      onToggle: self => top.classList.toggle("is-light", !self.isActive) });
 
     // line drawings are sewn in by a little needle when they come into view
     Thread.sewOnView();
@@ -328,24 +332,67 @@
     $("#plate-dl").innerHTML = rows.map(([k, v]) => `<dt>${t(k)}</dt><dd>${v}</dd>`).join("");
     $("#plate-status").textContent = field(w, "status");
   }
+  /* the clicked image flies from the wall into the plate, and back on close */
+  function flyer(fromRect, src) {
+    const im = document.createElement("img");
+    im.src = src; im.alt = ""; im.className = "flyer";
+    Object.assign(im.style, { left: fromRect.left + "px", top: fromRect.top + "px", width: fromRect.width + "px", height: fromRect.height + "px" });
+    document.body.appendChild(im); return im;
+  }
+  const visibleRect = el => {
+    if (!el) return null; const r = el.getBoundingClientRect();
+    return r.width > 4 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth ? r : null;
+  };
   function openPlate(id, opener) {
     if (!byId[id]) return;
     plateState.id = id; plateState.opener = opener || document.activeElement;
+    const srcImg = opener && opener.querySelector ? opener.querySelector("img") : null;
+    const from = !reduce && srcImg ? visibleRect(srcImg) : null;
     fillPlate(id);
     plate.hidden = false;
     document.body.style.overflow = "hidden";
     if (lenis) lenis.stop();
     try { history.replaceState(null, "", "#" + id); } catch (e) {}
-    if (!reduce) gsap.fromTo(plate, { opacity: 0 }, { opacity: 1, duration: .45, ease: "power2.out" });
+    if (!reduce) {
+      const info = $$(".plate-info > *", plate);
+      gsap.fromTo(plate, { opacity: 0 }, { opacity: 1, duration: .5, ease: "power2.out" });
+      gsap.fromTo(info, { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: "expo.out", stagger: .05, delay: .25, clearProps: "transform,opacity" });
+      const target = $("#plate-media .mat img");
+      if (from && target) {
+        const run = () => {
+          const to = target.getBoundingClientRect();
+          if (!to.width) return;
+          const f = flyer(from, target.src);
+          target.style.visibility = "hidden";
+          gsap.to(f, { left: to.left, top: to.top, width: to.width, height: to.height, duration: .95, ease: "expo.inOut",
+            onComplete: () => { target.style.visibility = ""; f.remove(); } });
+        };
+        target.complete ? run() : target.addEventListener("load", run, { once: true });
+      }
+    }
     $("#plate-close").focus({ preventScroll: true });
   }
   function closePlate() {
     if (!plateState.id) return;
-    plate.hidden = true; plateState.id = null;
-    document.body.style.overflow = "";
-    if (lenis) lenis.start();
+    const opener = plateState.opener;
+    const finish = () => {
+      plate.hidden = true; plate.style.opacity = "";
+      document.body.style.overflow = "";
+      if (lenis) lenis.start();
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
+    };
+    const openedId = plateState.id; plateState.id = null;
     try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
-    if (plateState.opener && plateState.opener.focus) plateState.opener.focus({ preventScroll: true });
+    if (reduce) return finish();
+    const srcImg = opener && opener.dataset && opener.dataset.open === openedId ? opener.querySelector("img") : null;
+    const back = srcImg ? visibleRect(srcImg) : null;
+    const cur = $("#plate-media .mat img");
+    const from = cur ? cur.getBoundingClientRect() : null;
+    if (back && from && from.width) {
+      const f = flyer(from, cur.src); cur.style.visibility = "hidden";
+      gsap.to(f, { left: back.left, top: back.top, width: back.width, height: back.height, duration: .85, ease: "expo.inOut", onComplete: () => f.remove() });
+    }
+    gsap.to(plate, { opacity: 0, duration: .45, ease: "power2.inOut", delay: back ? .15 : 0, onComplete: finish });
   }
   function stepPlate(dir) {
     const i = order.indexOf(plateState.id);
@@ -405,6 +452,82 @@
   }
 
 
+  /* ---------------- titles rise out of a fold, word by word ---------------- */
+  const splitIO = ("IntersectionObserver" in window) ? new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("is-in"); splitIO.unobserve(e.target); }
+  }), { threshold: .3 }) : null;
+  function splitTitles() {
+    if (reduce || !splitIO) return;
+    $$("[data-split]").forEach(el => {
+      const text = el.textContent; if (!text.trim()) return;
+      el.setAttribute("aria-label", text);
+      el.innerHTML = text.split(/(\s+)/).map((w, i) => /\s+/.test(w) ? w :
+        `<span class="w" aria-hidden="true"><span class="wi" style="--i:${i}">${w}</span></span>`).join("");
+      el.classList.add("split");
+      if (!el.classList.contains("is-in")) splitIO.observe(el);
+    });
+  }
+
+  /* ---------------- red thread: page progress on the right edge ---------------- */
+  function setupProgressThread() {
+    if (reduce || !fine || innerWidth < 900) return;
+    const marks = [["#main", "StashaHats"], ["#prolog", "prolog.kicker"], ["#salon", "nav.salon"], ["#film", "film.kicker"], ["#zid", "nav.wall"], ["#izlozbe", "nav.ex"], ["#kontakt", "nav.contact"]];
+    const box = document.createElement("nav");
+    box.className = "pthread"; box.setAttribute("aria-label", "Sections");
+    box.innerHTML = `<span class="pthread-track"></span><span class="pthread-line"></span><span class="pthread-needle"></span>` +
+      marks.map(([sel, k]) => `<button type="button" class="pthread-tick" data-scroll-to="${sel}"><span class="mono" ${k.includes(".") ? `data-i18n="${k}"` : ""}>${k.includes(".") ? t(k) : k}</span></button>`).join("");
+    document.body.appendChild(box);
+    const line = box.querySelector(".pthread-line"), needle = box.querySelector(".pthread-needle");
+    const ticks = $$(".pthread-tick", box);
+    const place = () => {
+      const H = document.documentElement.scrollHeight - innerHeight;
+      ticks.forEach((b, i) => {
+        const el = $(marks[i][0]); const y = el ? el.getBoundingClientRect().top + scrollY : 0;
+        b.style.top = (Math.min(1, y / H) * 100) + "%"; b.dataset.y = y;
+      });
+    };
+    const update = () => {
+      const H = document.documentElement.scrollHeight - innerHeight, p = H > 0 ? scrollY / H : 0;
+      line.style.transform = `scaleY(${p})`; needle.style.top = (p * 100) + "%";
+      ticks.forEach(b => b.classList.toggle("is-past", +b.dataset.y <= scrollY + innerHeight * .4));
+      box.classList.toggle("is-on-dark", !!document.querySelector(".top:not(.is-light)"));
+    };
+    box.addEventListener("click", e => { const b = e.target.closest("[data-scroll-to]"); if (b) scrollTo(b.dataset.scrollTo); });
+    place(); update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", () => { place(); update(); });
+    ScrollTrigger.addEventListener("refresh", () => { place(); update(); });
+  }
+
+  /* ---------------- hero: depth that follows the mouse ---------------- */
+  function setupHeroDepth() {
+    if (reduce || !fine) return;
+    const hero = $(".hero"); let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    hero.addEventListener("pointermove", e => {
+      const r = hero.getBoundingClientRect();
+      tx = (e.clientX - r.left) / r.width * 2 - 1; ty = (e.clientY - r.top) / r.height * 2 - 1;
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+    hero.addEventListener("pointerleave", () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(loop); });
+    function loop() {
+      x += (tx - x) * .08; y += (ty - y) * .08;
+      hero.style.setProperty("--mx", x.toFixed(4)); hero.style.setProperty("--my", y.toFixed(4));
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > .001 ? requestAnimationFrame(loop) : 0;
+    }
+  }
+
+  /* ---------------- salon: warm gallery light follows the cursor ---------------- */
+  function setupGalleryLight() {
+    if (reduce || !fine) return;
+    const wall = $(".wall");
+    wall.addEventListener("pointermove", e => {
+      const r = wall.getBoundingClientRect();
+      wall.style.setProperty("--lx", (e.clientX - r.left) + "px"); wall.style.setProperty("--ly", (e.clientY - r.top) + "px");
+      wall.classList.add("is-lit");
+    });
+    wall.addEventListener("pointerleave", () => wall.classList.remove("is-lit"));
+  }
+
   /* ---------------- film: plays muted while in view ---------------- */
   const film = { v: null, userPaused: false };
   function updateFilmBtn() {
@@ -460,8 +583,14 @@
       e.preventDefault();
       const ok = $("#f-name").value.trim() && /\S+@\S+\.\S+/.test($("#f-email").value) && $("#f-msg").value.trim();
       status.classList.toggle("is-err", !ok);
-      // TODO: connect to a form service (Formspree, Netlify Forms…) here.
-      status.textContent = ok ? `${t("f.done")} ${SITE.contactEmail}` : t("f.err");
+      if (!ok) { status.textContent = t("f.err"); return; }
+      // Without a form service, the message is handed to the visitor's own e-mail app.
+      // To receive it directly instead, connect Formspree / Netlify Forms here.
+      const type = $("#f-type").selectedOptions[0].textContent;
+      const subject = `${type} · ${$("#f-name").value.trim()}`;
+      const body = `${$("#f-msg").value.trim()}\n\n${$("#f-name").value.trim()}\n${$("#f-email").value.trim()}`;
+      status.textContent = `${t("f.mailing")} ${SITE.contactEmail}`;
+      window.location.href = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
   }
 
@@ -478,6 +607,9 @@
   setupFilm();
   setupExFloat();
   setupTilt();
-  if (window.gsap && window.ScrollTrigger) setupScroll();
+  if (window.gsap && window.ScrollTrigger) { setupScroll(); setupProgressThread(); }
+  setupHeroDepth();
+  setupGalleryLight();
+  $$("[data-top]").forEach(b => b.addEventListener("click", () => scrollTo(0)));
   setupHalftones();
 })();
