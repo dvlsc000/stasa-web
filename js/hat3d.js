@@ -14,7 +14,7 @@ function init(host) {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   } catch (e) { host.classList.add("no-webgl"); return; }
   // full sharpness on retina phones too (capped at 2x: past that the eye cannot tell, the GPU can)
-  renderer.setPixelRatio(Math.min(touch ? 1.75 : 2, window.devicePixelRatio || 1));
+  renderer.setPixelRatio(Math.min(touch ? 1.5 : 2, window.devicePixelRatio || 1));   // phones: sharp but light enough to spin while scrolling
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
@@ -256,8 +256,6 @@ function init(host) {
   }
   function loop(t) {
     const dt = Math.min(0.05, (t - lastT) / 1000 || 0.016); lastT = t;
-    // while the page is scrolling the canvas just rides along as a still image: no GPU work
-    if (!dragging && t - (window.__scrolling || 0) < 180) { raf = requestAnimationFrame(loop); return; }
     if (!dragging) {
       yaw += vel; vel *= 0.93;                                       // glide after a flick
       if (!reduce && t > idleUntil) yaw += dt * 0.3;                 // turn on its own when left alone
@@ -265,6 +263,18 @@ function init(host) {
     pitch += (tPitch - pitch) * 0.12;
     draw();
     raf = visible || dragging || Math.abs(vel) > 0.0005 ? requestAnimationFrame(loop) : 0;
+  }
+  // scrolling through the gallery turns the hat with you (both directions), then it keeps its slow spin
+  {
+    const sc = document.documentElement.classList.contains("app-scroll") ? document.body : window;
+    const getY = () => sc === window ? window.scrollY : sc.scrollTop;
+    let lastY = getY();
+    sc.addEventListener("scroll", () => {
+      const y = getY(), d = y - lastY; lastY = y;
+      if (!visible || dragging || reduce) return;
+      vel += Math.max(-0.008, Math.min(0.008, d * 0.00012));          // ~a quarter turn per screen of walking
+      wake();
+    }, { passive: true });
   }
   new IntersectionObserver(([en]) => {
     visible = en.isIntersecting;
