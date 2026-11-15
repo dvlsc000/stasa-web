@@ -330,7 +330,21 @@ html.pin-on .feature-card { left: 6%; bottom: 13vh; }
 
 /* ---------- the walk on phones: same sideways walk, portrait proportions ---------- */
 @media (max-width: 899px) {
-  html.pin-on .walk-viewport { height: 100svh; }
+  /* native sideways swipe: the gallery scrolls, the page does not get hijacked */
+  html.pin-mob .walk-viewport {
+    height: min(100svh, 860px); overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  html.pin-mob .walk-viewport::-webkit-scrollbar { display: none; }
+  html.pin-mob .walk-track { transform: none !important; }
+  html.pin-mob .walk-intro, html.pin-mob .walk-feature { scroll-snap-align: start; }
+  html.pin-mob .piece { scroll-snap-align: center; scroll-snap-stop: normal; }
+  html.pin-mob .walk-end { scroll-snap-align: end; }
+  html.pin-mob .floorplan { position: absolute; left: var(--gutter); right: var(--gutter); transition: opacity .3s ease; }
+  html.pin-mob .floorplan.is-hidden { opacity: 0; }
+  html.pin-mob .hat3d, html.pin-mob .hat3d canvas { pointer-events: none; touch-action: auto; }
+  html.pin-mob .feature-hint { display: none; }
   html.pin-on .walk-intro { width: 100vw; padding: 0 7vw; }
   html.pin-on .walk-intro .display { font-size: clamp(56px, 17vw, 96px); }
   html.pin-on .walk-intro-text { font-size: 17px; }

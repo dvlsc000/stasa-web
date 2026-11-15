@@ -218,9 +218,40 @@
     else el && el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
   }
 
+  /* phones: the walk is a native horizontal swipe with gentle snapping */
+  function setupSwipeWalk() {
+    const walk = $(".walk"), vp = $(".walk-viewport"), fp = $("#floorplan");
+    const rooms = $$(".room", vp), lis = $$(".floorplan-rooms li"), prog = $(".floorplan-progress");
+    walk.appendChild(fp);                                     // keep the indicator still while the gallery moves
+    const hint = $(".walk-hint [data-i18n]"); if (hint) { hint.dataset.i18n = "wing1.swipe"; hint.textContent = t("wing1.swipe"); }
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = vp.scrollWidth - vp.clientWidth, x = vp.scrollLeft;
+      prog.style.transform = `scaleX(${max > 0 ? x / max : 0})`;
+      let cur = -1; rooms.forEach((r, i) => { if (x + vp.clientWidth * .5 >= r.offsetLeft) cur = i; });
+      lis.forEach((li, i) => li.firstElementChild.setAttribute("aria-current", String(i === cur)));
+      fp.classList.toggle("is-hidden", cur < 0);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    vp.addEventListener("scroll", onScroll, { passive: true });
+    const onGo = e => {
+      const b = e.target.closest("[data-goto]"); if (!b) return;
+      const r = $("#room-" + b.dataset.goto); if (r) vp.scrollTo({ left: r.offsetLeft, behavior: "smooth" });
+    };
+    fp.addEventListener("click", onGo);
+    update();
+    return () => {
+      vp.removeEventListener("scroll", onScroll); fp.removeEventListener("click", onGo);
+      vp.appendChild(fp); vp.scrollLeft = 0;
+      if (hint) { hint.dataset.i18n = "wing1.scroll"; hint.textContent = t("wing1.scroll"); }
+      html.classList.remove("pin-on", "pin-mob");
+    };
+  }
+
   function setupScroll() {
     gsap.registerPlugin(ScrollTrigger);
-    if (!reduce && window.Lenis) {
+    if (!reduce && window.Lenis && fine) {          // touch devices keep 100% native scrolling
       lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(time => lenis.raf(time * 1000));
@@ -245,6 +276,7 @@
       if (!desk && !mob) return;
       html.classList.add("pin-on");
       html.classList.toggle("pin-mob", !!mob);
+      if (mob) return setupSwipeWalk();                       // phones: native sideways swipe, page scroll untouched
       const track = $("#walk-track");
       const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
       const rooms = $$(".room", track);
@@ -259,7 +291,7 @@
       const tween = gsap.to(track, {
         x: () => -dist(), ease: "none",
         scrollTrigger: {
-          trigger: "#salon", pin: true, scrub: mob ? 0.35 : 0.7, start: "top top", end: () => "+=" + dist() * (mob ? 1.15 : 1),
+          trigger: "#salon", pin: true, scrub: 0.7, start: "top top", end: () => "+=" + dist(),
           anticipatePin: 1,
           invalidateOnRefresh: true, onRefresh: measure,
           onUpdate: self => {
@@ -271,8 +303,7 @@
       });
       measure();
       $$(".piece", track).forEach(el => {
-        const d = mob ? 0 : parseFloat(el.dataset.depth || 0) * 110;   // phones: no extra depth, just a calm walk
-        if (!d) return;
+        const d = parseFloat(el.dataset.depth || 0) * 110;
         gsap.fromTo(el, { x: d }, { x: -d, ease: "none", scrollTrigger: { trigger: el, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
       });
       $$(".walk-ribbon", track).forEach(el => {

@@ -511,12 +511,12 @@ Object.assign(window.STORIES, {
         "film.kicker":"Film","film.title":"Six silhouettes","film.text":"Chapeaux et coiffes de la séance photo de la collection : haut-de-forme, rubans, sinamay rouge et noir, plumes et couronne.","film.play":"Lire le film","film.pause":"Mettre en pause"}
   };
   const more = {
-    hr:{"foot.bye":"Do sljedećeg susreta","foot.write":"Pišite","foot.top":"Na vrh","f.mailing":"Otvaramo vaš program za e-poštu s porukom za"},
-    en:{"foot.bye":"Until we meet again","foot.write":"Write","foot.top":"Back to top","f.mailing":"Opening your e-mail app with the message to"},
-    nl:{"foot.bye":"Tot de volgende keer","foot.write":"Schrijf","foot.top":"Naar boven","f.mailing":"Uw e-mailprogramma opent met het bericht aan"},
-    es:{"foot.bye":"Hasta el próximo encuentro","foot.write":"Escriba","foot.top":"Volver arriba","f.mailing":"Abrimos su programa de correo con el mensaje para"},
-    de:{"foot.bye":"Bis zum nächsten Mal","foot.write":"Schreiben","foot.top":"Nach oben","f.mailing":"Ihr E-Mail-Programm öffnet sich mit der Nachricht an"},
-    fr:{"foot.bye":"À la prochaine rencontre","foot.write":"Écrire","foot.top":"Haut de page","f.mailing":"Votre messagerie s'ouvre avec le message pour"}
+    hr:{"wing1.swipe":"Povucite za šetnju","foot.bye":"Do sljedećeg susreta","foot.write":"Pišite","foot.top":"Na vrh","f.mailing":"Otvaramo vaš program za e-poštu s porukom za"},
+    en:{"wing1.swipe":"Swipe to walk","foot.bye":"Until we meet again","foot.write":"Write","foot.top":"Back to top","f.mailing":"Opening your e-mail app with the message to"},
+    nl:{"wing1.swipe":"Veeg om te wandelen","foot.bye":"Tot de volgende keer","foot.write":"Schrijf","foot.top":"Naar boven","f.mailing":"Uw e-mailprogramma opent met het bericht aan"},
+    es:{"wing1.swipe":"Deslice para pasear","foot.bye":"Hasta el próximo encuentro","foot.write":"Escriba","foot.top":"Volver arriba","f.mailing":"Abrimos su programa de correo con el mensaje para"},
+    de:{"wing1.swipe":"Wischen zum Rundgang","foot.bye":"Bis zum nächsten Mal","foot.write":"Schreiben","foot.top":"Nach oben","f.mailing":"Ihr E-Mail-Programm öffnet sich mit der Nachricht an"},
+    fr:{"wing1.swipe":"Balayez pour avancer","foot.bye":"À la prochaine rencontre","foot.write":"Écrire","foot.top":"Haut de page","f.mailing":"Votre messagerie s'ouvre avec le message pour"}
   };
   for (const l in add) Object.assign(window.UI[l], add[l], more[l]);
 })();
