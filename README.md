@@ -99,3 +99,23 @@ Supabase (project **stasa-web**, Frankfurt). Photos live in the Supabase storage
   Site URL = `https://stasa-web.vercel.app`, and add `https://stasa-web.vercel.app/admin/`
   to Redirect URLs, so confirmation and password e-mails link back to the admin page.
 * Interface words (menus, buttons) are still in `js/content.js` → `UI`.
+
+## Design studio: four seasons (admin → Design)
+
+Each season (Spring, Summer, Autumn, Winter) is a complete design of the site:
+colours (red, ink, cotton, paper, blue), heading and text fonts, motion (Full / Calm / Still),
+the opening stage (wall, floor, which works rotate and how fast), the order, visibility,
+background, softening and text colour of every section, the quote print, the order / walls /
+open rooms of the gallery walk, and the footer band. Backgrounds come from her prints
+(eyes, lips, hands, satin, velvet…), plain colours, or photos you upload (fill or pattern).
+
+* **Live on the site:** *Automatic by date* (Mar–May spring, Jun–Aug summer, Sep–Nov
+  autumn, Dec–Feb winter) or one season fixed.
+* **Draft → Publish:** every change is saved as a draft and shown in the live preview
+  (desktop or phone). Visitors only see a season after you press *Publish*.
+  Undo / redo (Ctrl+Z), *Copy from…* another season, *Reset season* to its original design.
+* **Texts tab:** every word of the interface in all six languages; empty = original.
+* Code: `js/themes.js` (wall library, season presets, applying a design),
+  `admin/design.js` (the studio). Data: table `layouts` (draft + published per season),
+  `settings.season_mode`, `settings.texts`, `settings.backgrounds`.
+* `?season=winter` on the site URL shows a season's published design without making it live.

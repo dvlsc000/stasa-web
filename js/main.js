@@ -4,7 +4,8 @@ window.__startSite = () => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const html = document.documentElement;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches || window.__motion === "still";
+  const calm = window.__motion === "calm";               // admin: "calm" motion, fewer flourishes
   const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
   /* Phones: the page body scrolls instead of the browser window. The browser's address bar and
      toolbar then stay still, so they can never push the screen up and down mid-walk, and the
@@ -216,7 +217,7 @@ window.__startSite = () => {
       const bar = $("#hero-bar"); bar.classList.remove("run"); void bar.offsetWidth; if (!reduce) bar.classList.add("run");
       if (user) restart();
     };
-    const restart = () => { clearInterval(hero.timer); if (!reduce) hero.timer = setInterval(() => { if (!hero.paused && !document.hidden) go(hero.i + 1); }, 6000); };
+    const restart = () => { clearInterval(hero.timer); if (!reduce) hero.timer = setInterval(() => { if (!hero.paused && !document.hidden) go(hero.i + 1); }, window.__heroInterval || 6000); };
     $("#hero-prev").addEventListener("click", () => go(hero.i - 1, true));
     $("#hero-next").addEventListener("click", () => go(hero.i + 1, true));
     const fig = $(".hero-work");
@@ -250,7 +251,7 @@ window.__startSite = () => {
         </figure>`).join("");
       end.insertAdjacentHTML("beforebegin", `
         <div class="room" id="room-${room.id}" data-room="${room.id}" style="--n:${works.length}">
-          <div class="room-wall tex-${room.wall}" aria-hidden="true"></div>
+          <div class="room-wall" style="${room.wallCss || ""}" aria-hidden="true"></div>
           <div class="room-lace" aria-hidden="true"></div>
           <header class="room-title"><span class="mono"><span data-i18n="room"></span> ${ROMAN[i]}</span><h3 data-i18n="rooms.${room.id}"></h3></header>
           ${pieces}
@@ -527,7 +528,7 @@ window.__startSite = () => {
   function fillPlate(id) {
     const w = byId[id];
     const room = ROOMS.find(r => r.id === w.room);
-    const band = room ? `<div class="tex-band tex-${room.wall}" aria-hidden="true"></div>` : "";
+    const band = room ? `<div class="tex-band" style="${room.wallCss || ""}" aria-hidden="true"></div>` : "";
     const m = $("#plate-media");
     m.classList.remove("is-zoomed");
     m.innerHTML = band + (w.image
@@ -824,13 +825,25 @@ window.__startSite = () => {
   setupForm();
   setupFilm();
   setupExFloat();
-  setupTilt();
+  if (!calm) setupTilt();
   if (window.gsap && window.ScrollTrigger) { setupScroll(); setupProgressThread(); }
-  setupHeroDepth();
+  if (!calm) setupHeroDepth();
   setupMenu();
   setupNavbar();
-  setupGalleryLight();
+  if (!calm) setupGalleryLight();
   $$("[data-top]").forEach(b => b.addEventListener("click", () => scrollTo(0)));
-  setupHalftones();
+  if (!calm) setupHalftones();
 };
-(window.__siteData || Promise.resolve()).then(() => window.__startSite());
+(window.__siteData || Promise.resolve()).then(() => {
+  // design of the live season (or the admin's draft in preview), then draw the site
+  try {
+    if (window.Theme) {
+      const t = Theme.pick(window.__siteRaw);
+      window.__season = t.season;
+      Theme.apply(t.layout, { backgrounds: t.backgrounds });
+      document.documentElement.dataset.season = t.season;
+      if (t.texts && window.UI) for (const [k, langs] of Object.entries(t.texts)) for (const [l, v] of Object.entries(langs || {})) if (v && UI[l]) UI[l][k] = v;
+    }
+  } catch (e) { console.warn("theme", e); }
+  window.__startSite();
+});

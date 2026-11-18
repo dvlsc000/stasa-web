@@ -9,6 +9,11 @@
   function apply(d) {
     if (!d || !Array.isArray(d.works) || !d.works.length) return false;
     const s = d.settings || {};
+    // design: the published layout of each season, which season is live, text changes, own backgrounds
+    window.__siteRaw = {
+      layouts: Object.fromEntries((d.layouts || []).map(l => [l.season, l.published])),
+      season_mode: s.season_mode || "auto", texts: s.texts || null, backgrounds: s.backgrounds || []
+    };
     if (s.contact_email) SITE.contactEmail = s.contact_email;
     if (s.instagram) SITE.instagram = s.instagram;
     if (Array.isArray(s.hero_works) && s.hero_works.length) SITE.heroWorks = s.hero_works;

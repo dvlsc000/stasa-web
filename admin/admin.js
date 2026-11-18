@@ -120,12 +120,15 @@
     const e = w.error || r.error || x.error || s.error; if (e) return toast("Could not load: " + err(e), true);
     st.works = w.data; st.rooms = r.data; st.ex = x.data; st.settings = s.data || { id: 1, hero_works: [] };
     renderRoomFilter(); renderWorks(); renderEx(); renderSettings(); renderAdmins(); checkImport();
+    window.Design && Design.init();
   }
 
   /* ---------- tabs ---------- */
   $$(".tabs button").forEach(b => b.addEventListener("click", () => {
     $$(".tabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
-    $$(".panel").forEach(p => p.hidden = p.id !== "tab-" + b.dataset.tab);
+    $$("#app > section").forEach(p => p.hidden = p.id !== "tab-" + b.dataset.tab);
+    document.body.classList.toggle("in-studio", b.dataset.tab === "design");
+    window.Design && Design.onTab(b.dataset.tab);
   }));
 
   /* ---------- drag to reorder (mouse and touch, by the ⠿ handle or the whole item) ---------- */
@@ -494,6 +497,9 @@
     msg.className = "msg ok"; msg.textContent = `Done: ${paths.length} photos are now stored in Supabase.`;
     btn.disabled = false; renderWorks(); renderEx(); renderSettings(); checkImport();
   });
+
+  // shared with the design studio (design.js)
+  window.Admin = { sb, st, toast, uploadPhoto, thumb, title, esc, err, sortable, removePhoto };
 
   /* ---------- start ---------- */
   (async () => {

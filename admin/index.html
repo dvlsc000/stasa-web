@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Cutive+Mono&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
-<link rel="stylesheet" href="admin.css?v=2611151841">
+<link rel="stylesheet" href="admin.css?v=2611181141">
 </head>
 <body>
 
@@ -42,9 +42,11 @@
   <header class="bar">
     <p class="brand">Stasha<em>Hats</em> <span class="mono">atelier</span></p>
     <nav class="tabs" role="tablist">
-      <button role="tab" data-tab="works" aria-selected="true">Works</button>
+      <button role="tab" data-tab="design" aria-selected="true">Design</button>
+      <button role="tab" data-tab="works">Works</button>
       <button role="tab" data-tab="exhibitions">Exhibitions</button>
-      <button role="tab" data-tab="settings">Opening &amp; contact</button>
+      <button role="tab" data-tab="texts">Texts</button>
+      <button role="tab" data-tab="settings">Contact</button>
       <button role="tab" data-tab="admins">Admins</button>
     </nav>
     <div class="bar-right">
@@ -53,8 +55,59 @@
     </div>
   </header>
 
+  <!-- DESIGN -->
+  <section class="studio" id="tab-design">
+    <div class="studio-bar">
+      <div class="seasons" id="season-tabs" role="tablist" aria-label="Season to edit"></div>
+      <label class="live">Live on the site
+        <select id="season-mode">
+          <option value="auto">Automatic by date</option>
+          <option value="spring">Always Spring</option><option value="summer">Always Summer</option>
+          <option value="autumn">Always Autumn</option><option value="winter">Always Winter</option>
+        </select></label>
+      <span class="grow"></span>
+      <span class="draft-state" id="draft-state"></span>
+      <button class="btn btn--ghost btn--small" id="undo" title="Undo (Ctrl+Z)">↶</button>
+      <button class="btn btn--ghost btn--small" id="redo" title="Redo (Ctrl+Shift+Z)">↷</button>
+      <select class="btn btn--small" id="copy-from" aria-label="Copy design from"><option value="">Copy from…</option></select>
+      <button class="btn btn--ghost btn--small" id="reset-season">Reset season</button>
+      <button class="btn btn--red" id="publish">Publish</button>
+    </div>
+    <div class="studio-body">
+      <aside class="controls" id="controls"></aside>
+      <div class="stage-preview">
+        <div class="device-bar">
+          <div class="seg seg--small" id="device">
+            <button data-d="desktop" aria-pressed="true">Desktop</button><button data-d="phone" aria-pressed="false">Phone</button>
+          </div>
+          <span class="mono" id="preview-note">Preview of your draft · visitors see the published design</span>
+          <span class="grow"></span>
+          <a class="link" id="open-preview" href="../?preview=1" target="_blank" rel="noopener">Open preview in a new tab ↗</a>
+        </div>
+        <div class="frame-wrap" id="frame-wrap"><iframe id="preview" title="Preview" src="about:blank"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEXTS -->
+  <section class="panel" id="tab-texts" hidden>
+    <div class="panel-head">
+      <h2>Every text on the site</h2><span class="grow"></span>
+      <div class="seg" id="text-lang"></div>
+    </div>
+    <p class="hint">Change any word on the site, in every language. Empty field = the original text (shown in grey). Changes show in the Design preview straight away; press Save to put them live.</p>
+    <div class="panel-head">
+      <input type="search" id="text-search" placeholder="Search texts…" style="max-width:340px">
+      <label class="check"><input type="checkbox" id="text-changed"> Only changed</label>
+      <span class="grow"></span>
+      <span class="msg" id="texts-msg"></span>
+      <button class="btn btn--red" id="save-texts">Save texts</button>
+    </div>
+    <div class="texts" id="texts-list"></div>
+  </section>
+
   <!-- WORKS -->
-  <section class="panel" id="tab-works">
+  <section class="panel" id="tab-works" hidden>
     <div class="panel-head">
       <div class="seg" id="wing-filter">
         <button data-wing="wearable" aria-pressed="true">Wearable</button>
@@ -87,11 +140,9 @@
 
   <!-- SETTINGS -->
   <section class="panel" id="tab-settings" hidden>
-    <h2>Opening stage</h2>
-    <p class="hint">The works that take turns on the stage at the top of the site. Click to add, drag to reorder, × to remove.</p>
-    <ol class="stage" id="stage-list"></ol>
-    <details class="picker"><summary class="btn">+ Add a work to the stage</summary><div class="pick-grid" id="stage-pick"></div></details>
     <h2>Contact</h2>
+    <p class="hint">The works on the opening stage are chosen per season in Design → Opening stage.</p>
+    <ol class="stage" id="stage-list" hidden></ol><div id="stage-pick" hidden></div>
     <form class="form-grid" id="settings-form">
       <label>Contact e-mail<input type="email" id="s-email"></label>
       <label>Instagram link<input type="url" id="s-insta" placeholder="https://www.instagram.com/…"></label>
@@ -190,6 +241,9 @@
 <script src="../vendor/supabase.min.js"></script>
 <script src="../js/content.js"></script>
 <script src="../js/config.js"></script>
-<script src="admin.js?v=2611151841"></script>
+<script src="../js/thread.js"></script>
+<script src="../js/themes.js"></script>
+<script src="admin.js?v=2611181141"></script>
+<script src="design.js?v=2611181141"></script>
 </body>
 </html>

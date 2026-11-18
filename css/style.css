@@ -233,7 +233,7 @@ svg[data-sew] { color: var(--red); }                       /* sewn drawings are 
 .hero-count b { font-weight: 400; color: var(--cotton); }
 .hero-prog { position: relative; width: 70px; height: 1px; background: rgba(238,233,223,.25); overflow: hidden; }
 .hero-prog i { position: absolute; inset: 0; background: var(--red); transform: scaleX(0); transform-origin: 0 50%; }
-.hero-prog i.run { animation: hero-prog 6s linear forwards; }
+.hero-prog i.run { animation: hero-prog var(--hero-interval, 6s) linear forwards; }
 .hero-work.is-paused .hero-prog i.run { animation-play-state: paused; }
 @keyframes hero-prog { to { transform: scaleX(1); } }
 
@@ -739,3 +739,9 @@ html.app-scroll { background: var(--ink); }
 html.app-scroll body { height: calc(100% - 1px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: none; }
 /* phones: the navbar is a fixed, steady frame above the gallery (its own layer, never moves) */
 html.app-scroll .top { transform: translateZ(0) !important; transition: color .4s ease, background-color .4s ease, border-color .4s ease; }
+
+/* admin motion setting: "still" = no animation at all */
+html.motion-still *, html.motion-still *::before, html.motion-still *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+/* admin can hide sections: their menu links go too */
+.top-nav a[hidden], .menu-nav a[hidden] { display: none !important; }
+#main > section[hidden] { display: none !important; }
